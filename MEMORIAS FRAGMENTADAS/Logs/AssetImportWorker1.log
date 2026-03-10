@@ -1,11 +1,19 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
 Built from '6000.3/staging' branch; Version is '6000.3.10f1 (e35f0c77bd8e) revision 14901004'; Using compiler version '194234433'; Build Type 'Release'
 OS: 'Windows 11  (10.0.26200) Professional' Language: 'es' Physical Memory: 28277 MB
+<<<<<<< HEAD
 [Licensing::IpcConnector] Successfully connected to: "LicenseClient-Laura" at "2026-03-10T02:30:18.9077828Z"
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
 System  architecture: x64
 Process architecture: x64
 Date: 2026-03-10T02:30:18Z
+=======
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Laura" at "2026-03-10T02:32:56.0403521Z"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-03-10T02:32:56Z
+>>>>>>> Integracion
 
 COMMAND LINE ARGUMENTS:
 C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Unity.exe
@@ -19,7 +27,11 @@ C:/Users/Laura/Documents/UNIVERSIDAD/PROYECTO/Memorias-Fragmentadas/MEMORIAS FRA
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
+<<<<<<< HEAD
 59990
+=======
+49558
+>>>>>>> Integracion
 -licensingIpc
 LicenseClient-Laura
 -job-worker-count
@@ -67,12 +79,21 @@ C:/Users/Laura/Documents/UNIVERSIDAD/PROYECTO/Memorias-Fragmentadas/MEMORIAS FRA
     "memorysetup-job-temp-allocator-block-size-background=1048576"
     "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
     "memorysetup-temp-allocator-size-cloud-worker=32768"
+<<<<<<< HEAD
 Player connection [34640]  Target information:
 
 Player connection [34640]  * "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 2603566834 [EditorId] 2603566834 [Version] 1048832 [Id] WindowsEditor(7,CARO-BELTRAN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
 Player connection [34640] Host joined multi-casting on [225.0.0.222:54997]...
 Player connection [34640] Host joined alternative multi-casting on [225.0.0.222:34997]...
+=======
+Player connection [25052]  Target information:
+
+Player connection [25052]  * "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 3699306809 [EditorId] 3699306809 [Version] 1048832 [Id] WindowsEditor(7,CARO-BELTRAN) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [25052] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [25052] Host joined alternative multi-casting on [225.0.0.222:34997]...
+>>>>>>> Integracion
 JobSystem: Creating JobQueue using job-worker-count value 5
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -100,7 +121,11 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< HEAD
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56508
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56304
+>>>>>>> Integracion
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
@@ -110,6 +135,7 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/
 	ResponseStatus: Unsupported protocol version '1.17.4'.
 [Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-Laura"
 [Licensing::IpcConnector] LicenseClient-Laura channel disconnected successfully.
+<<<<<<< HEAD
 [Licensing::IpcConnector] Successfully connected to: "LicenseClient-Laura-6000.3.10" at "2026-03-10T02:30:19.7512029Z"
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.4+4293ba1
@@ -121,6 +147,19 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/
 [Licensing::IpcConnector] Successfully connected to: "LicenseClient-Laura-6000.3.10-notifications" at "2026-03-10T02:30:20.6210604Z"
 [Licensing::Module] Licensing Background thread has ended after 1.72s
 [Licensing::Module] Licensing is initialized (took 0.98s).
+=======
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Laura-6000.3.10" at "2026-03-10T02:32:56.9198677Z"
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              d27e7f6b03994588b626825ef2357df8
+  Correlation Id:          65398bb30878363fbce0a18e6bd76955
+  External correlation Id: 5706595509103309603
+  Machine Id:              6GDksYIOATs3z3Ber3wkNnJkgho=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Laura-6000.3.10" (connect: 0.00s, validation: 0.00s, handshake: 0.85s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Laura-6000.3.10-notifications" at "2026-03-10T02:32:57.7696333Z"
+[Licensing::Module] Licensing Background thread has ended after 1.73s
+[Licensing::Module] Licensing is initialized (took 1.01s).
+>>>>>>> Integracion
 [Licensing::Client] Successfully resolved entitlement details
 [Licensing::Module] License group:
   Id: 4674063199360-UnityPersXXXX
@@ -128,6 +167,7 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/
   Type: Assigned
   Expiration: Unlimited
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+<<<<<<< HEAD
 Registered in 1.009241 seconds.
 - Loaded All Assemblies, in  1.400 seconds
 Native extension for Android target not found
@@ -146,6 +186,99 @@ UnityEngine.DebugLogHandler:LogException(Exception, Object)
 UnityEngine.Logger:LogException(Exception, Object)
 UnityEngine.Debug:LogException(Exception)
 UnityEditor.Modules.ModuleManager:InitializePlatformSupportModules()
+=======
+Registered in 1.015118 seconds.
+- Loaded All Assemblies, in  1.406 seconds
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 211 ms
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.571 seconds
+Domain Reload Profiling: 1974ms
+	BeginReloadAssembly (118ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (37ms)
+	RebuildNativeTypeToScriptingClass (13ms)
+	initialDomainReloadingComplete (1065ms)
+	LoadAllAssembliesAndSetupDomain (170ms)
+		LoadAssemblies (115ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (166ms)
+			TypeCache.Refresh (163ms)
+				TypeCache.ScanAssembly (151ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (571ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (541ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (290ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (62ms)
+			ProcessInitializeOnLoadAttributes (127ms)
+			ProcessInitializeOnLoadMethodAttributes (60ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Import Worker Mode flag is 0x00
+Begin MonoManager ReloadAssembly
+[Licensing::Client] Successfully resolved entitlement details
+- Loaded All Assemblies, in  0.252 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.300 seconds
+Domain Reload Profiling: 550ms
+	BeginReloadAssembly (174ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (37ms)
+	RebuildCommonClasses (28ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (16ms)
+	LoadAllAssembliesAndSetupDomain (20ms)
+		LoadAssemblies (91ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (16ms)
+			TypeCache.Refresh (13ms)
+				TypeCache.ScanAssembly (8ms)
+			BuildScriptInfoCaches (1ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (301ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (217ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (10ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (71ms)
+			ProcessInitializeOnLoadAttributes (99ms)
+			ProcessInitializeOnLoadMethodAttributes (28ms)
+			AfterProcessingInitializeOnLoad (6ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 66 unused Assets / (28.8 KB). Loaded Objects now: 661.
+Memory consumption went from 64.1 MB to 64.1 MB.
+Total: 4.552300 ms (FindLiveObjects: 0.080800 ms CreateObjectMapping: 0.012600 ms MarkObjects: 4.372800 ms  DeleteObjects: 0.084700 ms)
+>>>>>>> Integracion
 
 (Filename: /home/bokken/build/output/unity/unity/PlatformDependent/AndroidPlayer/Editor/Managed/Android/Command.cs Line: 148)
 

@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 51
+  controlID: 81
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -681,7 +681,11 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_LockTracker:
     m_IsLocked: 0
+<<<<<<< HEAD
   m_LastSelectedObjectID: -1816
+=======
+  m_LastSelectedObjectID: 20206
+>>>>>>> Integracion
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -756,7 +760,11 @@ MonoBehaviour:
       m_Data: 20412
     m_ExpandedIDs:
     - m_Data: 0
+<<<<<<< HEAD
     - m_Data: 19920
+=======
+    - m_Data: 20304
+>>>>>>> Integracion
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -789,7 +797,11 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
+<<<<<<< HEAD
     - m_Data: 19920
+=======
+    - m_Data: 20304
+>>>>>>> Integracion
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -892,9 +904,15 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
+<<<<<<< HEAD
       - m_Data: -1816
       m_LastClickedID:
         m_Data: -1816
+=======
+      - m_Data: 20206
+      m_LastClickedID:
+        m_Data: 20206
+>>>>>>> Integracion
       m_ExpandedIDs:
       - m_Data: -1276
       m_RenameOverlay:
@@ -1517,9 +1535,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0, y: 0, z: 0}
+    m_Target: {x: 1.0060078, y: 1.0976032, z: -1.7743529}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0}
+    m_Value: {x: 1.0060078, y: 1.0976032, z: -1.7743529}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1569,9 +1587,13 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_Size:
-    m_Target: 3.4871235
+    m_Target: 7.354682
     speed: 2
+<<<<<<< HEAD
     m_Value: 3.4871235
+=======
+    m_Value: 7.354682
+>>>>>>> Integracion
   m_Ortho:
     m_Target: 0
     speed: 2
