@@ -1,11 +1,11 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
 Built from '6000.3/staging' branch; Version is '6000.3.10f1 (e35f0c77bd8e) revision 14901004'; Using compiler version '194234433'; Build Type 'Release'
 OS: 'Windows 11  (10.0.26200) Professional' Language: 'en' Physical Memory: 18277 MB
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-LENOVO" at "2026-03-11T00:18:23.9584908Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-LENOVO" at "2026-03-11T03:28:36.6348638Z"
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
 System  architecture: x64
 Process architecture: x64
-Date: 2026-03-11T00:18:23Z
+Date: 2026-03-11T03:28:36Z
 
 COMMAND LINE ARGUMENTS:
 C:\Program Files\Unity\Hub\Editor\6000.3.10f1\Editor\Unity.exe
@@ -19,7 +19,7 @@ C:/Users/LENOVO/OneDrive - unimilitar.edu.co/Documentos/Proyecto/Memorias-Fragme
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-57251
+64071
 -licensingIpc
 LicenseClient-LENOVO
 -job-worker-count
@@ -67,12 +67,12 @@ C:/Users/LENOVO/OneDrive - unimilitar.edu.co/Documentos/Proyecto/Memorias-Fragme
     "memorysetup-job-temp-allocator-block-size-background=1048576"
     "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
     "memorysetup-temp-allocator-size-cloud-worker=32768"
-Player connection [7240]  Target information:
+Player connection [13024]  Target information:
 
-Player connection [7240]  * "[IP] 192.168.2.5 [Port] 0 [Flags] 2 [Guid] 1576308086 [EditorId] 1576308086 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-EN48K0R) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [13024]  * "[IP] 192.168.2.5 [Port] 0 [Flags] 2 [Guid] 509896347 [EditorId] 509896347 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-EN48K0R) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [7240] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [7240] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [13024] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [13024] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 5
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -84,7 +84,7 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 5.41 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.3.10f1 (e35f0c77bd8e)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Resources/UnitySubsystems
@@ -100,7 +100,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56860
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56756
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
@@ -110,17 +110,17 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/
 	ResponseStatus: Unsupported protocol version '1.17.4'.
 [Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-LENOVO"
 [Licensing::IpcConnector] LicenseClient-LENOVO channel disconnected successfully.
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-LENOVO-6000.3.10" at "2026-03-11T00:18:28.5430211Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-LENOVO-6000.3.10" at "2026-03-11T03:28:42.8864061Z"
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.4+4293ba1
-  Session Id:              0ce21fb063274727a719c8db4d5d096e
-  Correlation Id:          25a3002f557fe8b7e44ac61070e4ff35
-  External correlation Id: 6576106589004827738
+  Session Id:              4bcb82145bf64e2bb56b01e9be14561f
+  Correlation Id:          376796bfbd34dfbc9f4c7a974a723d04
+  External correlation Id: 565629846384012754
   Machine Id:              aWHJKi8cuCp/+LicNO+6qJbi7gg=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-LENOVO-6000.3.10" (connect: 0.00s, validation: 0.00s, handshake: 4.50s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-LENOVO-6000.3.10-notifications" at "2026-03-11T00:18:33.0507385Z"
-[Licensing::Module] Licensing Background thread has ended after 9.09s
-[Licensing::Module] Licensing is initialized (took 7.81s).
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-LENOVO-6000.3.10" (connect: 0.00s, validation: 0.00s, handshake: 5.33s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-LENOVO-6000.3.10-notifications" at "2026-03-11T03:28:48.2196704Z"
+[Licensing::Module] Licensing Background thread has ended after 11.59s
+[Licensing::Module] Licensing is initialized (took 9.65s).
 [Licensing::Client] Successfully resolved entitlement details
 [Licensing::Module] License group:
   Id: 4674087203035-UnityPersXXXX
@@ -128,42 +128,42 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/
   Type: Assigned
   Expiration: Unlimited
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-Registered in 7.822545 seconds.
-- Loaded All Assemblies, in  8.757 seconds
+Registered in 9.661338 seconds.
+- Loaded All Assemblies, in 11.045 seconds
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 486 ms
+Android Extension - Scanning For ADB Devices 664 ms
 Native extension for WindowsStandalone target not found
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.556 seconds
-Domain Reload Profiling: 10305ms
-	BeginReloadAssembly (304ms)
+- Finished resetting the current domain, in  1.965 seconds
+Domain Reload Profiling: 13001ms
+	BeginReloadAssembly (539ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (91ms)
-	RebuildNativeTypeToScriptingClass (31ms)
-	initialDomainReloadingComplete (7929ms)
-	LoadAllAssembliesAndSetupDomain (393ms)
-		LoadAssemblies (296ms)
+		CreateAndSetChildDomain (2ms)
+	RebuildCommonClasses (141ms)
+	RebuildNativeTypeToScriptingClass (59ms)
+	initialDomainReloadingComplete (9813ms)
+	LoadAllAssembliesAndSetupDomain (483ms)
+		LoadAssemblies (527ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (386ms)
-			TypeCache.Refresh (383ms)
-				TypeCache.ScanAssembly (356ms)
+		AnalyzeDomain (474ms)
+			TypeCache.Refresh (471ms)
+				TypeCache.ScanAssembly (436ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1557ms)
+	FinalizeReload (1966ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1474ms)
+		SetupLoadedEditorAssemblies (1872ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (674ms)
-			SetLoadedEditorAssemblies (9ms)
-			BeforeProcessingInitializeOnLoad (224ms)
-			ProcessInitializeOnLoadAttributes (393ms)
-			ProcessInitializeOnLoadMethodAttributes (173ms)
+			InitializePlatformSupportModulesInManaged (884ms)
+			SetLoadedEditorAssemblies (12ms)
+			BeforeProcessingInitializeOnLoad (288ms)
+			ProcessInitializeOnLoadAttributes (502ms)
+			ProcessInitializeOnLoadMethodAttributes (187ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -173,305 +173,211 @@ Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
 [Licensing::Client] Successfully resolved entitlement details
-- Loaded All Assemblies, in  0.646 seconds
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+- Loaded All Assemblies, in  2.177 seconds
+Refreshing native plugins compatible for Editor in 3.60 ms, found 0 plugins.
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.875 seconds
-Domain Reload Profiling: 1513ms
-	BeginReloadAssembly (426ms)
+Package Manager log level set to [2]
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+- Finished resetting the current domain, in  1.156 seconds
+Domain Reload Profiling: 3319ms
+	BeginReloadAssembly (471ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (18ms)
+		DisableScriptedObjects (14ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (64ms)
-	RebuildCommonClasses (85ms)
-	RebuildNativeTypeToScriptingClass (30ms)
-	initialDomainReloadingComplete (45ms)
-	LoadAllAssembliesAndSetupDomain (52ms)
-		LoadAssemblies (250ms)
+		CreateAndSetChildDomain (74ms)
+	RebuildCommonClasses (104ms)
+	RebuildNativeTypeToScriptingClass (31ms)
+	initialDomainReloadingComplete (53ms)
+	LoadAllAssembliesAndSetupDomain (1502ms)
+		LoadAssemblies (1706ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (40ms)
-			TypeCache.Refresh (32ms)
-				TypeCache.ScanAssembly (19ms)
-			BuildScriptInfoCaches (3ms)
+		AnalyzeDomain (68ms)
+			TypeCache.Refresh (49ms)
+				TypeCache.ScanAssembly (33ms)
+			BuildScriptInfoCaches (11ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (876ms)
+	FinalizeReload (1157ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (665ms)
+		SetupLoadedEditorAssemblies (881ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (21ms)
+			InitializePlatformSupportModulesInManaged (24ms)
 			SetLoadedEditorAssemblies (7ms)
-			BeforeProcessingInitializeOnLoad (238ms)
-			ProcessInitializeOnLoadAttributes (309ms)
-			ProcessInitializeOnLoadMethodAttributes (75ms)
-			AfterProcessingInitializeOnLoad (15ms)
-			EditorAssembliesLoaded (0ms)
+			BeforeProcessingInitializeOnLoad (349ms)
+			ProcessInitializeOnLoadAttributes (389ms)
+			ProcessInitializeOnLoadMethodAttributes (94ms)
+			AfterProcessingInitializeOnLoad (17ms)
+			EditorAssembliesLoaded (1ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (13ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+		AwakeInstancesAfterBackupRestoration (14ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 3.28 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 66 unused Assets / (28.4 KB). Loaded Objects now: 661.
-Memory consumption went from 64.1 MB to 64.1 MB.
-Total: 9.030200 ms (FindLiveObjects: 0.088400 ms CreateObjectMapping: 0.016100 ms MarkObjects: 8.748700 ms  DeleteObjects: 0.174900 ms)
+Unloading 311 unused Assets / (34.7 KB). Loaded Objects now: 910.
+Memory consumption went from 66.2 MB to 66.2 MB.
+Total: 10.680200 ms (FindLiveObjects: 0.151200 ms CreateObjectMapping: 0.033400 ms MarkObjects: 10.236300 ms  DeleteObjects: 0.257200 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 621584.658074 seconds.
-  path: Assets/Scenes/SampleScene.unity
-  artifactKey: Guid(99c9720ab356a0642a771bea13969a05) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/SampleScene.unity using Guid(99c9720ab356a0642a771bea13969a05) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '02bdef69cc2f3094152c6208664bcf61') in 0.1464667 seconds
+  Time since last request: 633002.363680 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scripts/VrModeController.cs
+  artifactKey: Guid(f478d43f27e324b7199d5dccff4298b7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scripts/VrModeController.cs using Guid(f478d43f27e324b7199d5dccff4298b7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '8af15a2e48b02beb9039dd89d85cdf62') in 0.2136051 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/Samples
+  artifactKey: Guid(15f872298d6006f47a23eae0019f9b8b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples using Guid(15f872298d6006f47a23eae0019f9b8b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '4f9f2a6f85fa4cb6319d045d78ca1891') in 0.0265052 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 22.787259 seconds.
-  path: Assets/Scenes/Modelado.unity
-  artifactKey: Guid(f9f5265d09d74614399999f3af88097e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/Modelado.unity using Guid(f9f5265d09d74614399999f3af88097e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '8233579c502337c511f1235db83e5bed') in 0.0228977 seconds
+  Time since last request: 0.000139 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scripts/GraphicsAPITextController.cs
+  artifactKey: Guid(a6e858f9314cf4903a8b6b60d93e3437) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scripts/GraphicsAPITextController.cs using Guid(a6e858f9314cf4903a8b6b60d93e3437) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '88aeb81992a55d956a3f0093e011b226') in 0.0246131 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000156 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures/Icosahedron_Pink_BakedDiffuse.png
+  artifactKey: Guid(156c229a982b84470938f1e4aa02ab43) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures/Icosahedron_Pink_BakedDiffuse.png using Guid(156c229a982b84470938f1e4aa02ab43) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '91c224d4e8bbf455d5263bc45b59f998') in 0.149306 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 39.811866 seconds.
-  path: Assets/Scenes/Prorgamación.unity
-  artifactKey: Guid(92099fbbd67912446aabd85a0cfd431c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/Prorgamación.unity using Guid(92099fbbd67912446aabd85a0cfd431c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '43f4b5e4773d748ab3c13b5ffaee7e5d') in 0.0250027 seconds
+  Time since last request: 0.000220 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures/TriSphere_Blue_BakedDiffuse.png
+  artifactKey: Guid(ce4a1a00714294255b95526bab0d31b7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures/TriSphere_Blue_BakedDiffuse.png using Guid(ce4a1a00714294255b95526bab0d31b7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '8058e2446bb105472ed35b2d2d60130c') in 0.037462 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 64.711084 seconds.
-  path: Assets/Scenes/Progamación.unity
-  artifactKey: Guid(1d014ea89c8042b4c9a8b2f81f36736c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/Progamación.unity using Guid(1d014ea89c8042b4c9a8b2f81f36736c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'a9dec891d36da22322fa3019fa197636') in 0.0289882 seconds
+  Time since last request: 0.000270 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures
+  artifactKey: Guid(e360c35f5834342bd8dbf7077a361cac) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures using Guid(e360c35f5834342bd8dbf7077a361cac) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'b8131fca6d4368c7ec16fc3ed569f754') in 0.0257972 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 107.750903 seconds.
-  path: Assets/Main.unity
-  artifactKey: Guid(23d34115f6905a54fa92fabe5fad9717) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Main.unity using Guid(23d34115f6905a54fa92fabe5fad9717) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'bfac07f3be689aeb272c01903e18a679') in 0.0264823 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+  Time since last request: 0.000048 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scripts/CardboardStartup.cs
+  artifactKey: Guid(dd68f027e715c44aa8d097000d4cccfb) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scripts/CardboardStartup.cs using Guid(dd68f027e715c44aa8d097000d4cccfb) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'd5b7d6c1975feef3e6ae3b1e1aa8feaa') in 0.0266047 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
 ========================================================================
 Received Import Request.
-  Time since last request: 24.404813 seconds.
-  path: Assets/Scenes/SampleScene.unity
-  artifactKey: Guid(99c9720ab356a0642a771bea13969a05) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/SampleScene.unity using Guid(99c9720ab356a0642a771bea13969a05) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '271264d44f6de669535d02c03ee4e923') in 0.0278054 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 43.278600 seconds.
-  path: Assets/Scenes/Integracion - Prueba .unity
-  artifactKey: Guid(9573a8cfb4b7e1d4a89b303e24094274) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/Integracion - Prueba .unity using Guid(9573a8cfb4b7e1d4a89b303e24094274) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'd2f9e3d5f45bd1f719e9507b5fa38660') in 0.0253889 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 21.504240 seconds.
-  path: Assets/Scenes/Animacion.unity
-  artifactKey: Guid(067f3359f59b81442b02e88fe1011ff0) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/Animacion.unity using Guid(067f3359f59b81442b02e88fe1011ff0) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '12d64b40be70b3a0eb864413195be63d') in 0.0260732 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 15.600657 seconds.
-  path: Assets/Scenes/UX - UI.unity
-  artifactKey: Guid(62b6d6a95bab9a34a8fb71839db61c8b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/UX - UI.unity using Guid(62b6d6a95bab9a34a8fb71839db61c8b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '71f82c87d2f78a2b632808aeda400627') in 0.0257778 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 33.293544 seconds.
-  path: Assets/Scenes/Programación.unity
-  artifactKey: Guid(f824533f49f05074eb277c9d78ef2a02) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Scenes/Programación.unity using Guid(f824533f49f05074eb277c9d78ef2a02) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '7bf3cc01cfc4cbdc79d421a79807cabb') in 0.024036 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 82.121253 seconds.
-  path: Assets/Readme.asset
-  artifactKey: Guid(8105016687592461f977c054a80ce2f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Readme.asset using Guid(8105016687592461f977c054a80ce2f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e4e50c2d444c82260e64a6d4d4aee46c') in 0.0292976 seconds
+  Time since last request: 0.000194 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Models/Materials/TriSpherePink.mat
+  artifactKey: Guid(98e1ed660e0a3453494d31d659d7388c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Models/Materials/TriSpherePink.mat using Guid(98e1ed660e0a3453494d31d659d7388c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'c4608e09107f277bdfef83b98d00fb67') in 0.0486445 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 1.619336 seconds.
-  path: Assets/Scenes
-  artifactKey: Guid(9c53962885c2c4f449125a979d6ad240) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes using Guid(9c53962885c2c4f449125a979d6ad240) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ae1af5c61b2fd4bcacfc65f55f013a75') in 0.0009586 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+  Time since last request: 0.000045 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Environments/CubeRoom.obj
+  artifactKey: Guid(0b3edbbeccaa9429dafe86abead2eade) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Environments/CubeRoom.obj using Guid(0b3edbbeccaa9429dafe86abead2eade) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '99ff167042cf9fd8e41d87abc798d06f') in 0.1339548 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
 
 ========================================================================
 Received Import Request.
-  Time since last request: 22.341823 seconds.
-  path: Assets/Escenas - Juego
-  artifactKey: Guid(046e6ea468c67a749ac13369081c32ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Escenas - Juego using Guid(046e6ea468c67a749ac13369081c32ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '02d2ab1dc138e196f2422e0fd4e2d013') in 0.0011289 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.914558 seconds.
-  path: Assets/Escenas - Juego
-  artifactKey: Guid(046e6ea468c67a749ac13369081c32ad) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Escenas - Juego using Guid(046e6ea468c67a749ac13369081c32ad) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '835f13aeb53c7173cac821be87042f86') in 0.0239627 seconds
+  Time since last request: 0.000046 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Models/Materials
+  artifactKey: Guid(c005ef73dcba345e8aa4e53a907eaab5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Models/Materials using Guid(c005ef73dcba345e8aa4e53a907eaab5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: '4c1314e667ce5cf084e53d1d617b971b') in 0.0241076 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 5.622172 seconds.
-  path: Assets/Branches
-  artifactKey: Guid(9c53962885c2c4f449125a979d6ad240) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Branches using Guid(9c53962885c2c4f449125a979d6ad240) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6e1f1d659dd6caa34f3a70ffd9ddfce3') in 0.0013588 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.948541 seconds.
-  path: Assets/Branches
-  artifactKey: Guid(9c53962885c2c4f449125a979d6ad240) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Branches using Guid(9c53962885c2c4f449125a979d6ad240) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'e9bd65aa27fdfde4dcdc753410ecfea8') in 0.0254007 seconds
+  Time since last request: 0.000124 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures/QuadSphere_Pink_BakedDiffuse.png
+  artifactKey: Guid(c50d4290154a549c28cd80199471f9ea) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Textures/QuadSphere_Pink_BakedDiffuse.png using Guid(c50d4290154a549c28cd80199471f9ea) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'eb093ef71f215a394704bd2d08361d3d') in 0.0328839 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000357 seconds.
-  path: Assets/Branches/Integracion - Prueba .unity
-  artifactKey: Guid(9573a8cfb4b7e1d4a89b303e24094274) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Branches/Integracion - Prueba .unity using Guid(9573a8cfb4b7e1d4a89b303e24094274) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'd6ae8c111d41ed3a7a468d7b8af181de') in 0.0265953 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000107 seconds.
-  path: Assets/Branches/UX - UI.unity
-  artifactKey: Guid(62b6d6a95bab9a34a8fb71839db61c8b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Branches/UX - UI.unity using Guid(62b6d6a95bab9a34a8fb71839db61c8b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'd85183f3fb62c61c17bdcda651e2a967') in 0.0265108 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000171 seconds.
-  path: Assets/Branches/Modelado.unity
-  artifactKey: Guid(f9f5265d09d74614399999f3af88097e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
-Start importing Assets/Branches/Modelado.unity using Guid(f9f5265d09d74614399999f3af88097e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'fcfe548fbb444bfbbf93190e0f6ff4f8') in 0.0298424 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 127.973384 seconds.
-  path: Assets/Settings/Mobile_Renderer.asset
-  artifactKey: Guid(65bc7dbf4170f435aa868c779acfb082) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/Mobile_Renderer.asset using Guid(65bc7dbf4170f435aa868c779acfb082) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd2aa1033a215add9f190a6d80a112122') in 0.0025406 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000405 seconds.
-  path: Assets/Settings/PC_Renderer.asset
-  artifactKey: Guid(f288ae1f4751b564a96ac7587541f7a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/PC_Renderer.asset using Guid(f288ae1f4751b564a96ac7587541f7a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'de49950f4751700a77e66c5b88fe2ce4') in 0.0028919 seconds
+  Time since last request: 0.000141 seconds.
+  path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Models/Materials/IcosahedronPink.mat
+  artifactKey: Guid(e569b4a1fb5d044619efe1abc174c85f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Models/Materials/IcosahedronPink.mat using Guid(e569b4a1fb5d044619efe1abc174c85f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (artifact id: 'f2f67b2f715089e153d9fe34917416ee') in 0.0300234 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
-========================================================================
-Received Import Request.
-  Time since last request: 0.007978 seconds.
-  path: Assets/Settings/SampleSceneProfile.asset
-  artifactKey: Guid(10fc4df2da32a41aaa32d77bc913491c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/SampleSceneProfile.asset using Guid(10fc4df2da32a41aaa32d77bc913491c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '40300c19fee4c6617845800bc0bb5306') in 0.0025261 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 65 unused Assets / (1.0 KB). Loaded Objects now: 665.
-Memory consumption went from 65.0 MB to 65.0 MB.
-Total: 10.295500 ms (FindLiveObjects: 0.101300 ms CreateObjectMapping: 0.014300 ms MarkObjects: 10.107500 ms  DeleteObjects: 0.069600 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 64 unused Assets / (1.0 KB). Loaded Objects now: 664.
-Memory consumption went from 65.0 MB to 65.0 MB.
-Total: 10.427800 ms (FindLiveObjects: 0.131300 ms CreateObjectMapping: 0.018800 ms MarkObjects: 10.198000 ms  DeleteObjects: 0.076300 ms)
-
-Prepare: number of updated asset objects reloaded= 0
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
 [Licensing::Client] Successfully resolved entitlement details
-- Loaded All Assemblies, in  0.625 seconds
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+- Loaded All Assemblies, in  0.848 seconds
+Refreshing native plugins compatible for Editor in 3.37 ms, found 0 plugins.
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.883 seconds
-Domain Reload Profiling: 1499ms
-	BeginReloadAssembly (422ms)
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+- Finished resetting the current domain, in  1.198 seconds
+Domain Reload Profiling: 2031ms
+	BeginReloadAssembly (518ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (13ms)
+		DisableScriptedObjects (23ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (85ms)
-	RebuildCommonClasses (88ms)
-	RebuildNativeTypeToScriptingClass (31ms)
-	initialDomainReloadingComplete (46ms)
-	LoadAllAssembliesAndSetupDomain (29ms)
-		LoadAssemblies (246ms)
+		CreateAndSetChildDomain (84ms)
+	RebuildCommonClasses (129ms)
+	RebuildNativeTypeToScriptingClass (34ms)
+	initialDomainReloadingComplete (49ms)
+	LoadAllAssembliesAndSetupDomain (102ms)
+		LoadAssemblies (319ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (17ms)
-			TypeCache.Refresh (6ms)
-				TypeCache.ScanAssembly (0ms)
-			BuildScriptInfoCaches (6ms)
-			ResolveRequiredComponents (1ms)
-	FinalizeReload (884ms)
+		AnalyzeDomain (75ms)
+			TypeCache.Refresh (46ms)
+				TypeCache.ScanAssembly (29ms)
+			BuildScriptInfoCaches (20ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (1199ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (675ms)
+		SetupLoadedEditorAssemblies (915ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (21ms)
+			InitializePlatformSupportModulesInManaged (33ms)
 			SetLoadedEditorAssemblies (7ms)
-			BeforeProcessingInitializeOnLoad (236ms)
-			ProcessInitializeOnLoadAttributes (306ms)
-			ProcessInitializeOnLoadMethodAttributes (90ms)
-			AfterProcessingInitializeOnLoad (15ms)
+			BeforeProcessingInitializeOnLoad (378ms)
+			ProcessInitializeOnLoadAttributes (397ms)
+			ProcessInitializeOnLoadMethodAttributes (82ms)
+			AfterProcessingInitializeOnLoad (17ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (12ms)
-Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+		AwakeInstancesAfterBackupRestoration (13ms)
+Refreshing native plugins compatible for Editor in 2.02 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 64 unused Assets / (1.0 KB). Loaded Objects now: 664.
-Memory consumption went from 64.5 MB to 64.5 MB.
-Total: 9.175900 ms (FindLiveObjects: 0.082100 ms CreateObjectMapping: 0.012900 ms MarkObjects: 9.016200 ms  DeleteObjects: 0.062700 ms)
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 662 unused Assets / (227.0 KB). Loaded Objects now: 1263.
+Memory consumption went from 69.4 MB to 69.1 MB.
+Total: 11.830900 ms (FindLiveObjects: 0.187500 ms CreateObjectMapping: 0.056800 ms MarkObjects: 11.075800 ms  DeleteObjects: 0.508300 ms)
 
 Prepare: number of updated asset objects reloaded= 0
-========================================================================
-Received Import Request.
-  Time since last request: 49.785430 seconds.
-  path: Assets/Branches/Animacion.unity
-  artifactKey: Guid(067f3359f59b81442b02e88fe1011ff0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Branches/Animacion.unity using Guid(067f3359f59b81442b02e88fe1011ff0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '62af0d1e36bd28f7c89435d3c0c651b3') in 0.003243 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
-
