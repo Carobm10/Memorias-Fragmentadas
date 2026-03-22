@@ -1,44 +1,52 @@
-﻿//-----------------------------------------------------------------------
-// CardboardStartup FIXED (XR Initialization added)
+//-----------------------------------------------------------------------
+// <copyright file="CardboardStartup.cs" company="Google LLC">
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// </copyright>
 //-----------------------------------------------------------------------
 
 using Google.XR.Cardboard;
 using UnityEngine;
-using UnityEngine.XR.Management;
-using System.Collections;
 
+/// <summary>
+/// Initializes Cardboard XR Plugin.
+/// </summary>
 public class CardboardStartup : MonoBehaviour
 {
-    IEnumerator Start()
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// </summary>
+    public void Start()
     {
-        // 🔥 Inicializar XR correctamente
-        yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
-
-        if (XRGeneralSettings.Instance.Manager.activeLoader == null)
-        {
-            Debug.LogError("XR Loader failed to initialize");
-            yield break;
-        }
-
-        XRGeneralSettings.Instance.Manager.StartSubsystems();
-
-        // Configuración de pantalla
+        // Configures the app to not shut down the screen and sets the brightness to maximum.
+        // Brightness control is expected to work only in iOS, see:
+        // https://docs.unity3d.com/ScriptReference/Screen-brightness.html.
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Screen.brightness = 1.0f;
 
-        // Verificar parámetros del dispositivo
+        // Checks if the device parameters are stored and scans them if not.
         if (!Api.HasDeviceParams())
         {
             Api.ScanDeviceParams();
         }
     }
 
-    void Update()
+    /// <summary>
+    /// Update is called once per frame.
+    /// </summary>
+    public void Update()
     {
-        // 🚨 Evita errores si XR aún no está listo
-        if (!XRGeneralSettings.Instance.Manager.isInitializationComplete)
-            return;
-
         if (Api.IsGearButtonPressed)
         {
             Api.ScanDeviceParams();
@@ -58,17 +66,8 @@ public class CardboardStartup : MonoBehaviour
         {
             Api.ReloadDeviceParams();
         }
-
+#if !UNITY_EDITOR
         Api.UpdateScreenParams();
-    }
-
-    void OnDisable()
-    {
-        // 🔻 Detener XR cuando se desactiva
-        if (XRGeneralSettings.Instance.Manager.isInitializationComplete)
-        {
-            XRGeneralSettings.Instance.Manager.StopSubsystems();
-            XRGeneralSettings.Instance.Manager.DeinitializeLoader();
-        }
+#endif
     }
 }

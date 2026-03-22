@@ -119,17 +119,21 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &454220091
+--- !u!1001 &311434866
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1259129458}
+    m_TransformParent: {fileID: 1953343106}
     m_Modifications:
     - target: {fileID: 171526, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
       propertyPath: m_Name
       value: CardboardReticlePointer
+      objectReference: {fileID: 0}
+    - target: {fileID: 171526, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 482300, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
       propertyPath: m_RootOrder
@@ -176,7 +180,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 723926960, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
-      propertyPath: ReticleInteractionLayerMask.m_Bits
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 723926960, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
@@ -192,10 +196,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
---- !u!4 &454220092 stripped
+--- !u!4 &311434867 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 482300, guid: 15fcd94adb15b48f7bb4a80622ae7046, type: 3}
-  m_PrefabInstance: {fileID: 454220091}
+  m_PrefabInstance: {fileID: 311434866}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &484719181
 GameObject:
@@ -310,7 +314,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &826866674
+--- !u!1 &1216408403
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,7 +322,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 826866675}
+  - component: {fileID: 1216408405}
+  - component: {fileID: 1216408404}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -326,23 +331,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &826866675
+--- !u!114 &1216408404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216408403}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7ddcd661535994fb52f10f9269c239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardboardSimulator
+  UseCardboardSimulator: 1
+  horizontalSpeed: 0.5
+  verticalSpeed: 0.5
+  rotationX: 0
+  rotationY: 0
+--- !u!4 &1216408405
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826866674}
+  m_GameObject: {fileID: 1216408403}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1259129458}
+  - {fileID: 1953343106}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1259129457
+--- !u!1 &1953343105
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,11 +372,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1259129458}
-  - component: {fileID: 1259129462}
-  - component: {fileID: 1259129461}
-  - component: {fileID: 1259129460}
-  - component: {fileID: 1259129459}
+  - component: {fileID: 1953343106}
+  - component: {fileID: 1953343110}
+  - component: {fileID: 1953343109}
+  - component: {fileID: 1953343108}
+  - component: {fileID: 1953343107}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -362,29 +384,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1259129458
+--- !u!4 &1953343106
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259129457}
+  m_GameObject: {fileID: 1953343105}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 454220092}
-  m_Father: {fileID: 826866675}
+  - {fileID: 311434867}
+  m_Father: {fileID: 1216408405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1259129459
+--- !u!114 &1953343107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259129457}
+  m_GameObject: {fileID: 1953343105}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
@@ -396,29 +418,29 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 0
---- !u!81 &1259129460
+--- !u!81 &1953343108
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259129457}
+  m_GameObject: {fileID: 1953343105}
   m_Enabled: 1
---- !u!124 &1259129461
+--- !u!124 &1953343109
 Behaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259129457}
+  m_GameObject: {fileID: 1953343105}
   m_Enabled: 1
---- !u!20 &1259129462
+--- !u!20 &1953343110
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259129457}
+  m_GameObject: {fileID: 1953343105}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -565,5 +587,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2081411904}
-  - {fileID: 826866675}
   - {fileID: 484719185}
+  - {fileID: 1216408405}
