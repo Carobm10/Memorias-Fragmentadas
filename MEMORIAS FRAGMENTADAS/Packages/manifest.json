@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.google.xr.cardboard": "file:C:/Users/LENOVO/Downloads/cardboard-xr-plugin-1.22.0/cardboard-xr-plugin-1.22.0",
+    "com.google.xr.cardboard": "file:C:/Users/Laura/Downloads/cardboard-xr-plugin-1.22.0/cardboard-xr-plugin-1.22.0",
     "com.unity.multiplayer.center": "1.0.1",
     "com.unity.ugui": "2.0.0",
     "com.unity.xr.interaction.toolkit": "3.3.1",
