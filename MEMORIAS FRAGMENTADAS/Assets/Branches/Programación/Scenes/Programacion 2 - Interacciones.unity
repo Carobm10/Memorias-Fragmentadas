@@ -348,6 +348,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: acostada
       objectReference: {fileID: 0}
+    - target: {fileID: 1583740849730217425, guid: 6fee459cec9738e4ab08f10aef655bff, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1583740849730217425, guid: 6fee459cec9738e4ab08f10aef655bff, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4047517347178011060, guid: 6fee459cec9738e4ab08f10aef655bff, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4484481
@@ -403,6 +411,14 @@ PrefabInstance:
     - target: {fileID: 4047517347178011060, guid: 6fee459cec9738e4ab08f10aef655bff, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341539325321829662, guid: 6fee459cec9738e4ab08f10aef655bff, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341539325321829662, guid: 6fee459cec9738e4ab08f10aef655bff, type: 3}
+      propertyPath: m_TagString
+      value: Interactivo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
