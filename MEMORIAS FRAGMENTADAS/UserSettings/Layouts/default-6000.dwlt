@@ -760,21 +760,7 @@ MonoBehaviour:
       m_Data: 28566
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 28464
-    - m_Data: 28466
-    - m_Data: 28468
-    - m_Data: 28470
-    - m_Data: 28472
-    - m_Data: 28474
-    - m_Data: 28476
-    - m_Data: 28478
-    - m_Data: 28480
-    - m_Data: 28482
-    - m_Data: 28484
-    - m_Data: 28486
-    - m_Data: 28488
-    - m_Data: 28490
-    - m_Data: 28492
+    - m_Data: 28736
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -807,21 +793,7 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 28464
-    - m_Data: 28466
-    - m_Data: 28468
-    - m_Data: 28470
-    - m_Data: 28472
-    - m_Data: 28474
-    - m_Data: 28476
-    - m_Data: 28478
-    - m_Data: 28480
-    - m_Data: 28482
-    - m_Data: 28484
-    - m_Data: 28486
-    - m_Data: 28488
-    - m_Data: 28490
-    - m_Data: 28492
+    - m_Data: 28736
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1662,7 +1634,7 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.210973, y: -0.062417865, z: 0.013495752, w: -0.9754134}
+    m_Target: {x: -0.24931271, y: 0.06820263, z: -0.017609358, w: -0.96586794}
     speed: 2
     m_Value: {x: -0.210973, y: -0.06241787, z: 0.013495752, w: -0.97541344}
   m_Size:
@@ -1746,7 +1718,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1100.5, y: 472.25}
+  m_TargetSize: {x: 880.4, y: 377.8}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1761,10 +1733,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -440.2
-    m_HBaseRangeMax: 440.2
-    m_VBaseRangeMin: -188.90001
-    m_VBaseRangeMax: 188.90001
+    m_HBaseRangeMin: -352.16
+    m_HBaseRangeMax: 352.16
+    m_VBaseRangeMin: -151.12
+    m_VBaseRangeMax: 151.12
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1797,7 +1769,7 @@ MonoBehaviour:
       width: 704.32
       height: 302.24
     m_MinimalGUI: 1
-  m_defaultScale: 0.99999994
+  m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1100.5, y: 498.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
