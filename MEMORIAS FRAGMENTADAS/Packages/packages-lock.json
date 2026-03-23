@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.google.xr.cardboard": {
-      "version": "file:C:/Users/LENOVO/Downloads/cardboard-xr-plugin-1.22.0/cardboard-xr-plugin-1.22.0",
+      "version": "file:com.google.xr.cardboard",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.unity.xr.management": "3.2.9",
         "com.unity.xr.legacyinputhelpers": "2.1.4"
