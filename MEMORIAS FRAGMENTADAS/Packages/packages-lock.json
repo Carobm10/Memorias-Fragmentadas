@@ -1,11 +1,7 @@
 {
   "dependencies": {
     "com.google.xr.cardboard": {
-<<<<<<< HEAD
-      "version": "file:C:/Users/Laura/Downloads/cardboard-xr-plugin-1.22.0/cardboard-xr-plugin-1.22.0",
-=======
       "version": "file:com.google.xr.cardboard",
->>>>>>> 403f92f1765af0d03a573a70a93605e66a58799f
       "depth": 0,
       "source": "embedded",
       "dependencies": {
