@@ -214,9 +214,6 @@ namespace Google.XR.Cardboard
         {
             switch (SystemInfo.graphicsDeviceType)
             {
-                case GraphicsDeviceType.OpenGLES2:
-                    CardboardUnity_setGraphicsApi(CardboardGraphicsApi.kOpenGlEs2);
-                    break;
                 case GraphicsDeviceType.OpenGLES3:
                     CardboardUnity_setGraphicsApi(CardboardGraphicsApi.kOpenGlEs3);
                     break;
