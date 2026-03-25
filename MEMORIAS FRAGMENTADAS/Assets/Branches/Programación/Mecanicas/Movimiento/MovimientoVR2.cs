@@ -6,6 +6,9 @@ public class MovimientoVR2 : MonoBehaviour
     public Transform camara;
     public float gravedad = -9.8f;
 
+    [Header("Animación")]
+    public Animator animator;
+
     [Header("Suavizado")]
     public float suavizado = 5f;
 
@@ -28,7 +31,7 @@ public class MovimientoVR2 : MonoBehaviour
 
     void Update()
     {
-        // INPUT
+        // INPUT (WASD)
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -40,7 +43,11 @@ public class MovimientoVR2 : MonoBehaviour
 
         Vector3 direccion = (forward * v + right * h).normalized;
 
-        // 🔥 SUAVIZADO DEL MOVIMIENTO
+        // 🔥 ANIMACIÓN
+        float movimientoInput = direccion.magnitude; // 0 o 1
+        animator.SetFloat("movement", movimientoInput);
+
+        // SUAVIZADO
         Vector3 velocidadObjetivo = direccion * velocidad;
         velocidadActual = Vector3.Lerp(velocidadActual, velocidadObjetivo, suavizado * Time.deltaTime);
 
@@ -57,7 +64,7 @@ public class MovimientoVR2 : MonoBehaviour
 
         controller.Move(movimientoFinal * Time.deltaTime);
 
-        // 🔥 HEAD BOB (efecto caminar)
+        // HEAD BOB
         if (direccion.magnitude > 0.1f && controller.isGrounded)
         {
             bobTiempo += Time.deltaTime * bobFrecuencia;
@@ -75,9 +82,6 @@ public class MovimientoVR2 : MonoBehaviour
             );
         }
 
-        // Ajuste del collider (VR)
-        Vector3 center = camara.localPosition;
-        center.y = controller.height / 2;
-        controller.center = center;
+        controller.center = new Vector3(0, controller.height / 2, 0);
     }
 }
