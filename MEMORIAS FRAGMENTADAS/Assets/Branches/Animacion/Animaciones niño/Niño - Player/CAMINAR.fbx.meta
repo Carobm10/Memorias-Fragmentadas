@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f092fb4d9da7408458e4352ddda1f44c
+guid: abf598ccd7c889f4ca7cbc40a456f6d3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -17,17 +17,12 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'EM3D_Base_NeckTwist02' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'EM3D_Base_L_Clavicle'
-      has translation animation that will be discarded.\n\t'EM3D_Base_R_Clavicle'
-      has translation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5

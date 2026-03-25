@@ -1,0 +1,1125 @@
+fileFormatVersion: 2
+guid: a88e99966f11edd4a8e0db611b92f5c9
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: EM3D_Base_Hip
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Thigh
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Thigh
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Calf
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Calf
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Foot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Foot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_Waist
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_Spine01
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_NeckTwist01
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Clavicle
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Clavicle
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Upperarm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Upperarm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Forearm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Forearm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_ToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_ToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Eye
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Eye
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_JawRoot
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Thumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Thumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Thumb3
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Index1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Index2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Index3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Mid1
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Mid2
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Mid3
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Ring1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Ring2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Ring3
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Pinky1
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Pinky2
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_L_Pinky3
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Thumb1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Thumb2
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Thumb3
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Index1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Index2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Index3
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Mid1
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Mid2
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Mid3
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Ring1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Ring2
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Ring3
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Pinky1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Pinky2
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_R_Pinky3
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: EM3D_Base_Spine02
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: HERMANA(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_BoneRoot
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_Hip
+      parentName: EM3D_Base_BoneRoot
+      position: {x: -0, y: 0, z: 0.9379198}
+      rotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: EM3D_Base_Pelvis
+      parentName: EM3D_Base_Hip
+      position: {x: 2.8928888e-17, y: 0, z: -0.0000000019413802}
+      rotation: {x: 0.14358068, y: -0.000000057340173, z: 0.0000014819423, w: 0.9896387}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: EM3D_Base_L_Thigh
+      parentName: EM3D_Base_Pelvis
+      position: {x: -0.08172953, y: -0.014546203, z: -0.00049791334}
+      rotation: {x: 0.0010845307, y: 0.11729203, z: 0.99308133, w: -0.005561512}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_L_Calf
+      parentName: EM3D_Base_L_Thigh
+      position: {x: -0.000011677742, y: 0.3966473, z: -0.000011463165}
+      rotation: {x: 0.0263698, y: -0.00032471045, z: 0.0049530123, w: 0.99964}
+      scale: {x: 1, y: 1.0000002, z: 0.99999994}
+    - name: EM3D_Base_L_CalfTwist01
+      parentName: EM3D_Base_L_Calf
+      position: {x: -0.0000000047683715, y: -0.000000076293944, z: 0.000000007152557}
+      rotation: {x: -0.0000070948145, y: 0.00000027471103, z: 0.000009131157, w: 1}
+      scale: {x: 1.000001, y: 1.0000006, z: 1.0000004}
+    - name: EM3D_Base_L_CalfTwist02
+      parentName: EM3D_Base_L_CalfTwist01
+      position: {x: 0.00027791024, y: 0.24284868, z: -0.0002548003}
+      rotation: {x: -0.0000013281768, y: -0.000012128932, z: 0.0000016583401, w: 1}
+      scale: {x: 0.99999994, y: 1.0000002, z: 0.9999998}
+    - name: EM3D_Base_L_KneeShareBone
+      parentName: EM3D_Base_L_Calf
+      position: {x: -0.0000000047683715, y: -0.000000076293944, z: 0.000000007152557}
+      rotation: {x: 0.0000050906087, y: -0.016082369, z: -0.0000067609353, w: 0.9998707}
+      scale: {x: 1.0000014, y: 1.0000011, z: 1.0000001}
+    - name: EM3D_Base_L_Foot
+      parentName: EM3D_Base_L_Calf
+      position: {x: 0.0013974571, y: 0.48549291, z: -0.00009023666}
+      rotation: {x: 0.608022, y: 0.036943715, z: -0.03646678, w: 0.7922214}
+      scale: {x: 1.0000012, y: 1.0000008, z: 1.0000002}
+    - name: EM3D_Base_L_ToeBaseShareBone
+      parentName: EM3D_Base_L_Foot
+      position: {x: -0.000000028610229, y: 0.11671503, z: -0.000000088214875}
+      rotation: {x: 0.1093903, y: -0.026449654, z: 0.0037901967, w: 0.9936397}
+      scale: {x: 0.99999994, y: 1, z: 0.9999997}
+    - name: EM3D_Base_L_ToeBase
+      parentName: EM3D_Base_L_Foot
+      position: {x: -0.000000028610229, y: 0.11671503, z: -0.000000088214875}
+      rotation: {x: 0.10939308, y: -0.0262793, z: 0.003828555, w: 0.99364376}
+      scale: {x: 0.99999994, y: 1.0000001, z: 0.99999964}
+    - name: EM3D_Base_L_IndexToe1
+      parentName: EM3D_Base_L_ToeBase
+      position: {x: -0.011823005, y: 0.01971424, z: 0.0022056175}
+      rotation: {x: -0.090991825, y: -0.044982743, z: -0.00037174197, w: 0.9948352}
+      scale: {x: 1.0000004, y: 0.99999994, z: 1.0000004}
+    - name: EM3D_Base_L_MidToe1
+      parentName: EM3D_Base_L_ToeBase
+      position: {x: -0.000000009536743, y: 0.018393707, z: 0.000000014305114}
+      rotation: {x: -0.096010685, y: -0.03873547, z: 0.010823079, w: 0.99456745}
+      scale: {x: 1.0000004, y: 1, z: 1.0000006}
+    - name: EM3D_Base_L_BigToe1
+      parentName: EM3D_Base_L_ToeBase
+      position: {x: -0.027190374, y: 0.017528018, z: 0.00108392}
+      rotation: {x: 0.02679606, y: 0.00078094174, z: -0.0026708175, w: 0.9996371}
+      scale: {x: 1.0000005, y: 0.99999994, z: 1.0000005}
+    - name: EM3D_Base_L_RingToe1
+      parentName: EM3D_Base_L_ToeBase
+      position: {x: 0.010444474, y: 0.010737381, z: -0.00018697738}
+      rotation: {x: -0.15508556, y: -0.05790785, z: 0.0049379687, w: 0.98619}
+      scale: {x: 1.0000005, y: 1.0000001, z: 1.0000005}
+    - name: EM3D_Base_L_PinkyToe1
+      parentName: EM3D_Base_L_ToeBase
+      position: {x: 0.020537866, y: 0.0029026794, z: -0.003033185}
+      rotation: {x: -0.086348, y: -0.03764005, z: 0.024726724, w: 0.99524665}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000002}
+    - name: EM3D_Base_L_ThighTwist01
+      parentName: EM3D_Base_L_Thigh
+      position: {x: 0.000000014305114, y: 0, z: -0.000000009536743}
+      rotation: {x: 0.00002301982, y: 0.0000013317912, z: -0.000007732683, w: 1}
+      scale: {x: 1.0000006, y: 1.0000005, z: 0.9999997}
+    - name: EM3D_Base_L_ThighTwist02
+      parentName: EM3D_Base_L_ThighTwist01
+      position: {x: -0.000008816719, y: 0.19849113, z: -0.00000772953}
+      rotation: {x: -0.00000013760835, y: 0.0000020144519, z: 0.00000010209377, w: 1}
+      scale: {x: 1.0000008, y: 1.0000002, z: 1.0000002}
+    - name: EM3D_Base_R_Thigh
+      parentName: EM3D_Base_Pelvis
+      position: {x: 0.081729494, y: -0.014544906, z: -0.0004983902}
+      rotation: {x: -0.0010859746, y: 0.11729767, z: 0.99308056, w: 0.0055768434}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
+    - name: EM3D_Base_R_Calf
+      parentName: EM3D_Base_R_Thigh
+      position: {x: 0.000011940002, y: 0.3966476, z: -0.000012822151}
+      rotation: {x: 0.026339222, y: 0.0003239955, z: -0.004946052, w: 0.9996408}
+      scale: {x: 1.0000001, y: 1.0000005, z: 1}
+    - name: EM3D_Base_R_CalfTwist01
+      parentName: EM3D_Base_R_Calf
+      position: {x: -0, y: -0.00000019073485, z: 0}
+      rotation: {x: -0.000007156281, y: -0.00000031609662, z: -0.0000092317605, w: 1}
+      scale: {x: 1.0000004, y: 1.0000002, z: 0.9999999}
+    - name: EM3D_Base_R_CalfTwist02
+      parentName: EM3D_Base_R_CalfTwist01
+      position: {x: -0.0002733898, y: 0.24284847, z: -0.00024066686}
+      rotation: {x: -0.0000014101348, y: 0.000012127417, z: -0.0000017050021, w: 1}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1}
+    - name: EM3D_Base_R_KneeShareBone
+      parentName: EM3D_Base_R_Calf
+      position: {x: -0, y: -0.00000019073485, z: 0}
+      rotation: {x: 0.0000050980584, y: 0.016082326, z: 0.000006609886, w: 0.99987066}
+      scale: {x: 1.0000007, y: 1.0000006, z: 0.99999976}
+    - name: EM3D_Base_R_Foot
+      parentName: EM3D_Base_R_Calf
+      position: {x: -0.0014132261, y: 0.4855024, z: -0.000049266815}
+      rotation: {x: 0.60804397, y: -0.036954768, z: 0.036454502, w: 0.7922045}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.99999994}
+    - name: EM3D_Base_R_ToeBase
+      parentName: EM3D_Base_R_Foot
+      position: {x: -0.0000001335144, y: 0.11671441, z: 0.00000025510786}
+      rotation: {x: 0.1093911, y: 0.026277196, z: -0.0038286834, w: 0.99364406}
+      scale: {x: 0.9999999, y: 1, z: 1}
+    - name: EM3D_Base_R_IndexToe1
+      parentName: EM3D_Base_R_ToeBase
+      position: {x: 0.011823196, y: 0.01971386, z: 0.0022053586}
+      rotation: {x: -0.09098734, y: 0.04498211, z: 0.0003741136, w: 0.99483556}
+      scale: {x: 1.0000002, y: 0.9999998, z: 0.9999998}
+    - name: EM3D_Base_R_MidToe1
+      parentName: EM3D_Base_R_ToeBase
+      position: {x: -0.000000028610229, y: 0.01839366, z: 0.0000000047683715}
+      rotation: {x: -0.0960086, y: 0.03874554, z: -0.010823023, w: 0.9945672}
+      scale: {x: 1.0000002, y: 0.99999994, z: 1}
+    - name: EM3D_Base_R_BigToe1
+      parentName: EM3D_Base_R_ToeBase
+      position: {x: 0.027190465, y: 0.01752778, z: 0.0010834241}
+      rotation: {x: 0.02679644, y: -0.0007810535, z: 0.0026689998, w: 0.99963707}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1}
+    - name: EM3D_Base_R_RingToe1
+      parentName: EM3D_Base_R_ToeBase
+      position: {x: -0.01037012, y: 0.010168285, z: 0.0006653738}
+      rotation: {x: -0.15508296, y: 0.057913356, z: -0.0049402723, w: 0.9861902}
+      scale: {x: 1.0000001, y: 0.9999998, z: 0.99999994}
+    - name: EM3D_Base_R_PinkyToe1
+      parentName: EM3D_Base_R_ToeBase
+      position: {x: -0.020451145, y: 0.0031110286, z: -0.0027783418}
+      rotation: {x: -0.0863414, y: 0.037650876, z: -0.0247264, w: 0.9952468}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: EM3D_Base_R_ToeBaseShareBone
+      parentName: EM3D_Base_R_Foot
+      position: {x: -0.00000014305114, y: 0.11671444, z: 0.00000026464463}
+      rotation: {x: 0.10938777, y: 0.026448106, z: -0.0037895767, w: 0.99364}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: EM3D_Base_R_ThighTwist01
+      parentName: EM3D_Base_R_Thigh
+      position: {x: -0.000000014305114, y: 0.000000076293944, z: -0.000000023841856}
+      rotation: {x: 0.000023012639, y: -0.0000013633979, z: 0.000007586422, w: 1}
+      scale: {x: 1, y: 1, z: 0.99999976}
+    - name: EM3D_Base_R_ThighTwist02
+      parentName: EM3D_Base_R_ThighTwist01
+      position: {x: 0.0000038051605, y: 0.1984932, z: -0.000009016991}
+      rotation: {x: -0.00000007799462, y: -0.0000020138107, z: -0.000000049881272, w: 1}
+      scale: {x: 0.9999997, y: 0.99999934, z: 1.0000001}
+    - name: EM3D_Base_Waist
+      parentName: EM3D_Base_Hip
+      position: {x: -0.0000000563489, y: 0.05473938, z: 0.015586823}
+      rotation: {x: 0.14694035, y: -0.0000017188704, z: 0.0000130714625, w: 0.9891454}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: EM3D_Base_Spine01
+      parentName: EM3D_Base_Waist
+      position: {x: -4.8894434e-11, y: 0.034342345, z: 0.000000038146972}
+      rotation: {x: -0.2094317, y: 0.000033374698, z: 0.00012687081, w: 0.97782326}
+      scale: {x: 1, y: 0.9999999, z: 1.0000001}
+    - name: EM3D_Base_Spine02
+      parentName: EM3D_Base_Spine01
+      position: {x: -0.000000034030528, y: 0.12427177, z: 0.0000010299682}
+      rotation: {x: -0.04760938, y: 0.000006079211, z: -0.00015118648, w: 0.9988661}
+      scale: {x: 1, y: 1, z: 0.9999999}
+    - name: EM3D_Base_R_RibsTwist
+      parentName: EM3D_Base_Spine02
+      position: {x: 0.0798715, y: 0.023963852, z: 0.09472555}
+      rotation: {x: 0.000010515671, y: 0.62495315, z: 0.78066224, w: 0.000008809144}
+      scale: {x: 1.0000005, y: 1.0000005, z: 1.0000007}
+    - name: EM3D_Base_R_Breast
+      parentName: EM3D_Base_R_RibsTwist
+      position: {x: 0.000000166893, y: 0.019999694, z: 0.0000007629394}
+      rotation: {x: -0.000000029802319, y: -5.6388665e-11, z: -1.0459188e-11, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 0.9999998}
+    - name: EM3D_Base_L_RibsTwist
+      parentName: EM3D_Base_Spine02
+      position: {x: -0.079992995, y: 0.023566512, z: 0.0948105}
+      rotation: {x: -0.0000022400325, y: 0.62495315, z: 0.78066224, w: -0.0000007187508}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1.0000007}
+    - name: EM3D_Base_L_Breast
+      parentName: EM3D_Base_L_RibsTwist
+      position: {x: -0.00000016212464, y: 0.019999666, z: 0.00000061035155}
+      rotation: {x: -0.000000029802319, y: 2.8421706e-14, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_NeckTwist01
+      parentName: EM3D_Base_Spine02
+      position: {x: 0.0000000012107193, y: 0.20017135, z: -0.0000017356872}
+      rotation: {x: 0.14246447, y: -0.00016449808, z: -0.00015026574, w: 0.9898}
+      scale: {x: 1.0000001, y: 1.0000005, z: 1}
+    - name: EM3D_Base_NeckTwist02
+      parentName: EM3D_Base_NeckTwist01
+      position: {x: 0.00000018570572, y: 0.039772492, z: 0.00024763108}
+      rotation: {x: 0.0046393233, y: -0.0000108597005, z: -0.000031406886, w: 0.9999892}
+      scale: {x: 0.99999994, y: 0.9999999, z: 1}
+    - name: EM3D_Base_Head
+      parentName: EM3D_Base_NeckTwist02
+      position: {x: 5.587935e-10, y: 0.035054777, z: -0.00000019073485}
+      rotation: {x: -0.036436073, y: 0.00019222128, z: 0.00017075487, w: 0.999336}
+      scale: {x: 0.99999994, y: 1.0000001, z: 0.9999994}
+    - name: EM3D_Base_FacialBone
+      parentName: EM3D_Base_Head
+      position: {x: 1.1525116e-10, y: 0.00000030517577, z: 0}
+      rotation: {x: -0.49999994, y: 0.50000006, z: 0.50000006, w: -0.49999997}
+      scale: {x: 1.0000001, y: 1, z: 0.99999994}
+    - name: EM3D_Base_UpperJaw
+      parentName: EM3D_Base_FacialBone
+      position: {x: -0.029673003, y: 0.06734721, z: -0.000003034945}
+      rotation: {x: 0.000027720047, y: 0.000030705392, z: -0.70711195, w: 0.7071017}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+    - name: EM3D_Base_Teeth01
+      parentName: EM3D_Base_UpperJaw
+      position: {x: -0.0075612115, y: -0.0052343747, z: 0.000018618055}
+      rotation: {x: 1, y: 0.000011384342, z: 0.00003408495, w: 0.000011650208}
+      scale: {x: 1.000001, y: 1.0000001, z: 1.0000011}
+    - name: EM3D_Base_L_Eye
+      parentName: EM3D_Base_FacialBone
+      position: {x: -0.07430847, y: 0.07379815, z: 0.04092586}
+      rotation: {x: 0.70715255, y: -0.00005429983, z: -0.7070611, w: 0.000049376235}
+      scale: {x: 1, y: 1.0000007, z: 1.0000005}
+    - name: EM3D_Base_R_Eye
+      parentName: EM3D_Base_FacialBone
+      position: {x: -0.074241176, y: 0.073764965, z: -0.041159157}
+      rotation: {x: 0.707061, y: 0.00004923343, z: -0.7071526, w: -0.000054176337}
+      scale: {x: 1.0000001, y: 1.000001, z: 1.0000006}
+    - name: EM3D_Base_JawRoot
+      parentName: EM3D_Base_FacialBone
+      position: {x: -0.015930176, y: 0.033187423, z: 0.0000015757}
+      rotation: {x: -0.000060029608, y: 0.000043092583, z: -0.7070929, w: 0.7071208}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
+    - name: EM3D_Base_Tongue01
+      parentName: EM3D_Base_JawRoot
+      position: {x: -0.024128715, y: 0.009533997, z: -0.000000021532177}
+      rotation: {x: -0.000045060035, y: -0.0001336339, z: 0.021712054, w: -0.9997643}
+      scale: {x: 1.0000006, y: 1.0000015, z: 1.0000007}
+    - name: EM3D_Base_Tongue02
+      parentName: EM3D_Base_Tongue01
+      position: {x: -0.011141595, y: 0.00000015258789, z: 0.0000000014342367}
+      rotation: {x: 0.000026263293, y: 0.000005030189, z: -0.104592025, w: 0.9945152}
+      scale: {x: 1.0000005, y: 1.0000011, z: 1.0000007}
+    - name: EM3D_Base_Tongue03
+      parentName: EM3D_Base_Tongue02
+      position: {x: -0.021817684, y: -0.000040893552, z: 0.0000024164874}
+      rotation: {x: -0.0000017136335, y: -0.000000007450581, z: 0.0000010952353, w: 1}
+      scale: {x: 0.9999997, y: 0.9999997, z: 0.9999997}
+    - name: EM3D_Base_Teeth02
+      parentName: EM3D_Base_JawRoot
+      position: {x: -0.028354878, y: 0.008869324, z: 0.00002242485}
+      rotation: {x: 1, y: 0.0000024764315, z: -0.000097057775, w: -0.00008100138}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000002}
+    - name: EM3D_Base_R_Clavicle
+      parentName: EM3D_Base_Spine02
+      position: {x: 0.04367016, y: 0.15246482, z: -0.0018946265}
+      rotation: {x: -0.010824591, y: 0.16781908, z: -0.706158, w: 0.687794}
+      scale: {x: 1.0000012, y: 1.000001, z: 1.0000004}
+    - name: EM3D_Base_R_Upperarm
+      parentName: EM3D_Base_R_Clavicle
+      position: {x: -0.0006086731, y: 0.09697175, z: -0.000035872457}
+      rotation: {x: 0.122714385, y: 0.006849443, z: -0.004069564, w: 0.99241006}
+      scale: {x: 0.9999997, y: 0.99999994, z: 0.99999964}
+    - name: EM3D_Base_R_Forearm
+      parentName: EM3D_Base_R_Upperarm
+      position: {x: -0.00019020081, y: 0.24059898, z: 0.00048086166}
+      rotation: {x: -0.006166259, y: -0.0008213665, z: 0.0016298705, w: 0.9999793}
+      scale: {x: 1, y: 0.9999999, z: 1}
+    - name: EM3D_Base_R_ForearmTwist01
+      parentName: EM3D_Base_R_Forearm
+      position: {x: -0, y: 0.000000038146972, z: 0.0000000047683715}
+      rotation: {x: -0.00000016624102, y: 0.0000034591637, z: -0.0000063379766, w: 1}
+      scale: {x: 1.0000004, y: 1.0000006, z: 1}
+    - name: EM3D_Base_R_ForearmTwist02
+      parentName: EM3D_Base_R_ForearmTwist01
+      position: {x: -0.0000008392334, y: 0.107019216, z: -0.000000538826}
+      rotation: {x: 0.000004645881, y: 0.000000038969564, z: 0.00000602805, w: 1}
+      scale: {x: 1.000001, y: 1.0000006, z: 1.0000005}
+    - name: EM3D_Base_R_ElbowShareBone
+      parentName: EM3D_Base_R_Forearm
+      position: {x: -0, y: 0.000000038146972, z: 0.0000000047683715}
+      rotation: {x: -0.00046706508, y: 0.003092039, z: -0.0003266977, w: 0.99999505}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1.0000002}
+    - name: EM3D_Base_R_Hand
+      parentName: EM3D_Base_R_Forearm
+      position: {x: 0.00019012451, y: 0.21359916, z: -0.00047732829}
+      rotation: {x: -0.03900673, y: -0.0022727787, z: -0.019529551, w: 0.99904555}
+      scale: {x: 1.0000007, y: 1.0000011, z: 1}
+    - name: EM3D_Base_R_Thumb1
+      parentName: EM3D_Base_R_Hand
+      position: {x: 0.0048724366, y: 0.014000854, z: 0.022088382}
+      rotation: {x: -0.4261843, y: 0.099919744, z: 0.08487883, w: -0.8950858}
+      scale: {x: 1.000001, y: 1.0000004, z: 1.0000002}
+    - name: EM3D_Base_R_Thumb2
+      parentName: EM3D_Base_R_Thumb1
+      position: {x: -0.0000003814697, y: 0.048874386, z: -0.00000020980835}
+      rotation: {x: -0.02994419, y: -0.0059416103, z: 0.013737307, w: 0.9994396}
+      scale: {x: 0.9999996, y: 0.9999992, z: 1.0000002}
+    - name: EM3D_Base_R_Thumb3
+      parentName: EM3D_Base_R_Thumb2
+      position: {x: -0.00000030517577, y: 0.022904241, z: -0.000000057220458}
+      rotation: {x: 0.0228663, y: 0.0028987306, z: -0.06761331, w: -0.99744534}
+      scale: {x: 0.99999994, y: 1.0000004, z: 0.99999946}
+    - name: EM3D_Base_R_Pinky1
+      parentName: EM3D_Base_R_Hand
+      position: {x: 0.002243881, y: 0.07415443, z: -0.014122028}
+      rotation: {x: 0.060265154, y: 0.0037443833, z: 0.0019259818, w: 0.99817353}
+      scale: {x: 1.0000006, y: 1.0000005, z: 1.0000002}
+    - name: EM3D_Base_R_Pinky2
+      parentName: EM3D_Base_R_Pinky1
+      position: {x: 0.000060577393, y: 0.02457527, z: 0.00013354301}
+      rotation: {x: 0.022034977, y: 0.0032358856, z: 0.034396548, w: -0.9991601}
+      scale: {x: 1.0000005, y: 1, z: 0.99999976}
+    - name: EM3D_Base_R_Pinky3
+      parentName: EM3D_Base_R_Pinky2
+      position: {x: -0.00000022888183, y: 0.01373886, z: -0.000000009536743}
+      rotation: {x: 0.016934052, y: 0.002006806, z: -0.06068863, w: -0.9980111}
+      scale: {x: 1, y: 1.0000001, z: 1.0000004}
+    - name: EM3D_Base_R_Index1
+      parentName: EM3D_Base_R_Hand
+      position: {x: -0.00246521, y: 0.074639246, z: 0.03141934}
+      rotation: {x: 0.03106429, y: -0.0004145402, z: 0.002094557, w: 0.9995152}
+      scale: {x: 1.000001, y: 1.0000005, z: 1.0000004}
+    - name: EM3D_Base_R_Index2
+      parentName: EM3D_Base_R_Index1
+      position: {x: 0.00050674437, y: 0.030971382, z: -0.00011478662}
+      rotation: {x: -0.014912749, y: -0.004888027, z: 0.024494078, w: -0.99957687}
+      scale: {x: 0.9999996, y: 0.9999998, z: 0.9999996}
+    - name: EM3D_Base_R_Index3
+      parentName: EM3D_Base_R_Index2
+      position: {x: 0.00008590698, y: 0.020097842, z: -0.000024528503}
+      rotation: {x: 0.0010446811, y: -0.000570324, z: -0.0362392, w: -0.9993425}
+      scale: {x: 0.99999994, y: 0.9999996, z: 1.0000001}
+    - name: EM3D_Base_R_Mid1
+      parentName: EM3D_Base_R_Hand
+      position: {x: -0.0039611817, y: 0.07535408, z: 0.014297547}
+      rotation: {x: 0.04990882, y: -0.00009679791, z: 0.0075964443, w: 0.99872494}
+      scale: {x: 1.0000007, y: 1.0000006, z: 1.0000002}
+    - name: EM3D_Base_R_Mid2
+      parentName: EM3D_Base_R_Mid1
+      position: {x: 0.0004344177, y: 0.034797486, z: -0.00011249065}
+      rotation: {x: 0.0012835893, y: -0.0031764777, z: 0.014169662, w: -0.9998938}
+      scale: {x: 0.99999934, y: 0.9999996, z: 0.99999976}
+    - name: EM3D_Base_R_Mid3
+      parentName: EM3D_Base_R_Mid2
+      position: {x: 0.00006759643, y: 0.022007281, z: 0.00004573345}
+      rotation: {x: -0.004857598, y: 0.00013381516, z: 0.0041420083, w: 0.9999797}
+      scale: {x: 1.0000004, y: 0.9999998, z: 1.0000002}
+    - name: EM3D_Base_R_Ring1
+      parentName: EM3D_Base_R_Hand
+      position: {x: -0.00012687682, y: 0.07392456, z: -0.00024415491}
+      rotation: {x: 0.047197018, y: 0.003426795, z: 0.020061031, w: 0.99867827}
+      scale: {x: 1.0000007, y: 1.0000002, z: 1.0000001}
+    - name: EM3D_Base_R_Ring2
+      parentName: EM3D_Base_R_Ring1
+      position: {x: 0.00051849365, y: 0.032942846, z: -0.00006376743}
+      rotation: {x: 0.019527588, y: 0.0002894994, z: 0.036082216, w: -0.999158}
+      scale: {x: 0.9999998, y: 0.99999934, z: 1}
+    - name: EM3D_Base_R_Ring3
+      parentName: EM3D_Base_R_Ring2
+      position: {x: 0.00000030517577, y: 0.019525107, z: -0.00000024318695}
+      rotation: {x: 0.0051239794, y: 0.00047635566, z: -0.03862567, w: -0.9992405}
+      scale: {x: 0.9999991, y: 1.0000004, z: 1.0000001}
+    - name: EM3D_Base_R_UpperarmTwist01
+      parentName: EM3D_Base_R_Upperarm
+      position: {x: 0.00000015258789, y: -0.000000038146972, z: -0.000000014305114}
+      rotation: {x: 0.00001810491, y: -0.007951679, z: 0.0000031650998, w: 0.99996847}
+      scale: {x: 1.0000007, y: 1.0000006, z: 0.99999976}
+    - name: EM3D_Base_R_UpperarmTwist02
+      parentName: EM3D_Base_R_UpperarmTwist01
+      position: {x: -0.00009452819, y: 0.12029918, z: 0.00024033069}
+      rotation: {x: 0.000015610172, y: 0.007941498, z: -0.0000047856374, w: 0.9999685}
+      scale: {x: 1.0000004, y: 1.0000005, z: 1.0000004}
+    - name: EM3D_Base_L_Clavicle
+      parentName: EM3D_Base_Spine02
+      position: {x: -0.043672577, y: 0.15246262, z: -0.0018948745}
+      rotation: {x: -0.010746871, y: -0.16793136, z: 0.7061836, w: 0.68774134}
+      scale: {x: 1.0000008, y: 1.0000006, z: 1}
+    - name: EM3D_Base_L_Upperarm
+      parentName: EM3D_Base_L_Clavicle
+      position: {x: 0.00060684205, y: 0.09698055, z: -0.000035789013}
+      rotation: {x: 0.12272822, y: -0.0067956215, z: 0.004014556, w: 0.99240893}
+      scale: {x: 0.9999997, y: 0.99999976, z: 0.99999994}
+    - name: EM3D_Base_L_Forearm
+      parentName: EM3D_Base_L_Upperarm
+      position: {x: 0.00018836974, y: 0.24059916, z: 0.00048069953}
+      rotation: {x: -0.006162566, y: 0.0008958838, z: -0.0016325972, w: 0.9999793}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000001}
+    - name: EM3D_Base_L_ForearmTwist01
+      parentName: EM3D_Base_L_Forearm
+      position: {x: 0.00000015258789, y: 0.000000038146972, z: 0.000000009536743}
+      rotation: {x: -0.00000012107189, y: -0.0000033153908, z: 0.0000062772406, w: 1}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1}
+    - name: EM3D_Base_L_ForearmTwist02
+      parentName: EM3D_Base_L_ForearmTwist01
+      position: {x: 0.0000020599364, y: 0.107019804, z: -0.000000023841856}
+      rotation: {x: 0.000004417318, y: 0.00008625445, z: -0.0000059491094, w: 1}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1}
+    - name: EM3D_Base_L_ElbowShareBone
+      parentName: EM3D_Base_L_Forearm
+      position: {x: 0.00000015258789, y: 0.000000038146972, z: 0.000000009536743}
+      rotation: {x: -0.00046599878, y: -0.0030919749, z: 0.0003262176, w: 0.9999951}
+      scale: {x: 1.0000004, y: 1.0000007, z: 0.9999999}
+    - name: EM3D_Base_L_Hand
+      parentName: EM3D_Base_L_Forearm
+      position: {x: -0.00018821716, y: 0.21359746, z: -0.00047705648}
+      rotation: {x: -0.03903695, y: 0.002285558, z: 0.01956353, w: 0.99904364}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.9999999}
+    - name: EM3D_Base_L_Thumb1
+      parentName: EM3D_Base_L_Hand
+      position: {x: -0.004871826, y: 0.013999824, z: 0.022089202}
+      rotation: {x: 0.42624605, y: 0.09987562, z: 0.0848949, w: 0.8950598}
+      scale: {x: 1, y: 0.99999994, z: 0.9999998}
+    - name: EM3D_Base_L_Thumb2
+      parentName: EM3D_Base_L_Thumb1
+      position: {x: 0.0000005340576, y: 0.04887472, z: -0.00000057220456}
+      rotation: {x: -0.0299444, y: 0.0059318426, z: -0.013744083, w: 0.99943954}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1}
+    - name: EM3D_Base_L_Thumb3
+      parentName: EM3D_Base_L_Thumb2
+      position: {x: 0.00000030517577, y: 0.02290939, z: -0.000000019073486}
+      rotation: {x: -0.022873389, y: 0.0028538555, z: -0.067611024, w: 0.9974455}
+      scale: {x: 1, y: 1.0000002, z: 0.9999999}
+    - name: EM3D_Base_L_Pinky1
+      parentName: EM3D_Base_L_Hand
+      position: {x: -0.0022377777, y: 0.07415588, z: -0.014117756}
+      rotation: {x: 0.060294494, y: -0.003755378, z: -0.0019631311, w: 0.9981716}
+      scale: {x: 1.0000004, y: 1.0000005, z: 0.9999999}
+    - name: EM3D_Base_L_Pinky2
+      parentName: EM3D_Base_L_Pinky1
+      position: {x: -0.00004814148, y: 0.024579162, z: 0.00013097763}
+      rotation: {x: -0.021935148, y: 0.0032203344, z: 0.034235343, w: 0.99916786}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: EM3D_Base_L_Pinky3
+      parentName: EM3D_Base_L_Pinky2
+      position: {x: -0, y: 0.013738937, z: 0.0000000047683715}
+      rotation: {x: -0.016892942, y: 0.0019834521, z: -0.060441326, w: 0.99802685}
+      scale: {x: 1, y: 0.9999998, z: 0.9999999}
+    - name: EM3D_Base_L_Index1
+      parentName: EM3D_Base_L_Hand
+      position: {x: 0.0024698637, y: 0.07463772, z: 0.031423923}
+      rotation: {x: 0.03109542, y: 0.00040637166, z: -0.0021419404, w: 0.99951404}
+      scale: {x: 0.9999998, y: 1, z: 0.99999964}
+    - name: EM3D_Base_L_Index2
+      parentName: EM3D_Base_L_Index1
+      position: {x: -0.00050559995, y: 0.030971412, z: -0.00011479616}
+      rotation: {x: 0.0142541155, y: -0.005131289, z: 0.02662846, w: 0.9995306}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000004}
+    - name: EM3D_Base_L_Index3
+      parentName: EM3D_Base_L_Index2
+      position: {x: -0.00014007567, y: 0.020097421, z: 0.0000023126602}
+      rotation: {x: -0.0018260645, y: -0.0003684996, z: -0.035263706, w: 0.9993763}
+      scale: {x: 1, y: 0.9999996, z: 1.0000001}
+    - name: EM3D_Base_L_Mid1
+      parentName: EM3D_Base_L_Hand
+      position: {x: 0.0039673615, y: 0.075353086, z: 0.014302144}
+      rotation: {x: 0.04994559, y: 0.00009154388, z: -0.0076302197, w: 0.9987228}
+      scale: {x: 1, y: 1.0000004, z: 0.9999999}
+    - name: EM3D_Base_L_Mid2
+      parentName: EM3D_Base_L_Mid1
+      position: {x: -0.00043395994, y: 0.03479779, z: -0.00011284351}
+      rotation: {x: -0.0013169943, y: -0.0031766084, z: 0.014166055, w: 0.9998937}
+      scale: {x: 1.0000004, y: 1, z: 1}
+    - name: EM3D_Base_L_Mid3
+      parentName: EM3D_Base_L_Mid2
+      position: {x: -0.00006736755, y: 0.022006959, z: 0.000046925543}
+      rotation: {x: -0.0039467826, y: -0.00024551537, z: -0.007634308, w: 0.9999631}
+      scale: {x: 0.99999994, y: 1, z: 1.0000001}
+    - name: EM3D_Base_L_Ring1
+      parentName: EM3D_Base_L_Hand
+      position: {x: 0.00013298035, y: 0.07392459, z: -0.00023979186}
+      rotation: {x: 0.047228057, y: -0.0034274964, z: -0.020091174, w: 0.9986762}
+      scale: {x: 1.0000002, y: 1.0000005, z: 0.99999964}
+    - name: EM3D_Base_L_Ring2
+      parentName: EM3D_Base_L_Ring1
+      position: {x: -0.00051956176, y: 0.03294376, z: -0.00006381988}
+      rotation: {x: -0.019531671, y: 0.00029313983, z: 0.036084235, w: 0.99915785}
+      scale: {x: 1.0000004, y: 0.99999994, z: 1.0000004}
+    - name: EM3D_Base_L_Ring3
+      parentName: EM3D_Base_L_Ring2
+      position: {x: -0.00000061035155, y: 0.019525794, z: -0.00000014305114}
+      rotation: {x: -0.0051197438, y: 0.0004768269, z: -0.038631823, w: 0.9992403}
+      scale: {x: 0.9999996, y: 0.9999998, z: 1.0000001}
+    - name: EM3D_Base_L_UpperarmTwist01
+      parentName: EM3D_Base_L_Upperarm
+      position: {x: 0.00000015258789, y: -0.00000030517577, z: -0.000000028610229}
+      rotation: {x: 0.000017918643, y: 0.007954491, z: -0.00000328198, w: 0.99996835}
+      scale: {x: 1.000001, y: 1.0000007, z: 0.9999999}
+    - name: EM3D_Base_L_UpperarmTwist02
+      parentName: EM3D_Base_L_UpperarmTwist01
+      position: {x: 0.00009437561, y: 0.12029911, z: 0.00024036407}
+      rotation: {x: 0.000015504147, y: -0.007944341, z: 0.0000044114977, w: 0.9999685}
+      scale: {x: 0.9999997, y: 0.99999994, z: 0.9999999}
+    - name: EM3D_Base_Tongue
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_Body
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_Teeth
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_Eye
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_TearLine
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EM3D_Base_EyeOEM3Dlusion
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Female_Flat
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bra
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Underwear_Bottoms
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Space_bun_L
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Space_bun_R
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Air_bangs
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Double_high
+      parentName: HERMANA(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 37bba11787e10344da9d2e7002fa475d, type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

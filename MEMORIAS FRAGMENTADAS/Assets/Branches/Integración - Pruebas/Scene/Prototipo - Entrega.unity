@@ -689,6 +689,7 @@ GameObject:
   - component: {fileID: 225037001}
   - component: {fileID: 225037003}
   - component: {fileID: 225037002}
+  - component: {fileID: 225037004}
   m_Layer: 0
   m_Name: puerta_uno_armario1
   m_TagString: Untagged
@@ -736,7 +737,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+  - {fileID: 2100000, guid: dcaa5b8be06fb834b9709eb9ebc146ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -768,6 +769,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225037000}
   m_Mesh: {fileID: 7821755882039214528, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+--- !u!65 &225037004
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225037000}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.07337295, y: 0.14954305, z: 0.04474083}
+  m_Center: {x: -0.03831673, y: -0.026551615, z: -0.021366963}
 --- !u!1 &415905933
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +801,7 @@ GameObject:
   - component: {fileID: 415905934}
   - component: {fileID: 415905936}
   - component: {fileID: 415905935}
+  - component: {fileID: 415905937}
   m_Layer: 0
   m_Name: "pasted__estructura_mesa_noche_ni\xF1o"
   m_TagString: Untagged
@@ -858,6 +881,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 415905933}
   m_Mesh: {fileID: -6191314415708136523, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+--- !u!65 &415905937
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415905933}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.06004654, y: 0.1326608, z: 0.1010907}
+  m_Center: {x: -0.0000001238659, y: 0.0000000037252903, z: 0.082716286}
 --- !u!1 &417881314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1614,7 @@ GameObject:
   - component: {fileID: 721846666}
   - component: {fileID: 721846668}
   - component: {fileID: 721846667}
+  - component: {fileID: 721846669}
   m_Layer: 0
   m_Name: "estructura_mesa_noche_ni\xF1o"
   m_TagString: Untagged
@@ -1649,6 +1694,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721846665}
   m_Mesh: {fileID: 7228711583943077529, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+--- !u!65 &721846669
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721846665}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.06004654, y: 0.1326608, z: 0.1010907}
+  m_Center: {x: -0.0000001238659, y: 0.0000000037252903, z: 0.00000004656613}
 --- !u!1 &776729071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1995,7 @@ GameObject:
   m_Component:
   - component: {fileID: 835643065}
   m_Layer: 0
-  m_Name: mujer
+  m_Name: mujer_referencia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2331,6 +2397,7 @@ GameObject:
   - component: {fileID: 878879969}
   - component: {fileID: 878879971}
   - component: {fileID: 878879970}
+  - component: {fileID: 878879972}
   m_Layer: 0
   m_Name: parte_arriba_armario1
   m_TagString: Untagged
@@ -2410,6 +2477,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 878879968}
   m_Mesh: {fileID: 1796428700411457813, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+--- !u!65 &878879972
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878879968}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.10672607, y: 0.32765868, z: 0.21578124}
+  m_Center: {x: -0.000000048428774, y: 0, z: 0}
 --- !u!1 &886337038
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,7 +3582,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+  - {fileID: 2100000, guid: dcaa5b8be06fb834b9709eb9ebc146ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4375,6 +4463,7 @@ GameObject:
   - component: {fileID: 1439279023}
   - component: {fileID: 1439279022}
   - component: {fileID: 1439279021}
+  - component: {fileID: 1439279024}
   m_Layer: 0
   m_Name: triciclo
   m_TagString: Untagged
@@ -4454,6 +4543,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1129335154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1439279024
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439279020}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.092601225, y: 0.13094093, z: 0.13168463}
+  m_Center: {x: -0.00040908717, y: 2.7071118e-27, z: -0.00000047683716}
 --- !u!1 &1454816968
 GameObject:
   m_ObjectHideFlags: 0
@@ -5326,6 +5436,7 @@ GameObject:
   - component: {fileID: 1651769519}
   - component: {fileID: 1651769521}
   - component: {fileID: 1651769520}
+  - component: {fileID: 1651769522}
   m_Layer: 0
   m_Name: puerta_dos_armario1
   m_TagString: Untagged
@@ -5373,7 +5484,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+  - {fileID: 2100000, guid: dcaa5b8be06fb834b9709eb9ebc146ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5405,6 +5516,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651769518}
   m_Mesh: {fileID: 6318852210378863408, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+--- !u!65 &1651769522
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651769518}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01427025, y: 0.14954303, z: 0.09107735}
+  m_Center: {x: -0.0033603073, y: 0, z: 0.048365705}
 --- !u!1 &1684472045
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,7 +6668,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+  - {fileID: 2100000, guid: dcaa5b8be06fb834b9709eb9ebc146ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6626,7 +6758,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7791486788655378091, guid: 6a9d0be611fdb4148805841c41e9dc38, type: 3}
+  - {fileID: 2100000, guid: dcaa5b8be06fb834b9709eb9ebc146ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
