@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scenes/HelloCardboard.unity
     guid: 145a2a45d7bc746b19cb68410368bf96
+  - enabled: 1
+    path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/MEN\xDA.unity"
+    guid: 3995952cc7bb0144daa8063f3422cccb
+  - enabled: 1
+    path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/CINEMATICA 1.unity"
+    guid: 1750c3cecec67c14985f3cb00b9d53f1
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e891914dce1eda14f9bd5c100b09c98d, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d9d9282a0e357ff44b3c48fc491b5475, type: 2}
