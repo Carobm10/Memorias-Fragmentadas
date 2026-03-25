@@ -9,6 +9,10 @@ public class MovimientoVR2 : MonoBehaviour
     [Header("Animación")]
     public Animator animator;
 
+    [Header("Rotación visual")]
+    public Transform modelo; // el objeto que tiene el Animator
+    public float velocidadRotacion = 10f;
+
     [Header("Suavizado")]
     public float suavizado = 5f;
 
@@ -50,6 +54,20 @@ public class MovimientoVR2 : MonoBehaviour
         // SUAVIZADO
         Vector3 velocidadObjetivo = direccion * velocidad;
         velocidadActual = Vector3.Lerp(velocidadActual, velocidadObjetivo, suavizado * Time.deltaTime);
+
+        // ROTAR MODELO SEGÚN CÁMARA
+        Vector3 direccionCamara = camara.forward;
+        direccionCamara.y = 0;
+
+        if (direccionCamara.sqrMagnitude > 0.01f)
+        {
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionCamara);
+            modelo.rotation = Quaternion.Slerp(
+                modelo.rotation,
+                rotacionObjetivo,
+                velocidadRotacion * Time.deltaTime
+            );
+        }
 
         // GRAVEDAD
         if (controller.isGrounded && velocidadY < 0)
