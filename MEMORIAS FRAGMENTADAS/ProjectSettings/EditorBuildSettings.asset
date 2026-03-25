@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: "Assets/Branches/Programaci\xF3n/Scenes/Programacion 2 - Interacciones.unity"
     guid: eeb82b44f1a88bf44ad8a9f3ca5773f5
   - enabled: 0
@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/CINEMATICA 1.unity"
     guid: 1750c3cecec67c14985f3cb00b9d53f1
+  - enabled: 1
+    path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/Prototipo - Entrega.unity"
+    guid: 165a162c18720c44fada734dc7854c8f
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e891914dce1eda14f9bd5c100b09c98d, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d9d9282a0e357ff44b3c48fc491b5475, type: 2}

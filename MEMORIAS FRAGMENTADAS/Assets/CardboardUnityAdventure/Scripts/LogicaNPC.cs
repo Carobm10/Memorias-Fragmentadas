@@ -21,7 +21,11 @@ public class LogicaNPC : MonoBehaviour
     public Button botonOpcion3;
 
     [Header("Configuración")]
-    public KeyCode teclaHablar = KeyCode.X;
+    public KeyCode teclaHablarTeclado = KeyCode.X;
+    public KeyCode teclaHablarJoystick = KeyCode.JoystickButton3;   // X
+    public KeyCode teclaOpcion1 = KeyCode.JoystickButton11;         // A
+    public KeyCode teclaOpcion2 = KeyCode.JoystickButton7;          // B
+    public KeyCode teclaOpcion3 = KeyCode.JoystickButton4;          // Y
     public float velocidadEscritura = 0.03f;
 
     private bool jugadorCerca = false;
@@ -57,9 +61,30 @@ public class LogicaNPC : MonoBehaviour
 
     void Update()
     {
-        if (jugadorCerca && !dialogoActivo && Input.GetKeyDown(teclaHablar))
+        // Mostrar diálogo al estar cerca y oprimir X
+        if (jugadorCerca && !dialogoActivo &&
+            (Input.GetKeyDown(teclaHablarTeclado) || Input.GetKeyDown(teclaHablarJoystick)))
         {
             IniciarDialogo();
+        }
+
+        // Elegir opciones con joystick cuando el diálogo está activo
+        if (dialogoActivo && !escribiendo)
+        {
+            if (botonOpcion1.gameObject.activeSelf && Input.GetKeyDown(teclaOpcion1))
+            {
+                Opcion1();
+            }
+
+            if (botonOpcion2.gameObject.activeSelf && Input.GetKeyDown(teclaOpcion2))
+            {
+                Opcion2();
+            }
+
+            if (botonOpcion3.gameObject.activeSelf && Input.GetKeyDown(teclaOpcion3))
+            {
+                Opcion3();
+            }
         }
     }
 
@@ -84,9 +109,9 @@ public class LogicaNPC : MonoBehaviour
                     "¡Ey! ¿Quieres jugar conmigo?\nEstoy armando algo… pero me falta una pieza.\n\n¿Me ayudas o estás ocupado?",
                     () =>
                     {
-                        textoOpcion1.text = "Sí, ¿a qué estás jugando?";
-                        textoOpcion2.text = "No puedo ahora, tengo que alistarme.";
-                        textoOpcion3.text = "¿Qué estás haciendo?";
+                        textoOpcion1.text = "A. Sí, ¿a qué estás jugando?";
+                        textoOpcion2.text = "B. No puedo ahora, tengo que alistarme.";
+                        textoOpcion3.text = "Y. ¿Qué estás haciendo?";
 
                         botonOpcion1.gameObject.SetActive(true);
                         botonOpcion2.gameObject.SetActive(true);
@@ -100,8 +125,8 @@ public class LogicaNPC : MonoBehaviour
                     "¡Estoy armando una casita!\nPero siempre se me cae…\n\nTú eres mejor que yo… ¿cierto?",
                     () =>
                     {
-                        textoOpcion1.text = "Déjame ayudarte.";
-                        textoOpcion2.text = "Está bien así.";
+                        textoOpcion1.text = "A. Déjame ayudarte.";
+                        textoOpcion2.text = "B. Está bien así.";
                         textoOpcion3.text = "";
 
                         botonOpcion1.gameObject.SetActive(true);
@@ -146,8 +171,8 @@ public class LogicaNPC : MonoBehaviour
                     "Es una casa…\nPara que vivamos todos…\n\nAsí no se nos olvida nada.\n¿Tú crees que las cosas se olvidan?",
                     () =>
                     {
-                        textoOpcion1.text = "A veces…";
-                        textoOpcion2.text = "No, si las recuerdas.";
+                        textoOpcion1.text = "A. A veces…";
+                        textoOpcion2.text = "B. No, si las recuerdas.";
                         textoOpcion3.text = "";
 
                         botonOpcion1.gameObject.SetActive(true);
@@ -182,7 +207,7 @@ public class LogicaNPC : MonoBehaviour
                     "Bueno… ve, que mamá te está llamando.",
                     () =>
                     {
-                        textoOpcion1.text = "Cerrar";
+                        textoOpcion1.text = "A. Cerrar";
                         textoOpcion2.text = "";
                         textoOpcion3.text = "";
 
@@ -229,7 +254,7 @@ public class LogicaNPC : MonoBehaviour
 
     private void MostrarSoloBotonContinuar()
     {
-        textoOpcion1.text = "Continuar";
+        textoOpcion1.text = "A. Continuar";
         textoOpcion2.text = "";
         textoOpcion3.text = "";
 
@@ -289,6 +314,9 @@ public class LogicaNPC : MonoBehaviour
             case EstadoDialogo.RamaC:
                 estadoActual = EstadoDialogo.RamaC2;
                 break;
+
+            default:
+                return;
         }
 
         MostrarEstadoActual();
@@ -303,6 +331,9 @@ public class LogicaNPC : MonoBehaviour
             case EstadoDialogo.Inicio:
                 estadoActual = EstadoDialogo.RamaC;
                 break;
+
+            default:
+                return;
         }
 
         MostrarEstadoActual();

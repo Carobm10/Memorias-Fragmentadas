@@ -14,6 +14,21 @@ public class MenuBotones : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // X → Jugar
+        if (Input.GetKeyDown(KeyCode.JoystickButton3))
+        {
+            Jugar();
+        }
+
+        // A → Salir
+        if (Input.GetKeyDown(KeyCode.JoystickButton11))
+        {
+            Salir();
+        }
+    }
+
     public void Jugar()
     {
         StartCoroutine(CargarEscena());
@@ -25,7 +40,7 @@ public class MenuBotones : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        SceneManager.LoadScene("CINEMATICA 1");
+        SceneManager.LoadScene("CINEMATICA 1"); // usa tu nombre exacto
     }
 
     public void Salir()

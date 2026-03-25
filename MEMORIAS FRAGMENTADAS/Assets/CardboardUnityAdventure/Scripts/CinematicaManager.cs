@@ -8,6 +8,8 @@ public class CinematicaManager : MonoBehaviour
     public GameObject pantallaVideo;
     public GameObject pantallaInstrucciones;
 
+    private bool mostrandoInstrucciones = false;
+
     void Start()
     {
         pantallaVideo.SetActive(true);
@@ -16,14 +18,36 @@ public class CinematicaManager : MonoBehaviour
         videoPlayer.loopPointReached += AlTerminarVideo;
     }
 
+    void Update()
+    {
+        if (mostrandoInstrucciones)
+        {
+            // Y → repetir video
+            if (Input.GetKeyDown(KeyCode.JoystickButton4))
+            {
+                RepetirVideo();
+            }
+
+            // X → continuar
+            if (Input.GetKeyDown(KeyCode.JoystickButton3))
+            {
+                Continuar();
+            }
+        }
+    }
+
     void AlTerminarVideo(VideoPlayer vp)
     {
         pantallaVideo.SetActive(false);
         pantallaInstrucciones.SetActive(true);
+
+        mostrandoInstrucciones = true;
     }
 
     public void RepetirVideo()
     {
+        mostrandoInstrucciones = false;
+
         pantallaInstrucciones.SetActive(false);
         pantallaVideo.SetActive(true);
 
