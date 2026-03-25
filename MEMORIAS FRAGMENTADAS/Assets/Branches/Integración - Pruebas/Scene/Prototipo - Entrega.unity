@@ -2442,7 +2442,11 @@ MonoBehaviour:
   botonOpcion1: {fileID: 353917766}
   botonOpcion2: {fileID: 349613216}
   botonOpcion3: {fileID: 603452691}
-  teclaHablar: 120
+  teclaHablarTeclado: 120
+  teclaHablarJoystick: 333
+  teclaOpcion1: 341
+  teclaOpcion2: 337
+  teclaOpcion3: 334
   velocidadEscritura: 0.03
 --- !u!1001 &681995096
 PrefabInstance:
@@ -3875,6 +3879,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: libro_abierto_cerrado
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12e1d77d6a1b2dd40b8feb88874a536c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -840777845830954692, guid: 12e1d77d6a1b2dd40b8feb88874a536c, type: 3}
@@ -4334,13 +4342,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201270047}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcdf4a1fba1d9104ab64760e079bc4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteraccionObjetos
   distancia: 1.5
-  textDetect: {fileID: 0}
+  textDetect: {fileID: 1396128308}
 --- !u!114 &1201270050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4719,7 +4727,11 @@ MonoBehaviour:
   botonOpcion1: {fileID: 353917766}
   botonOpcion2: {fileID: 349613216}
   botonOpcion3: {fileID: 603452691}
-  teclaHablar: 120
+  teclaHablarTeclado: 120
+  teclaHablarJoystick: 333
+  teclaOpcion1: 341
+  teclaOpcion2: 337
+  teclaOpcion3: 334
   velocidadEscritura: 0.03
 --- !u!1 &1439279020
 GameObject:

@@ -31,7 +31,7 @@ public class Selected : MonoBehaviour
 
             if (hit.collider.CompareTag("Interactivo"))
             {
-                if (Input.GetKeyDown(KeyCode.I))
+                if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.JoystickButton7))
                 {
                     hit.collider.GetComponent<ObjetoInteractivo>().ActivarObjeto();
                 }

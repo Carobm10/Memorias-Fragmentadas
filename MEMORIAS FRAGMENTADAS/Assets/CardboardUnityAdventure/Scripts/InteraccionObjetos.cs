@@ -36,7 +36,7 @@ public class InteraccionObjetos : MonoBehaviour
             if (textDetect != null)
                 textDetect.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.JoystickButton7))
             {
                 // Busca el script en el objeto golpeado o en su padre
                 ObjetoInteractivo interactivo = hit.collider.GetComponentInParent<ObjetoInteractivo>();
