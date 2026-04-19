@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactivo
   - Interactable
+  - Objeto Interactivo
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - RayCast Detect
   - UI 2
-  - 
+  - Raycast Detect
   - 
   - 
   - 
