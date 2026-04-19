@@ -6,6 +6,9 @@ public class MovimientoVR2 : MonoBehaviour
     public Transform camara;
     public float gravedad = -9.8f;
 
+    [Header("Pruebas")]
+    public bool activarModeloYAnimacion = false;
+
     [Header("Animación")]
     public Animator animator;
 
@@ -30,11 +33,25 @@ public class MovimientoVR2 : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        camaraPosInicial = camara.localPosition;
+
+        if (camara == null && Camera.main != null)
+        {
+            camara = Camera.main.transform;
+        }
+
+        if (camara != null)
+        {
+            camaraPosInicial = camara.localPosition;
+        }
     }
 
     void Update()
     {
+        if (controller == null || camara == null)
+        {
+            return;
+        }
+
         // INPUT (WASD)
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -47,27 +64,36 @@ public class MovimientoVR2 : MonoBehaviour
 
         Vector3 direccion = (forward * v + right * h).normalized;
 
-        // 🔥 ANIMACIÓN
-        float movimientoInput = direccion.magnitude; // 0 o 1
-        animator.SetFloat("movement", movimientoInput);
+        // ANIMACION Y ROTACION VISUAL (desactivable para pruebas)
+        if (activarModeloYAnimacion)
+        {
+            if (animator != null)
+            {
+                float movimientoInput = direccion.magnitude;
+                animator.SetFloat("movement", movimientoInput);
+            }
+
+            if (modelo != null)
+            {
+                Vector3 direccionCamara = camara.forward;
+                direccionCamara.y = 0;
+
+                if (direccionCamara.sqrMagnitude > 0.01f)
+                {
+                    Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionCamara);
+                    modelo.rotation = Quaternion.Slerp(
+                        modelo.rotation,
+                        rotacionObjetivo,
+                        velocidadRotacion * Time.deltaTime
+                    );
+                }
+            }
+        }
 
         // SUAVIZADO
         Vector3 velocidadObjetivo = direccion * velocidad;
-        velocidadActual = Vector3.Lerp(velocidadActual, velocidadObjetivo, suavizado * Time.deltaTime);
-
-        // ROTAR MODELO SEGÚN CÁMARA
-        Vector3 direccionCamara = camara.forward;
-        direccionCamara.y = 0;
-
-        if (direccionCamara.sqrMagnitude > 0.01f)
-        {
-            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionCamara);
-            modelo.rotation = Quaternion.Slerp(
-                modelo.rotation,
-                rotacionObjetivo,
-                velocidadRotacion * Time.deltaTime
-            );
-        }
+        float factorSuavizado = 1f - Mathf.Exp(-Mathf.Max(0.01f, suavizado) * Time.deltaTime);
+        velocidadActual = Vector3.Lerp(velocidadActual, velocidadObjetivo, factorSuavizado);
 
         // GRAVEDAD
         if (controller.isGrounded && velocidadY < 0)
