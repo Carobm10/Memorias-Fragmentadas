@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 43.2
+    y: 0
     width: 1536
     height: 36
   m_SerializedDataModeController:
@@ -582,8 +582,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1095.2001
-    y: 79.200005
+    x: 1096.2
+    y: 24
     width: 439.80005
     height: 690.8
   m_SerializedDataModeController:
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79.200005
+    y: 24
     width: 235.8
     height: 525.2
   m_SerializedDataModeController:
@@ -653,8 +653,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 140840
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -665,8 +664,8 @@ MonoBehaviour:
       - m_Data: 32592
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: HermanaInicioJugando (1)
-        m_OriginalName: HermanaInicioJugando (1)
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -674,10 +673,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: 32656
+          m_Data: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 8}
@@ -709,8 +708,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 236.8
-    y: 79.200005
+    x: 237.8
+    y: 24
     width: 856.39996
     height: 525.2
   m_SerializedDataModeController:
@@ -1347,11 +1346,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.16701321, y: -0.77202773, z: 0.23214057, w: -0.5688045}
     speed: 2
-    m_Value: {x: -0.16690075, y: -0.7715079, z: 0.23198427, w: -0.56842154}
+    m_Value: {x: 0.1670132, y: 0.77202773, z: -0.23214056, w: 0.5688045}
   m_Size:
     m_Target: 0.5117576
     speed: 2
-    m_Value: 0.48972023
+    m_Value: 0.5117576
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1635,7 +1634,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 630.4
+    y: 575.2
     width: 1094.2
     height: 139.59998
   m_SerializedDataModeController:
@@ -1687,22 +1686,20 @@ MonoBehaviour:
       m_Data: 19824
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 19562
-    - m_Data: 19564
-    - m_Data: 28894
-    - m_Data: 28898
-    - m_Data: 28900
-    - m_Data: 28902
-    - m_Data: 28904
-    - m_Data: 28906
-    - m_Data: 28908
-    - m_Data: 28910
-    - m_Data: 28912
-    - m_Data: 28914
-    - m_Data: 28916
-    - m_Data: 29042
-    - m_Data: 29060
-    - m_Data: 1000000000
+    - m_Data: 38936
+    - m_Data: 38938
+    - m_Data: 38940
+    - m_Data: 38942
+    - m_Data: 38944
+    - m_Data: 38946
+    - m_Data: 38948
+    - m_Data: 38950
+    - m_Data: 38952
+    - m_Data: 38954
+    - m_Data: 38956
+    - m_Data: 38958
+    - m_Data: 38960
+    - m_Data: 38962
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1735,20 +1732,20 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 19562
-    - m_Data: 19564
-    - m_Data: 28894
-    - m_Data: 28896
-    - m_Data: 28898
-    - m_Data: 28900
-    - m_Data: 28902
-    - m_Data: 28904
-    - m_Data: 28906
-    - m_Data: 28908
-    - m_Data: 28910
-    - m_Data: 28912
-    - m_Data: 28914
-    - m_Data: 28916
+    - m_Data: 38936
+    - m_Data: 38938
+    - m_Data: 38940
+    - m_Data: 38942
+    - m_Data: 38944
+    - m_Data: 38946
+    - m_Data: 38948
+    - m_Data: 38950
+    - m_Data: 38952
+    - m_Data: 38954
+    - m_Data: 38956
+    - m_Data: 38958
+    - m_Data: 38960
+    - m_Data: 38962
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1855,7 +1852,7 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 32210
+  m_LastSelectedObjectID: 0
 --- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
