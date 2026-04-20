@@ -2,31 +2,153 @@
 
 public class Selected : MonoBehaviour
 {
-    LayerMask mask;
-    public float distancia =1.5f; 
+    private LayerMask mask;
+
+    public float distancia = 2f;
+    public Texture2D puntero;
+    public GameObject TextDetect;
+
+    private GameObject ultimoReconocido;
+    private Renderer ultimoRenderer;
+    private Color colorOriginal;
+
+    private InspectableObject currentInspectable;
+
     void Start()
     {
-        //Rayo imaginario que se lanza del punto A al punto B, choca con colaiders y se obtiene información 
-        // Estructura base para declarar: Raycast(origen(De dónde se dispara), dirección, out hit(Lo que almacena), distancia, máscara)
-        mask= LayerMask.GetMask("Raycast Detect"); 
+        mask = LayerMask.GetMask("Raycast Detect");
+
+        if (TextDetect != null)
+        {
+            TextDetect.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Si ya estás inspeccionando algo, E lo suelta
+        if (currentInspectable != null && currentInspectable.isInspecting)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                currentInspectable.ToggleInspect();
+                currentInspectable = null;
+            }
+
+            return;
+        }
+
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, distancia, mask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, distancia, mask))
         {
-            if (hit.collider.tag == "Objeto Interactivo")
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    //hit.collider.transform.GetComponent<SCRIPT>().FUNCION();
-                    hit.collider.transform.GetComponent<ObjetoInteractivo>().ActivarObjeto();
+            GameObject objetoDetectado = hit.collider.gameObject;
 
+            if (ultimoReconocido != objetoDetectado)
+            {
+                Deselect();
+                SelectedObject(hit.collider);
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                SystemDoor door = hit.collider.GetComponent<SystemDoor>();
+                if (door == null)
+                    door = hit.collider.GetComponentInParent<SystemDoor>();
+
+                if (door != null)
+                {
+                    door.ToggleDoor();
+                    return;
+                }
+
+                SystemDrawer drawer = hit.collider.GetComponent<SystemDrawer>();
+                if (drawer == null)
+                    drawer = hit.collider.GetComponentInParent<SystemDrawer>();
+
+                if (drawer != null)
+                {
+                    drawer.ToggleDrawer();
+                    return;
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                InspectableObject inspectable = hit.collider.GetComponent<InspectableObject>();
+                if (inspectable == null)
+                    inspectable = hit.collider.GetComponentInParent<InspectableObject>();
+
+                if (inspectable != null)
+                {
+                    currentInspectable = inspectable;
+                    inspectable.ToggleInspect();
+                    return;
+                }
+
+                ObjetoInteractivo objeto = hit.collider.GetComponent<ObjetoInteractivo>();
+                if (objeto == null)
+                    objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
+
+                if (objeto != null)
+                {
+                    objeto.ActivarObjeto();
+                }
+            }
+
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * distancia, Color.red);
+        }
+        else
+        {
+            Deselect();
+        }
+    }
+
+    void SelectedObject(Collider col)
+    {
+        Renderer renderer = col.GetComponent<Renderer>();
+
+        if (renderer == null)
+            renderer = col.GetComponentInParent<Renderer>();
+
+        if (renderer != null)
+        {
+            ultimoRenderer = renderer;
+            colorOriginal = renderer.material.color;
+            renderer.material.color = Color.green;
+        }
+
+        ultimoReconocido = col.gameObject;
+    }
+
+    void Deselect()
+    {
+        if (ultimoRenderer != null)
+        {
+            ultimoRenderer.material.color = colorOriginal;
+        }
+
+        ultimoReconocido = null;
+        ultimoRenderer = null;
+    }
+
+    private void OnGUI()
+    {
+        if (puntero != null)
+        {
+            Rect rect = new Rect(
+                (Screen.width - puntero.width) / 2,
+                (Screen.height - puntero.height) / 2,
+                puntero.width,
+                puntero.height
+            );
+
+            GUI.DrawTexture(rect, puntero);
+        }
+
+        if (TextDetect != null)
+        {
+            TextDetect.SetActive(ultimoReconocido != null || currentInspectable != null);
         }
     }
 }
