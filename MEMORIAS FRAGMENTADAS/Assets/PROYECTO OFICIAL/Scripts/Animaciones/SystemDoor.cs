@@ -14,7 +14,7 @@ public class SystemDoor : MonoBehaviour
         closedRotation = transform.localRotation;
         openRotation = closedRotation * Quaternion.Euler(0f, openOffsetY, 0f);
 
-        transform.localRotation = closedRotation; // fuerza que arranque cerrada
+        transform.localRotation = closedRotation; // fuerza que arranque cerrada 
         doorOpen = false;
     }
 
@@ -32,5 +32,15 @@ public class SystemDoor : MonoBehaviour
     public void ToggleDoor()
     {
         doorOpen = !doorOpen;
+    }
+
+    public void OpenDoor()
+    {
+        doorOpen = true;
+    }
+
+    public void CloseDoor()
+    {
+        doorOpen = false;
     }
 }

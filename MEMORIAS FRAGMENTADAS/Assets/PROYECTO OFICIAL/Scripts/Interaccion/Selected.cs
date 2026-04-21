@@ -52,6 +52,16 @@ public class Selected : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.B))
             {
+                ClosetMissionTrigger closetMission = hit.collider.GetComponent<ClosetMissionTrigger>();
+                if (closetMission == null)
+                    closetMission = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
+
+                if (closetMission != null)
+                {
+                    closetMission.StartClosetMission();
+                    return;
+                }
+                
                 SystemDoor door = hit.collider.GetComponent<SystemDoor>();
                 if (door == null)
                     door = hit.collider.GetComponentInParent<SystemDoor>();
