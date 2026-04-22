@@ -28,6 +28,18 @@ public class LogicaNPC : MonoBehaviour
     public KeyCode teclaOpcion3 = KeyCode.JoystickButton4;          // Y
     public float velocidadEscritura = 0.03f;
 
+    [Header("Audio hermana")]
+    public AudioSource audioSource;
+    public AudioClip audioInicio;
+    public AudioClip audioRamaA;   // Se deja vacío a propósito
+    public AudioClip audioRamaA1;
+    public AudioClip audioRamaA2;
+    public AudioClip audioRamaB;
+    public AudioClip audioRamaC;
+    public AudioClip audioRamaC1;
+    public AudioClip audioRamaC2;
+    public AudioClip audioCierre;
+
     private bool jugadorCerca = false;
     private bool dialogoActivo = false;
     private bool escribiendo = false;
@@ -53,6 +65,16 @@ public class LogicaNPC : MonoBehaviour
     {
         panelInteraccionNPC.SetActive(false);
         panelDialogoNPC.SetActive(false);
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         botonOpcion1.onClick.AddListener(Opcion1);
         botonOpcion2.onClick.AddListener(Opcion2);
@@ -105,6 +127,7 @@ public class LogicaNPC : MonoBehaviour
         switch (estadoActual)
         {
             case EstadoDialogo.Inicio:
+                ReproducirAudioDialogo(audioInicio);
                 IniciarEscritura(
                     "¡Ey! ¿Quieres jugar conmigo?\nEstoy armando algo… pero me falta una pieza.\n\n¿Me ayudas o estás ocupado?",
                     () =>
@@ -121,6 +144,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaA:
+                ReproducirAudioDialogo(audioRamaA);
                 IniciarEscritura(
                     "¡Estoy armando una casita!\nPero siempre se me cae…\n\nTú eres mejor que yo… ¿cierto?",
                     () =>
@@ -137,6 +161,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaA1:
+                ReproducirAudioDialogo(audioRamaA1);
                 IniciarEscritura(
                     "¡Sabía que sí!\nCuando seas grande, seguro vas a hacer cosas increíbles.",
                     () =>
@@ -147,6 +172,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaA2:
+                ReproducirAudioDialogo(audioRamaA2);
                 IniciarEscritura(
                     "Bueno… igual me gusta como queda.\nNo todo tiene que ser perfecto.",
                     () =>
@@ -157,6 +183,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaB:
+                ReproducirAudioDialogo(audioRamaB);
                 IniciarEscritura(
                     "Ahh…\nSiempre estás ocupado…\n\nBueno… pero no te demores mucho.\nLuego jugamos, ¿sí?",
                     () =>
@@ -167,6 +194,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaC:
+                ReproducirAudioDialogo(audioRamaC);
                 IniciarEscritura(
                     "Es una casa…\nPara que vivamos todos…\n\nAsí no se nos olvida nada.\n¿Tú crees que las cosas se olvidan?",
                     () =>
@@ -183,6 +211,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaC1:
+                ReproducirAudioDialogo(audioRamaC1);
                 IniciarEscritura(
                     "Entonces hay que cuidarlas…\nPara que no desaparezcan.",
                     () =>
@@ -193,6 +222,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaC2:
+                ReproducirAudioDialogo(audioRamaC2);
                 IniciarEscritura(
                     "Entonces está bien…\nPorque yo no quiero olvidar esto.",
                     () =>
@@ -203,6 +233,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.Cierre:
+                ReproducirAudioDialogo(audioCierre);
                 IniciarEscritura(
                     "Bueno… ve, que mamá te está llamando.",
                     () =>
@@ -347,6 +378,23 @@ public class LogicaNPC : MonoBehaviour
         if (jugadorCerca)
         {
             panelInteraccionNPC.SetActive(true);
+        }
+    }
+
+    private void ReproducirAudioDialogo(AudioClip clip)
+    {
+        if (audioSource == null)
+        {
+            return;
+        }
+
+        audioSource.Stop();
+        audioSource.clip = clip;
+
+        if (clip != null)
+        {
+            audioSource.loop = false;
+            audioSource.Play();
         }
     }
 

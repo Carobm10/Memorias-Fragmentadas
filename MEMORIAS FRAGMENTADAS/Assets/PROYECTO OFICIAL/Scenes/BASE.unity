@@ -4378,6 +4378,16 @@ MonoBehaviour:
   teclaOpcion2: 337
   teclaOpcion3: 334
   velocidadEscritura: 0.03
+  audioSource: {fileID: 0}
+  audioInicio: {fileID: 8300000, guid: f580a21879ce4fe45840ece329b0696c, type: 3}
+  audioRamaA: {fileID: 0}
+  audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
+  audioRamaA2: {fileID: 8300000, guid: e94b123a84dfd9445a866ee13b835f7e, type: 3}
+  audioRamaB: {fileID: 8300000, guid: 8607f96c493fe8f46b922a2552bd0761, type: 3}
+  audioRamaC: {fileID: 8300000, guid: 1d3b1736bf6b5f5498b13fd2bf6e74cc, type: 3}
+  audioRamaC1: {fileID: 8300000, guid: 9ff97747479d7834a957d86420979565, type: 3}
+  audioRamaC2: {fileID: 8300000, guid: bcdc1fbe265690341993ad635e7fe6a4, type: 3}
+  audioCierre: {fileID: 8300000, guid: b3abb9eed1e5aa640b6bea03553850e5, type: 3}
 --- !u!1 &616668806
 GameObject:
   m_ObjectHideFlags: 0
@@ -9217,6 +9227,16 @@ MonoBehaviour:
   teclaOpcion2: 337
   teclaOpcion3: 334
   velocidadEscritura: 0.03
+  audioSource: {fileID: 0}
+  audioInicio: {fileID: 8300000, guid: f580a21879ce4fe45840ece329b0696c, type: 3}
+  audioRamaA: {fileID: 0}
+  audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
+  audioRamaA2: {fileID: 8300000, guid: e94b123a84dfd9445a866ee13b835f7e, type: 3}
+  audioRamaB: {fileID: 8300000, guid: 8607f96c493fe8f46b922a2552bd0761, type: 3}
+  audioRamaC: {fileID: 8300000, guid: 1d3b1736bf6b5f5498b13fd2bf6e74cc, type: 3}
+  audioRamaC1: {fileID: 8300000, guid: 9ff97747479d7834a957d86420979565, type: 3}
+  audioRamaC2: {fileID: 8300000, guid: bcdc1fbe265690341993ad635e7fe6a4, type: 3}
+  audioCierre: {fileID: 8300000, guid: b3abb9eed1e5aa640b6bea03553850e5, type: 3}
 --- !u!1 &1439279020
 GameObject:
   m_ObjectHideFlags: 0
