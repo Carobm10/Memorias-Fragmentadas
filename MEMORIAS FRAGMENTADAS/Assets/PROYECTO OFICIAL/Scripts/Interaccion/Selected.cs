@@ -66,6 +66,25 @@ public class Selected : MonoBehaviour
                 SelectedObject(hit.collider);
             }
 
+            LogicaNPC npc = hit.collider.GetComponent<LogicaNPC>();
+            if (npc == null)
+                npc = hit.collider.GetComponentInParent<LogicaNPC>();
+
+            // Si mira un NPC, no mostrar prompt general ni tratarlo como objeto normal
+            if (npc != null)
+            {
+                if (TextDetect != null)
+                    TextDetect.SetActive(false);
+
+                if (MissionPromptPanel != null)
+                    MissionPromptPanel.SetActive(false);
+
+                if (ClothingPromptPanel != null)
+                    ClothingPromptPanel.SetActive(false);
+
+                return;
+            }
+
             ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
             if (closet == null)
                 closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
@@ -74,7 +93,6 @@ public class Selected : MonoBehaviour
             if (clothing == null)
                 clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
 
-            // Si mira una prenda
             if (clothing != null)
             {
                 if (ClothingPromptPanel != null)
@@ -108,7 +126,6 @@ public class Selected : MonoBehaviour
                     ClothingPromptPanel.SetActive(false);
             }
 
-            // Si mira el clóset antes de iniciar misión
             if (clothing == null && closet != null && !closet.missionStarted)
             {
                 if (MissionPromptPanel != null)
@@ -130,7 +147,6 @@ public class Selected : MonoBehaviour
                     MissionPromptPanel.SetActive(false);
             }
 
-            // Interacción normal si no es prenda ni clóset misión
             if (clothing == null && closet == null)
             {
                 if (InputManagerCustom.PressB())
@@ -159,7 +175,6 @@ public class Selected : MonoBehaviour
                 }
             }
 
-            // Inspección
             if (Input.GetKeyDown(KeyCode.E))
             {
                 InspectableObject inspectable = hit.collider.GetComponent<InspectableObject>();
@@ -193,6 +208,9 @@ public class Selected : MonoBehaviour
 
             if (ClothingPromptPanel != null)
                 ClothingPromptPanel.SetActive(false);
+
+            if (TextDetect != null)
+                TextDetect.SetActive(false);
 
             Deselect();
         }
@@ -263,6 +281,13 @@ public class Selected : MonoBehaviour
 
     void OnGUI()
     {
+        if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
+        {
+            if (TextDetect != null)
+                TextDetect.SetActive(false);
+            return;
+        }
+
         if (puntero != null)
         {
             float size = 12f;
@@ -278,14 +303,9 @@ public class Selected : MonoBehaviour
 
         if (TextDetect != null)
         {
-            if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
-            {
-                TextDetect.SetActive(false);
-                return;
-            }
-
             bool mirandoCloset = false;
             bool mirandoPrenda = false;
+            bool mirandoNPC = false;
 
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, distancia, mask))
@@ -301,9 +321,20 @@ public class Selected : MonoBehaviour
                     clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
 
                 mirandoPrenda = clothing != null;
+
+                LogicaNPC npc = hit.collider.GetComponent<LogicaNPC>();
+                if (npc == null)
+                    npc = hit.collider.GetComponentInParent<LogicaNPC>();
+
+                mirandoNPC = npc != null;
             }
 
-            TextDetect.SetActive((ultimoReconocido != null || currentInspectable != null) && !mirandoCloset && !mirandoPrenda);
+            TextDetect.SetActive(
+                (ultimoReconocido != null || currentInspectable != null)
+                && !mirandoCloset
+                && !mirandoPrenda
+                && !mirandoNPC
+            );
         }
     }
 }
