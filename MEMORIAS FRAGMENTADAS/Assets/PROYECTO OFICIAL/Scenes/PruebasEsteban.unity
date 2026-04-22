@@ -253,6 +253,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selected
   distancia: 3
+  puntero: {fileID: 0}
+  TextDetect: {fileID: 0}
+  MissionPromptPanel: {fileID: 0}
+  ClothingPromptPanel: {fileID: 0}
+  closetCanvasManager: {fileID: 0}
 --- !u!1 &33483669
 GameObject:
   m_ObjectHideFlags: 0
@@ -5070,13 +5075,15 @@ MonoBehaviour:
   velocidad: 0.46
   camara: {fileID: 14378717}
   gravedad: -9.8
+  puedeMoverse: 1
+  activarHeadBob: 1
+  bobFrecuencia: 8
+  bobAltura: 0.02
   activarModeloYAnimacion: 0
   animator: {fileID: 393637715}
   modelo: {fileID: 393637716}
   velocidadRotacion: 15
   suavizado: 6
-  bobFrecuencia: 8
-  bobAltura: 0.02
 --- !u!143 &1201270051
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5149,6 +5156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selected
   distancia: 3
+  puntero: {fileID: 0}
+  TextDetect: {fileID: 0}
+  MissionPromptPanel: {fileID: 0}
+  ClothingPromptPanel: {fileID: 0}
+  closetCanvasManager: {fileID: 0}
 --- !u!1 &1215949747
 GameObject:
   m_ObjectHideFlags: 0
@@ -7230,37 +7242,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &2135405137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2135405138}
-  m_Layer: 0
-  m_Name: Ojosdespertando
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2135405138
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135405137}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.32372, y: 0.2879, z: 4.53624}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2142003848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7465,4 +7446,3 @@ SceneRoots:
   - {fileID: 1229891857}
   - {fileID: 1736475330}
   - {fileID: 885545821}
-  - {fileID: 2135405138}
