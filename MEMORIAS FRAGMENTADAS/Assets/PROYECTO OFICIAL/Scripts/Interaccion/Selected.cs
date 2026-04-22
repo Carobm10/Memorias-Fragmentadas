@@ -15,13 +15,13 @@ public class Selected : MonoBehaviour
 
     [Header("Prompt prendas")]
     public GameObject ClothingPromptPanel;
-    public ClosetUIManager closetUIManager;
+
+    [Header("Manager de canvases")]
+    public ClosetCanvasManager closetCanvasManager;
 
     private GameObject ultimoReconocido;
     private Renderer[] renderersActuales;
     private Color[] coloresOriginales;
-
-    private ClosetClothingItem currentClothingItem;
     private InspectableObject currentInspectable;
 
     void Start()
@@ -40,8 +40,17 @@ public class Selected : MonoBehaviour
 
     void Update()
     {
-        if (closetUIManager != null && closetUIManager.uiAbierta)
+        if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
         {
+            if (TextDetect != null)
+                TextDetect.SetActive(false);
+
+            if (MissionPromptPanel != null)
+                MissionPromptPanel.SetActive(false);
+
+            if (ClothingPromptPanel != null)
+                ClothingPromptPanel.SetActive(false);
+
             return;
         }
 
@@ -57,21 +66,17 @@ public class Selected : MonoBehaviour
                 SelectedObject(hit.collider);
             }
 
-            // CLOSET
             ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
             if (closet == null)
                 closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
-            // PRENDA
             ClosetClothingItem clothing = hit.collider.GetComponent<ClosetClothingItem>();
             if (clothing == null)
                 clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
 
-            // SI MIRA PRENDA
+            // Si mira una prenda
             if (clothing != null)
             {
-                currentClothingItem = clothing;
-
                 if (ClothingPromptPanel != null)
                     ClothingPromptPanel.SetActive(true);
 
@@ -81,13 +86,17 @@ public class Selected : MonoBehaviour
                 if (TextDetect != null)
                     TextDetect.SetActive(false);
 
-                if (Input.GetKeyDown(KeyCode.B))
+                if (InputManagerCustom.PressB())
                 {
-                    Debug.Log("Prenda seleccionada: " + clothing.clothingName);
+                    Debug.Log("Seleccionaste prenda: " + clothing.clothingName);
 
-                    if (closetUIManager != null)
+                    if (closetCanvasManager != null)
                     {
-                        closetUIManager.AbrirUI();
+                        closetCanvasManager.AbrirCanvas(
+                            clothing.clothingCanvas,
+                            clothing.isCorrect,
+                            closet
+                        );
                     }
 
                     return;
@@ -95,13 +104,11 @@ public class Selected : MonoBehaviour
             }
             else
             {
-                currentClothingItem = null;
-
                 if (ClothingPromptPanel != null)
                     ClothingPromptPanel.SetActive(false);
             }
 
-            // SI MIRA CLOSET Y AÚN NO INICIA MISIÓN
+            // Si mira el clóset antes de iniciar misión
             if (clothing == null && closet != null && !closet.missionStarted)
             {
                 if (MissionPromptPanel != null)
@@ -110,8 +117,9 @@ public class Selected : MonoBehaviour
                 if (TextDetect != null)
                     TextDetect.SetActive(false);
 
-                if (Input.GetKeyDown(KeyCode.X))
+                if (InputManagerCustom.PressX())
                 {
+                    Debug.Log("Iniciando misión del clóset");
                     closet.StartClosetMission();
                     return;
                 }
@@ -122,11 +130,13 @@ public class Selected : MonoBehaviour
                     MissionPromptPanel.SetActive(false);
             }
 
-            // INTERACCIÓN NORMAL CON B
+            // Interacción normal si no es prenda ni clóset misión
             if (clothing == null && closet == null)
             {
-                if (Input.GetKeyDown(KeyCode.B))
+                if (InputManagerCustom.PressB())
                 {
+                    Debug.Log("Interactuando con objeto normal");
+
                     SystemDoor door = hit.collider.GetComponent<SystemDoor>();
                     if (door == null)
                         door = hit.collider.GetComponentInParent<SystemDoor>();
@@ -149,7 +159,7 @@ public class Selected : MonoBehaviour
                 }
             }
 
-            // INSPECCIÓN CON E
+            // Inspección
             if (Input.GetKeyDown(KeyCode.E))
             {
                 InspectableObject inspectable = hit.collider.GetComponent<InspectableObject>();
@@ -184,8 +194,6 @@ public class Selected : MonoBehaviour
             if (ClothingPromptPanel != null)
                 ClothingPromptPanel.SetActive(false);
 
-            currentClothingItem = null;
-
             Deselect();
         }
     }
@@ -193,11 +201,9 @@ public class Selected : MonoBehaviour
     void SelectedObject(Collider col)
     {
         HighlightGroup highlightGroup = col.GetComponent<HighlightGroup>();
-
         if (highlightGroup == null)
             highlightGroup = col.GetComponentInParent<HighlightGroup>();
 
-        // Si pertenece a un grupo, resalta TODO el grupo
         if (highlightGroup != null)
         {
             Renderer[] renderers = highlightGroup.GetComponentsInChildren<Renderer>();
@@ -221,12 +227,9 @@ public class Selected : MonoBehaviour
             return;
         }
 
-        // Si no pertenece a grupo, resalta solo el objeto detectado
         Renderer renderer = col.GetComponent<Renderer>();
-
         if (renderer == null)
             renderer = col.GetComponentInParent<Renderer>();
-
         if (renderer == null)
             renderer = col.GetComponentInChildren<Renderer>();
 
@@ -275,6 +278,12 @@ public class Selected : MonoBehaviour
 
         if (TextDetect != null)
         {
+            if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
+            {
+                TextDetect.SetActive(false);
+                return;
+            }
+
             bool mirandoCloset = false;
             bool mirandoPrenda = false;
 

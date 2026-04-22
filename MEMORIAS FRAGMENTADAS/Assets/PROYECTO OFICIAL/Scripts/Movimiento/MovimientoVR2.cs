@@ -54,7 +54,6 @@ public class MovimientoVR2 : MonoBehaviour
         if (controller == null || camara == null)
             return;
 
-        // INPUT
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -66,13 +65,11 @@ public class MovimientoVR2 : MonoBehaviour
 
         Vector3 direccion = (forward * v + right * h).normalized;
 
-        // 🔒 BLOQUEAR MOVIMIENTO (pero NO cámara)
         if (!puedeMoverse)
         {
             direccion = Vector3.zero;
         }
 
-        // ANIMACIÓN Y ROTACIÓN
         if (activarModeloYAnimacion)
         {
             if (animator != null)
@@ -98,12 +95,10 @@ public class MovimientoVR2 : MonoBehaviour
             }
         }
 
-        // SUAVIZADO
         Vector3 velocidadObjetivo = direccion * velocidad;
         float factorSuavizado = 1f - Mathf.Exp(-Mathf.Max(0.01f, suavizado) * Time.deltaTime);
         velocidadActual = Vector3.Lerp(velocidadActual, velocidadObjetivo, factorSuavizado);
 
-        // GRAVEDAD
         if (controller.isGrounded && velocidadY < 0)
         {
             velocidadY = -2f;
@@ -116,7 +111,6 @@ public class MovimientoVR2 : MonoBehaviour
 
         controller.Move(movimientoFinal * Time.deltaTime);
 
-        // HEAD BOB CONTROLADO
         if (activarHeadBob && direccion.magnitude > 0.1f && controller.isGrounded)
         {
             bobTiempo += Time.deltaTime * bobFrecuencia;
