@@ -10,6 +10,11 @@ public class VideoSceneController : MonoBehaviour
     public VideoPlayer videoPlayer;
     public Camera targetCameraOverride;
 
+    [Header("Video Background")]
+    public RawImage videoBackground;
+    public int renderTextureWidth = 1920;
+    public int renderTextureHeight = 1080;
+
     [Header("VR / Cardboard")]
     public bool autoConfigureForVR = true;
     public VideoAspectRatio vrAspectRatio = VideoAspectRatio.FitOutside;
@@ -42,6 +47,7 @@ public class VideoSceneController : MonoBehaviour
     private bool inputLocked = false;
 
     private Camera resolvedTargetCamera;
+    private RenderTexture runtimeVideoTexture;
 
     void Start()
     {
@@ -88,20 +94,80 @@ public class VideoSceneController : MonoBehaviour
 
     void ConfigureVideoForVR()
     {
-        if (resolvedTargetCamera == null)
+        SetupVideoBackground();
+
+        if (runtimeVideoTexture == null)
         {
-            Debug.LogWarning("No se encontró cámara objetivo para el video. Asigna targetCameraOverride o etiqueta MainCamera.");
+            Debug.LogWarning("No se pudo crear la textura de video. El video seguirá usando la configuración actual.");
             return;
         }
 
-        videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
-        videoPlayer.targetCamera = resolvedTargetCamera;
-        videoPlayer.targetCameraAlpha = 1f;
+        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+        videoPlayer.targetTexture = runtimeVideoTexture;
         videoPlayer.aspectRatio = vrAspectRatio;
         videoPlayer.waitForFirstFrame = true;
         videoPlayer.skipOnDrop = true;
 
-        Debug.Log("Video configurado para VR en cámara: " + resolvedTargetCamera.name);
+        Debug.Log("Video configurado para renderizar detrás del Canvas.");
+    }
+
+    void SetupVideoBackground()
+    {
+        if (videoBackground == null)
+        {
+            Canvas canvas = null;
+
+            if (imgAtras != null)
+            {
+                canvas = imgAtras.canvas;
+            }
+
+            if (canvas == null)
+            {
+                canvas = FindObjectOfType<Canvas>();
+            }
+
+            if (canvas != null)
+            {
+                videoBackground = canvas.GetComponentInChildren<RawImage>(true);
+
+                if (videoBackground == null)
+                {
+                    GameObject backgroundObject = new GameObject("VideoBackground", typeof(RectTransform), typeof(CanvasRenderer), typeof(RawImage));
+                    backgroundObject.transform.SetParent(canvas.transform, false);
+                    backgroundObject.transform.SetAsFirstSibling();
+
+                    RectTransform rectTransform = backgroundObject.GetComponent<RectTransform>();
+                    rectTransform.anchorMin = Vector2.zero;
+                    rectTransform.anchorMax = Vector2.one;
+                    rectTransform.offsetMin = Vector2.zero;
+                    rectTransform.offsetMax = Vector2.zero;
+
+                    videoBackground = backgroundObject.GetComponent<RawImage>();
+                }
+            }
+        }
+
+        if (runtimeVideoTexture == null)
+        {
+            runtimeVideoTexture = new RenderTexture(renderTextureWidth, renderTextureHeight, 0, RenderTextureFormat.ARGB32);
+            runtimeVideoTexture.Create();
+        }
+
+        if (videoBackground != null)
+        {
+            videoBackground.transform.SetAsFirstSibling();
+            videoBackground.texture = runtimeVideoTexture;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (runtimeVideoTexture != null)
+        {
+            runtimeVideoTexture.Release();
+            Destroy(runtimeVideoTexture);
+        }
     }
 
 #if UNITY_EDITOR
