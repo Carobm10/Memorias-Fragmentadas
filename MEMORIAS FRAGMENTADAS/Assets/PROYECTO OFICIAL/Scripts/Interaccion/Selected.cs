@@ -15,6 +15,7 @@ public class Selected : MonoBehaviour
 
     [Header("Prompt prendas")]
     public GameObject ClothingPromptPanel;
+    public ClosetUIManager closetUIManager;
 
     private GameObject ultimoReconocido;
     private Renderer[] renderersActuales;
@@ -39,6 +40,11 @@ public class Selected : MonoBehaviour
 
     void Update()
     {
+        if (closetUIManager != null && closetUIManager.uiAbierta)
+        {
+            return;
+        }
+
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, distancia, mask))
@@ -78,6 +84,12 @@ public class Selected : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.B))
                 {
                     Debug.Log("Prenda seleccionada: " + clothing.clothingName);
+
+                    if (closetUIManager != null)
+                    {
+                        closetUIManager.AbrirUI();
+                    }
+
                     return;
                 }
             }
