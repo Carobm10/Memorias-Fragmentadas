@@ -8,6 +8,12 @@ public class VideoSceneController : MonoBehaviour
 {
     [Header("Referencias")]
     public VideoPlayer videoPlayer;
+    public Camera targetCameraOverride;
+
+    [Header("VR / Cardboard")]
+    public bool autoConfigureForVR = true;
+    public VideoAspectRatio vrAspectRatio = VideoAspectRatio.FitOutside;
+    public bool autoAddCardboardSimulatorInEditor = true;
 
     [Header("Escenas")]
     public string previousSceneName = "MenuInicial";
@@ -35,6 +41,8 @@ public class VideoSceneController : MonoBehaviour
     private bool changingScene = false;
     private bool inputLocked = false;
 
+    private Camera resolvedTargetCamera;
+
     void Start()
     {
         Debug.Log("VideoSceneController iniciado");
@@ -45,6 +53,20 @@ public class VideoSceneController : MonoBehaviour
             return;
         }
 
+        resolvedTargetCamera = ResolveTargetCamera();
+
+        if (autoConfigureForVR)
+        {
+            ConfigureVideoForVR();
+        }
+
+#if UNITY_EDITOR
+        if (autoAddCardboardSimulatorInEditor)
+        {
+            EnsureEditorCardboardPreview();
+        }
+#endif
+
         Debug.Log("Video clip asignado: " + (videoPlayer.clip != null ? videoPlayer.clip.name : "NINGUNO"));
 
         videoPlayer.Play();
@@ -52,6 +74,53 @@ public class VideoSceneController : MonoBehaviour
 
         ResetUI();
     }
+
+    Camera ResolveTargetCamera()
+    {
+        if (targetCameraOverride != null)
+            return targetCameraOverride;
+
+        if (videoPlayer != null && videoPlayer.targetCamera != null)
+            return videoPlayer.targetCamera;
+
+        return Camera.main;
+    }
+
+    void ConfigureVideoForVR()
+    {
+        if (resolvedTargetCamera == null)
+        {
+            Debug.LogWarning("No se encontró cámara objetivo para el video. Asigna targetCameraOverride o etiqueta MainCamera.");
+            return;
+        }
+
+        videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
+        videoPlayer.targetCamera = resolvedTargetCamera;
+        videoPlayer.targetCameraAlpha = 1f;
+        videoPlayer.aspectRatio = vrAspectRatio;
+        videoPlayer.waitForFirstFrame = true;
+        videoPlayer.skipOnDrop = true;
+
+        Debug.Log("Video configurado para VR en cámara: " + resolvedTargetCamera.name);
+    }
+
+#if UNITY_EDITOR
+    void EnsureEditorCardboardPreview()
+    {
+        if (resolvedTargetCamera == null)
+            return;
+
+        Transform simulatorRoot = resolvedTargetCamera.transform.parent != null
+            ? resolvedTargetCamera.transform.parent
+            : resolvedTargetCamera.transform;
+
+        if (simulatorRoot.GetComponent<CardboardSimulator>() == null)
+        {
+            simulatorRoot.gameObject.AddComponent<CardboardSimulator>();
+            Debug.Log("Se añadió CardboardSimulator para previsualización en editor.");
+        }
+    }
+#endif
 
     void Update()
     {

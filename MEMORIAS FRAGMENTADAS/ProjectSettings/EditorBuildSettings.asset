@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/PROYECTO OFICIAL/Scene Pruebas 1/Prototipo - Entrega.unity
     guid: 165a162c18720c44fada734dc7854c8f
-  - enabled: 1
+  - enabled: 0
     path: Assets/PROYECTO OFICIAL/Scenes/MenuInicial.unity
     guid: 301a9c9a25370d94b8026daae614281c
   - enabled: 1

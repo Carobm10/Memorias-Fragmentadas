@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.92
+  m_AmbientIntensity: 0.44
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 667b87aa09d76464bb548b6645cf997a, type: 2}
@@ -3820,12 +3820,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1654000386999198924, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1396504726}
-    - targetCorrespondingSourceObject: {fileID: 9193086715041533935, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 479665631}
-    - targetCorrespondingSourceObject: {fileID: 9193086715041533935, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 479665632}
     - targetCorrespondingSourceObject: {fileID: 5332589761199546845, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2128136503}
@@ -11017,7 +11011,7 @@ MonoBehaviour:
   missionStarted: 0
   interferenceTriggered: 0
   missionCompleted: 0
-  tvInteraction: {fileID: 479665631}
+  tvInteraction: {fileID: 0}
   antennaInteraction: {fileID: 2101284258}
   missionAudioSource: {fileID: 0}
   fatherRequestClip: {fileID: 0}
@@ -11036,7 +11030,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 479665627}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1912624923
 GameObject:
@@ -12385,7 +12379,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 479665627}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2101284258
 MonoBehaviour:
@@ -12400,8 +12394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntennaInteraction
   missionController: {fileID: 1881024641}
-  antennaOne: {fileID: 479665629}
-  antennaTwo: {fileID: 479665628}
+  antennaOne: {fileID: 0}
+  antennaTwo: {fileID: 0}
   interactionEnabled: 0
   isAdjustMode: 0
   selectedAntenna: 0
@@ -12914,3 +12908,5 @@ SceneRoots:
   - {fileID: 892483951}
   - {fileID: 479686186}
   - {fileID: 1256944688}
+  - {fileID: 1881024642}
+  - {fileID: 2101284257}
