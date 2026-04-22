@@ -6,6 +6,14 @@ public class MovimientoVR2 : MonoBehaviour
     public Transform camara;
     public float gravedad = -9.8f;
 
+    [Header("Control de movimiento")]
+    public bool puedeMoverse = true;
+
+    [Header("Head Bob (caminar)")]
+    public bool activarHeadBob = true;
+    public float bobFrecuencia = 6f;
+    public float bobAltura = 0.05f;
+
     [Header("Pruebas")]
     public bool activarModeloYAnimacion = false;
 
@@ -13,15 +21,11 @@ public class MovimientoVR2 : MonoBehaviour
     public Animator animator;
 
     [Header("Rotación visual")]
-    public Transform modelo; // el objeto que tiene el Animator
+    public Transform modelo;
     public float velocidadRotacion = 10f;
 
     [Header("Suavizado")]
     public float suavizado = 5f;
-
-    [Header("Head Bob (caminar)")]
-    public float bobFrecuencia = 6f;
-    public float bobAltura = 0.05f;
 
     private CharacterController controller;
     private float velocidadY;
@@ -48,11 +52,9 @@ public class MovimientoVR2 : MonoBehaviour
     void Update()
     {
         if (controller == null || camara == null)
-        {
             return;
-        }
 
-        // INPUT (WASD)
+        // INPUT
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -64,7 +66,13 @@ public class MovimientoVR2 : MonoBehaviour
 
         Vector3 direccion = (forward * v + right * h).normalized;
 
-        // ANIMACION Y ROTACION VISUAL (desactivable para pruebas)
+        // 🔒 BLOQUEAR MOVIMIENTO (pero NO cámara)
+        if (!puedeMoverse)
+        {
+            direccion = Vector3.zero;
+        }
+
+        // ANIMACIÓN Y ROTACIÓN
         if (activarModeloYAnimacion)
         {
             if (animator != null)
@@ -108,8 +116,8 @@ public class MovimientoVR2 : MonoBehaviour
 
         controller.Move(movimientoFinal * Time.deltaTime);
 
-        // HEAD BOB
-        if (direccion.magnitude > 0.1f && controller.isGrounded)
+        // HEAD BOB CONTROLADO
+        if (activarHeadBob && direccion.magnitude > 0.1f && controller.isGrounded)
         {
             bobTiempo += Time.deltaTime * bobFrecuencia;
             float bobOffset = Mathf.Sin(bobTiempo) * bobAltura;
