@@ -1,0 +1,20 @@
+# Keep Unity YAML-based assets in LF to avoid noisy diffs on Windows.
+*.unity text eol=lf
+*.asset text eol=lf
+*.meta text eol=lf
+*.prefab text eol=lf
+*.mat text eol=lf
+*.anim text eol=lf
+*.controller text eol=lf
+*.overrideController text eol=lf
+
+# Common source/text files.
+*.cs text eol=lf
+*.shader text eol=lf
+*.cginc text eol=lf
+*.hlsl text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+
+# Track heavy FBX files with Git LFS.
+*.fbx filter=lfs diff=lfs merge=lfs -text

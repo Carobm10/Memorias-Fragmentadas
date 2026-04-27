@@ -11,15 +11,24 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.22.0/Hello Cardboard/Scenes/HelloCardboard.unity
     guid: 145a2a45d7bc746b19cb68410368bf96
-  - enabled: 1
-    path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/MEN\xDA.unity"
+  - enabled: 0
+    path: "Assets/PROYECTO OFICIAL/Scene Pruebas 1/MEN\xDA.unity"
     guid: 3995952cc7bb0144daa8063f3422cccb
-  - enabled: 1
-    path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/CINEMATICA 1.unity"
+  - enabled: 0
+    path: Assets/PROYECTO OFICIAL/Scene Pruebas 1/CINEMATICA 1.unity
     guid: 1750c3cecec67c14985f3cb00b9d53f1
-  - enabled: 1
-    path: "Assets/Branches/Integraci\xF3n - Pruebas/Scene/Prototipo - Entrega.unity"
+  - enabled: 0
+    path: Assets/PROYECTO OFICIAL/Scene Pruebas 1/Prototipo - Entrega.unity
     guid: 165a162c18720c44fada734dc7854c8f
+  - enabled: 0
+    path: Assets/PROYECTO OFICIAL/Scenes/MenuInicial.unity
+    guid: 301a9c9a25370d94b8026daae614281c
+  - enabled: 1
+    path: Assets/PROYECTO OFICIAL/Scenes/Escena_VideoIntro.unity
+    guid: 9e4d4ad1f7c3a004fb06fd846d65b71d
+  - enabled: 1
+    path: Assets/PROYECTO OFICIAL/Scenes/BASE.unity
+    guid: b30a9c647fefea345a39873a45ab65ac
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e891914dce1eda14f9bd5c100b09c98d, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d9d9282a0e357ff44b3c48fc491b5475, type: 2}
