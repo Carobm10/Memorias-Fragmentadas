@@ -25,10 +25,6 @@ public class OjosDespertarIntro : MonoBehaviour
     [Min(0f)]
     [SerializeField] private float pausaEntreParpadeos = 0.05f;
 
-    [Tooltip("Tiempo adicional en el que el ojo sigue abriendose un poco mas mientras la pantalla se desvanece.")]
-    [Min(0.01f)]
-    [SerializeField] private float duracionExpansionFinal = 0.55f;
-
     [Header("Rendimiento")]
     [Tooltip("Frecuencia de la animacion de apertura/cierre. 24 FPS suele sentirse fluido y reduce el costo de redibujado.")]
     [Range(12, 60)]

@@ -30,13 +30,24 @@ public class AudioTrigger : MonoBehaviour
     [Min(0f)]
     private float distanciaMaxima = 20f;
 
+    [Header("Manager")]
+    [Tooltip("Opcional. Si se asigna, este trigger usará ese AudioScriptManager. Si no, buscará primero en su jerarquía y luego en la escena.")]
+    [SerializeField]
     private AudioScriptManager audioManager;
     private bool yaReproducido = false;
     private Collider triggerCollider;
 
     void Start()
     {
-        audioManager = AudioScriptManager.Instance != null ? AudioScriptManager.Instance : FindFirstObjectByType<AudioScriptManager>();
+        if (audioManager == null)
+        {
+            audioManager = GetComponentInParent<AudioScriptManager>();
+        }
+
+        if (audioManager == null)
+        {
+            audioManager = FindFirstObjectByType<AudioScriptManager>();
+        }
 
         if (audioManager == null)
         {

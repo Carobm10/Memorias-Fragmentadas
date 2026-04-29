@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class AudioClipData
+public class AudioClipData : ISerializationCallbackReceiver
 {
     [Header("Datos del Audio")]
     [Tooltip("Nombre visible del audio en el Inspector.")]
@@ -18,12 +18,23 @@ public class AudioClipData
     [Range(0.5f, 2f)]
     public float pitch = 1f;
 
+    [HideInInspector]
+    [SerializeField]
+    private bool pitchInicializado = false;
+
     [Tooltip("Si está activo, el audio se repite al terminar.")]
     public bool loop = false;
 
+    [Header("Animación de Volumen")]
+    [Tooltip("Si está activo, el volumen seguirá una curva durante la duración total del clip.")]
+    public bool animarVolumen = false;
+
+    [Tooltip("Curva normalizada de volumen. Eje X = tiempo del clip de 0 a 1, eje Y = multiplicador de volumen.")]
+    public AnimationCurve curvaVolumen = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
     [Tooltip("Número total de repeticiones del clip. 1 = una vez, 2 = dos veces. Se ignora si Loop está activo.")]
-    [Min(1)]
-    public int repeticiones = 1;
+    [Min(0)]
+    public int repeticiones = 0;
     
     [Header("Tiempo")]
     [Tooltip("Espera antes de reproducir este audio, en segundos.")]
@@ -56,4 +67,25 @@ public class AudioClipData
     
     [HideInInspector]
     public bool yaReproducido = false;
+
+    public void OnBeforeSerialize()
+    {
+        if (!pitchInicializado)
+        {
+            if (Mathf.Approximately(pitch, 0f))
+            {
+                pitch = 1f;
+            }
+
+            pitchInicializado = true;
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        if (!pitchInicializado && Mathf.Approximately(pitch, 0f))
+        {
+            pitch = 1f;
+        }
+    }
 }

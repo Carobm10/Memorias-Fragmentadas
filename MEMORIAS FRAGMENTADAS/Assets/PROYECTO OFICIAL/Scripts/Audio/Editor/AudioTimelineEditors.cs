@@ -1,21 +1,21 @@
 #if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-internal struct TimelineEntry
-{
-    public string label;
-    public float start;
-    public float end;
-    public bool overlap;
-    public bool infiniteLoop;
-}
-
 [CustomEditor(typeof(AudioScriptManager))]
 public class AudioScriptManagerEditor : Editor
 {
+    private struct TimelineEntry
+    {
+        public string label;
+        public float start;
+        public float end;
+        public bool overlap;
+        public bool infiniteLoop;
+        public int repetitions;
+    }
+
     private static float managerZoom = 2f;
     private static float managerOffset = 0f;
 
@@ -55,11 +55,11 @@ public class AudioScriptManagerEditor : Editor
 
             string nombre = string.IsNullOrWhiteSpace(nombreProp.stringValue) ? $"Audio {i + 1}" : nombreProp.stringValue;
             AudioClip clip = clipProp.objectReferenceValue as AudioClip;
-            float pitch = Mathf.Max(0.01f, Mathf.Abs(pitchProp.floatValue));
+            float pitch = Mathf.Clamp(Mathf.Abs(pitchProp.floatValue), 0.5f, 2f);
             bool loopInfinito = loopProp.boolValue;
             int repeticiones = Mathf.Max(1, repeticionesProp.intValue);
             float duracionBase = clip != null ? clip.length / pitch : 0f;
-            float duracion = loopInfinito ? duracionBase * 4f : duracionBase * repeticiones;
+            float duracion = loopInfinito ? duracionBase : duracionBase * repeticiones;
             float inicio = inicioProp.boolValue ? 0f : Mathf.Max(0f, delayProp.floatValue);
             float fin = inicio + duracion;
 
@@ -69,7 +69,8 @@ public class AudioScriptManagerEditor : Editor
                 start = inicio,
                 end = fin,
                 overlap = false,
-                infiniteLoop = loopInfinito
+                infiniteLoop = loopInfinito,
+                repetitions = repeticiones
             });
         }
 
@@ -108,11 +109,19 @@ public class AudioScriptManagerEditor : Editor
         }
 
         float total = 0.1f;
-        for (int i = 0; i < entries.Count; i++)
+        AudioScriptManager manager = target as AudioScriptManager;
+        if (manager != null)
         {
-            if (entries[i].end > total)
+            total = Mathf.Max(total, manager.GetEstimatedTimelineDuration());
+        }
+        else
+        {
+            for (int i = 0; i < entries.Count; i++)
             {
-                total = entries[i].end;
+                if (entries[i].end > total)
+                {
+                    total = entries[i].end;
+                }
             }
         }
 
@@ -139,7 +148,6 @@ public class AudioScriptManagerEditor : Editor
 
         if (Application.isPlaying)
         {
-            AudioScriptManager manager = target as AudioScriptManager;
             if (manager != null)
             {
                 float playheadTime = manager.GetElapsedTime();
@@ -190,7 +198,8 @@ public class AudioScriptManagerEditor : Editor
             TimelineEntry entry = entries[i];
             string estado = entry.overlap ? "  [OVERLAP]" : string.Empty;
             string loop = entry.infiniteLoop ? "  [LOOP INFINITO]" : string.Empty;
-            EditorGUILayout.LabelField($"{i + 1}. {entry.label}  |  {FormatSeconds(entry.start)} -> {FormatSeconds(entry.end)}{estado}{loop}");
+            string repeticiones = entry.repetitions > 1 ? $"  [x{entry.repetitions}]" : string.Empty;
+            EditorGUILayout.LabelField($"{i + 1}. {entry.label}{repeticiones}  |  {FormatSeconds(entry.start)} -> {FormatSeconds(entry.end)}{estado}{loop}");
         }
     }
 

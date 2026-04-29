@@ -124,7 +124,7 @@ public class VideoSceneController : MonoBehaviour
 
             if (canvas == null)
             {
-                canvas = FindObjectOfType<Canvas>();
+                canvas = FindFirstObjectByType<Canvas>();
             }
 
             if (canvas != null)

@@ -10,6 +10,9 @@ public class AudioScriptManager : MonoBehaviour
         public AudioClipData audioData;
         public Vector3 fallbackPosition;
         public float volumenMultiplicador;
+        public float volumenBase;
+        public float duracionTotal;
+        public float tiempoInicio;
     }
 
     public static AudioScriptManager Instance { get; private set; }
@@ -40,13 +43,18 @@ public class AudioScriptManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Instance = this;
         }
+    }
 
-        Instance = this;
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 
     void Start()
@@ -104,7 +112,7 @@ public class AudioScriptManager : MonoBehaviour
     /// </summary>
     public void PlayAudioAtPosition(AudioClipData audioData, Vector3 position, float volumenMultiplicador = 1f)
     {
-        if (audioData.clip == null)
+        if (audioData == null || audioData.clip == null)
         {
             Debug.LogWarning("AudioScriptManager: Intento de reproducir audio nulo");
             return;
@@ -126,7 +134,8 @@ public class AudioScriptManager : MonoBehaviour
         AudioSource runtimeSource = audioObject.AddComponent<AudioSource>();
         runtimeSource.playOnAwake = false;
         runtimeSource.clip = audioData.clip;
-        runtimeSource.volume = Mathf.Clamp01(audioData.volumen * Mathf.Clamp01(volumenMultiplicador));
+        float volumenBase = Mathf.Clamp01(audioData.volumen * Mathf.Clamp01(volumenMultiplicador));
+        runtimeSource.volume = volumenBase;
         runtimeSource.pitch = audioData.pitch;
         runtimeSource.loop = audioData.loop;
         runtimeSource.spatialBlend = audioData.usar3D ? 1f : 0f;
@@ -142,7 +151,10 @@ public class AudioScriptManager : MonoBehaviour
             source = runtimeSource,
             audioData = audioData,
             fallbackPosition = position,
-            volumenMultiplicador = Mathf.Clamp01(volumenMultiplicador)
+            volumenMultiplicador = Mathf.Clamp01(volumenMultiplicador),
+            volumenBase = volumenBase,
+            duracionTotal = CalcularDuracionTotal(audioData),
+            tiempoInicio = Time.time
         });
 
         return runtimeSource;
@@ -195,7 +207,21 @@ public class AudioScriptManager : MonoBehaviour
                 continue;
             }
 
-            binding.source.volume = Mathf.Clamp01(binding.audioData.volumen * binding.volumenMultiplicador);
+            float volumenBase = Mathf.Clamp01(binding.audioData.volumen * binding.volumenMultiplicador);
+            if (binding.audioData.animarVolumen)
+            {
+                float duracion = Mathf.Max(0.01f, binding.duracionTotal);
+                float tiempoNormalizado = Mathf.Clamp01((Time.time - binding.tiempoInicio) / duracion);
+                float factorCurva = binding.audioData.curvaVolumen != null
+                    ? binding.audioData.curvaVolumen.Evaluate(tiempoNormalizado)
+                    : tiempoNormalizado;
+                binding.source.volume = Mathf.Clamp01(volumenBase * Mathf.Max(0f, factorCurva));
+            }
+            else
+            {
+                binding.source.volume = volumenBase;
+            }
+
             binding.source.pitch = binding.audioData.pitch;
             binding.source.spatialBlend = binding.audioData.usar3D ? 1f : 0f;
 
@@ -224,25 +250,26 @@ public class AudioScriptManager : MonoBehaviour
         }
 
         int repeticiones = Mathf.Max(1, audioData.repeticiones);
-        float duracion = audioData.clip.length / Mathf.Max(0.01f, Mathf.Abs(audioData.pitch));
+        float duracion = CalcularDuracionBase(audioData);
+        float duracionTotal = audioData.loop ? duracion : duracion * repeticiones;
 
         if (repeticiones == 1)
         {
             runtimeSource.loop = false;
             runtimeSource.Play();
-            StartCoroutine(DestruirFuenteCuandoTermine(runtimeSource, duracion));
+            StartCoroutine(DestruirFuenteCuandoTermine(runtimeSource, duracionTotal));
             return;
         }
 
         runtimeSource.loop = true;
         runtimeSource.Play();
-        StartCoroutine(DetenerLoopFinito(runtimeSource, repeticiones, duracion));
+        StartCoroutine(DetenerLoopFinito(runtimeSource, duracionTotal));
     }
 
 
-    private IEnumerator DetenerLoopFinito(AudioSource source, int repeticiones, float duracion)
+    private IEnumerator DetenerLoopFinito(AudioSource source, float duracionTotal)
     {
-        yield return new WaitForSeconds((duracion * repeticiones) + 0.02f);
+        yield return new WaitForSeconds(duracionTotal + 0.02f);
 
         if (source == null)
         {
@@ -485,6 +512,64 @@ public class AudioScriptManager : MonoBehaviour
     public float GetElapsedTime()
     {
         return tiempoTranscurrido;
+    }
+
+    /// <summary>
+    /// Obtiene una estimación de la duración total del guion de audio.
+    /// La visualización usa la duración base de cada clip en su punto de inicio,
+    /// sin expandir repeticiones ni loops para que la línea de tiempo refleje
+    /// la secuencia de audios y no el tiempo de reproducción acumulado.
+    /// </summary>
+    public float GetEstimatedTimelineDuration()
+    {
+        float maxEnd = 0f;
+
+        for (int i = 0; i < audiosScheduled.Count; i++)
+        {
+            AudioClipData audio = audiosScheduled[i];
+            if (audio == null || audio.clip == null)
+            {
+                continue;
+            }
+
+            float duracion = CalcularDuracionTotal(audio);
+            float inicio = audio.reproducirAlInicio ? 0f : Mathf.Max(0f, audio.delay);
+            float fin = inicio + duracion;
+
+            if (fin > maxEnd)
+            {
+                maxEnd = fin;
+            }
+        }
+
+        return maxEnd;
+    }
+
+    private float CalcularDuracionBase(AudioClipData audioData)
+    {
+        if (audioData == null || audioData.clip == null)
+        {
+            return 0f;
+        }
+
+        float pitch = Mathf.Max(0.01f, Mathf.Abs(audioData.pitch));
+        return audioData.clip.length / pitch;
+    }
+
+    private float CalcularDuracionTotal(AudioClipData audioData)
+    {
+        float duracionBase = CalcularDuracionBase(audioData);
+        if (audioData == null)
+        {
+            return duracionBase;
+        }
+
+        if (audioData.loop)
+        {
+            return duracionBase;
+        }
+
+        return duracionBase * Mathf.Max(1, audioData.repeticiones);
     }
 
     /// <summary>

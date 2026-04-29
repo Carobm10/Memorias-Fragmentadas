@@ -3007,6 +3007,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353917764}
   m_CullTransparentMesh: 1
+--- !u!1 &390670644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 390670646}
+  - component: {fileID: 390670645}
+  m_Layer: 0
+  m_Name: AudioBackground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &390670645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390670644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbad02ce5361b74bafd09f08bf79d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioScriptManager
+  audiosScheduled:
+  - nombre: BoleroFondo
+    clip: {fileID: 8300000, guid: b888bffa55f5b3a4aa253bfe880980d1, type: 3}
+    volumen: 0.065
+    pitch: 1
+    pitchInicializado: 1
+    loop: 1
+    animarVolumen: 0
+    curvaVolumen:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.18713021
+        value: 0.74947816
+        inSlope: 0.99710786
+        outSlope: 0.99710786
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.007874225
+        outSlope: 0.007874225
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.48333335
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    repeticiones: 0
+    delay: 0
+    reproducirAlInicio: 0
+    usar3D: 0
+    distanciaMaxima: 0
+    intensidadCercania: 0
+    fadeOutZona: 0
+    puntoEmisionPersonalizado: {fileID: 0}
+    yaReproducido: 0
+  usarPosicionDeReproduccion: 1
+  puntoEmision3DPorDefecto: {fileID: 0}
+  usarCentroVisualParaGizmos: 1
+--- !u!4 &390670646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390670644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.56737, y: 0.43895, z: 4.85153}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &393637715 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 945e76f903921b54ca550e29daec61c3, type: 3}
@@ -4943,7 +5040,7 @@ MonoBehaviour:
   velocidadEscritura: 0.03
   audioSource: {fileID: 0}
   audioInicio: {fileID: 8300000, guid: f580a21879ce4fe45840ece329b0696c, type: 3}
-  audioRamaA: {fileID: 0}
+  audioRamaA: {fileID: 8300000, guid: c1f24ba118c0b6a4ba6a5e8b04960ac1, type: 3}
   audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
   audioRamaA2: {fileID: 8300000, guid: e94b123a84dfd9445a866ee13b835f7e, type: 3}
   audioRamaB: {fileID: 8300000, guid: 8607f96c493fe8f46b922a2552bd0761, type: 3}
@@ -8913,6 +9010,33 @@ MonoBehaviour:
   activarHeadBob: 1
   bobFrecuencia: 8
   bobAltura: 0.02
+  activarSonidoPasos: 1
+  usarVolumenCaminar: 1
+  volumenCaminar: 0.464
+  pasosPorSegundoMin: 2.02
+  pasosPorSegundoMax: 2.55
+  pitchPasoMin: 0.95
+  pitchPasoMax: 1.05
+  volumenPasoMin: 0.55
+  volumenPasoMax: 1
+  umbralMovimientoPasos: 0.014
+  pasosPorSegundoBase: 1.2
+  paso_madera_1: {fileID: 8300000, guid: 657e117bfe995a042b4a81427f2f919a, type: 3}
+  paso_madera_2: {fileID: 8300000, guid: 5dbee9ef864659545bef5bb64a578621, type: 3}
+  paso_madera_3: {fileID: 8300000, guid: a70795e76a905ff47bab54c07cf7dda4, type: 3}
+  paso_piso_1: {fileID: 8300000, guid: f25f867e140a8774eaed44a938203d78, type: 3}
+  paso_piso_2: {fileID: 8300000, guid: 629075ed9b87aaa48af22fe7cb86415f, type: 3}
+  origenDeteccionSuelo: {fileID: 0}
+  usarCharacterControllerComoOrigen: 1
+  nombresSuperficieMadera:
+  - piso_completo.001
+  - wood
+  nombresSuperficiePiso:
+  - piso_completo.002
+  - decorated tile
+  - tiles detailed
+  - tile
+  mostrarDebugSuperficie: 0
   activarModeloYAnimacion: 0
   animator: {fileID: 393637715}
   modelo: {fileID: 393637716}
@@ -8950,7 +9074,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201270047}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a7ddcd661535994fb52f10f9269c239, type: 3}
   m_Name: 
@@ -10180,7 +10304,7 @@ MonoBehaviour:
   velocidadEscritura: 0.03
   audioSource: {fileID: 0}
   audioInicio: {fileID: 8300000, guid: f580a21879ce4fe45840ece329b0696c, type: 3}
-  audioRamaA: {fileID: 0}
+  audioRamaA: {fileID: 8300000, guid: c1f24ba118c0b6a4ba6a5e8b04960ac1, type: 3}
   audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
   audioRamaA2: {fileID: 8300000, guid: e94b123a84dfd9445a866ee13b835f7e, type: 3}
   audioRamaB: {fileID: 8300000, guid: 8607f96c493fe8f46b922a2552bd0761, type: 3}
@@ -10983,6 +11107,70 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606734068}
   m_CullTransparentMesh: 1
+--- !u!1 &1610618357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1610618359}
+  - component: {fileID: 1610618358}
+  m_Layer: 0
+  m_Name: OjosDespertarIntro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1610618358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610618357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f30e1b49fd97a44d8647736b3224df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OjosDespertarIntro
+  esperaInicial: 0.15
+  parpadeosPrevios: 1
+  duracionParpadeo: 0.12
+  duracionAperturaFinal: 0.9
+  pausaEntreParpadeos: 0.08
+  fpsAnimacion: 24
+  altoOjoCerrado: 0.06
+  altoOjoAbierto: 0.42
+  anchoOjo: 0.94
+  curvaturaOcular: 1.85
+  suavizadoBorde: 0.06
+  altoOjoFinalExtra: 0.68
+  anchoOjoFinalExtra: 1
+  inicioExpansionFinal: 0.6
+  microMovimientoApertura: 0.35
+  inicioFadePantalla: 0.45
+  colorParpado: {r: 0, g: 0, b: 0, a: 1}
+  crearOverlayAutomatico: 1
+  iniciarAutomaticamente: 1
+  scriptsParaDesactivar: []
+--- !u!4 &1610618359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610618357}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5387, y: 0.405, z: 5.117}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1610911011
 GameObject:
   m_ObjectHideFlags: 0
@@ -11502,6 +11690,94 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1683024108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1683024110}
+  - component: {fileID: 1683024109}
+  m_Layer: 0
+  m_Name: AudioPersonaje
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1683024109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683024108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbad02ce5361b74bafd09f08bf79d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioScriptManager
+  audiosScheduled:
+  - nombre: Somnoliento
+    clip: {fileID: 8300000, guid: fd9e8b933f99faa46b0802f0173bb8ce, type: 3}
+    volumen: 0.896
+    pitch: 1.048
+    pitchInicializado: 1
+    loop: 0
+    animarVolumen: 0
+    curvaVolumen:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    repeticiones: 0
+    delay: 0
+    reproducirAlInicio: 0
+    usar3D: 0
+    distanciaMaxima: 0
+    intensidadCercania: 0
+    fadeOutZona: 0
+    puntoEmisionPersonalizado: {fileID: 0}
+    yaReproducido: 0
+  usarPosicionDeReproduccion: 1
+  puntoEmision3DPorDefecto: {fileID: 0}
+  usarCentroVisualParaGizmos: 1
+--- !u!4 &1683024110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683024108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.56737, y: 0.43895, z: 4.85153}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1715238134
 GameObject:
   m_ObjectHideFlags: 0
@@ -11892,6 +12168,76 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.022138556, y: 0.019037925, z: 0.019889206}
   m_Center: {x: -0.0011247066, y: 0.000086363405, z: -6.197522e-11}
+--- !u!1 &1818557397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1818557399}
+  - component: {fileID: 1818557398}
+  m_Layer: 0
+  m_Name: AudioFamiliares
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1818557398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818557397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbad02ce5361b74bafd09f08bf79d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioScriptManager
+  audiosScheduled:
+  - nombre: 
+    clip: {fileID: 0}
+    volumen: 0
+    pitch: 1
+    pitchInicializado: 1
+    loop: 0
+    animarVolumen: 0
+    curvaVolumen:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    repeticiones: 0
+    delay: 0
+    reproducirAlInicio: 0
+    usar3D: 0
+    distanciaMaxima: 0
+    intensidadCercania: 0
+    fadeOutZona: 0
+    puntoEmisionPersonalizado: {fileID: 0}
+    yaReproducido: 0
+  usarPosicionDeReproduccion: 1
+  puntoEmision3DPorDefecto: {fileID: 0}
+  usarCentroVisualParaGizmos: 1
+--- !u!4 &1818557399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818557397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.56737, y: 0.43895, z: 4.85153}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1834977036 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8311969417996383014, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
@@ -14295,6 +14641,10 @@ SceneRoots:
   - {fileID: 892483951}
   - {fileID: 479686186}
   - {fileID: 1256944688}
+  - {fileID: 1610618359}
   - {fileID: 1881024642}
   - {fileID: 1565319933}
   - {fileID: 2101284257}
+  - {fileID: 1683024110}
+  - {fileID: 390670646}
+  - {fileID: 1818557399}

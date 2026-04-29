@@ -76,6 +76,9 @@ public class LogicaNPC : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+
         botonOpcion1.onClick.AddListener(Opcion1);
         botonOpcion2.onClick.AddListener(Opcion2);
         botonOpcion3.onClick.AddListener(Opcion3);
@@ -388,14 +391,12 @@ public class LogicaNPC : MonoBehaviour
             return;
         }
 
-        audioSource.Stop();
-        audioSource.clip = clip;
-
-        if (clip != null)
+        if (clip == null)
         {
-            audioSource.loop = false;
-            audioSource.Play();
+            return;
         }
+
+        audioSource.PlayOneShot(clip);
     }
 
     private void OnTriggerEnter(Collider other)
