@@ -21,11 +21,15 @@ public class ClosetCanvasManager : MonoBehaviour
             return;
         }
 
+        Debug.Log("ABRIENDO CANVAS: " + canvasToOpen.name);
+
         currentCanvas = canvasToOpen;
         currentClosetMission = closetMission;
         currentChoiceIsCorrect = isCorrect;
 
+        currentCanvas.SetActive(false);
         currentCanvas.SetActive(true);
+
         uiAbierta = true;
 
         if (pointer3D != null)
@@ -33,8 +37,6 @@ public class ClosetCanvasManager : MonoBehaviour
 
         if (cameraLockController != null)
             cameraLockController.LockCamera();
-
-        Debug.Log("Canvas abierto: " + currentCanvas.name);
     }
 
     public void ProbarOtra()

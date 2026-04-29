@@ -198,7 +198,7 @@ public class MovimientoVR2 : MonoBehaviour
             );
         }
 
-        controller.center = new Vector3(0, controller.height / 2, 0);
+        //controller.center = new Vector3(0, controller.height / 2, 0);
     }
 
     private void ActualizarPasos(bool estaMoviendose, float movimientoNormalizado)

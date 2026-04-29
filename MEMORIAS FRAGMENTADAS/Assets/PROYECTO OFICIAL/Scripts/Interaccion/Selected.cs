@@ -2,6 +2,7 @@
 
 public class Selected : MonoBehaviour
 {
+    private LogicaNPC ultimoNPCMirado;
     [Header("Puntero 3D")]
     public Pointer3DController pointer3D;
 
@@ -67,8 +68,25 @@ public class Selected : MonoBehaviour
 
             if (npc != null)
             {
-                ApagarPrompts();
+                // Apagar el anterior
+                if (ultimoNPCMirado != null && ultimoNPCMirado != npc)
+                    ultimoNPCMirado.SetMirandoNPC(false);
+
+                ultimoNPCMirado = npc;
+                npc.SetMirandoNPC(true);
+
+                // IMPORTANTE: apagar otros prompts
+                ApagarTodosLosPrompts();
+
                 return;
+            }
+            else
+            {
+                if (ultimoNPCMirado != null)
+                {
+                    ultimoNPCMirado.SetMirandoNPC(false);
+                    ultimoNPCMirado = null;
+                }
             }
 
             // 2. Prendas del clóset
@@ -84,7 +102,9 @@ public class Selected : MonoBehaviour
                 if (closetForClothing == null)
                     closetForClothing = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
-                if (InputManagerCustom.PressB())
+                Debug.Log("INTENTO ABRIR PRENDA");
+
+                if (InputManagerCustom.PressX())
                 {
                     Debug.Log("Seleccionaste prenda: " + clothing.clothingName);
 
@@ -131,7 +151,7 @@ public class Selected : MonoBehaviour
             {
                 MostrarSolo(DoorPromptPanel);
 
-                if (InputManagerCustom.PressB())
+                if (InputManagerCustom.PressX())
                 {
                     Debug.Log("Abriendo/cerrando puerta: " + door.gameObject.name);
                     door.ToggleDoor();
@@ -150,7 +170,7 @@ public class Selected : MonoBehaviour
             {
                 MostrarSolo(DoorPromptPanel);
 
-                if (InputManagerCustom.PressB())
+                if (InputManagerCustom.PressX())
                 {
                     Debug.Log("Abriendo/cerrando cajón: " + drawer.gameObject.name);
                     drawer.ToggleDrawer();
@@ -205,9 +225,31 @@ public class Selected : MonoBehaviour
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
 
+            if (ultimoNPCMirado != null)
+            {
+                ultimoNPCMirado.SetMirandoNPC(false);
+                ultimoNPCMirado = null;
+            }
+
             ApagarPrompts();
             Deselect();
+            
         }
+    }
+
+    void ApagarTodosLosPrompts()
+    {
+        if (TextDetect != null)
+            TextDetect.SetActive(false);
+
+        if (DoorPromptPanel != null)
+            DoorPromptPanel.SetActive(false);
+
+        if (MissionPromptPanel != null)
+            MissionPromptPanel.SetActive(false);
+
+        if (ClothingPromptPanel != null)
+            ClothingPromptPanel.SetActive(false);
     }
 
     void MostrarSolo(GameObject panel)

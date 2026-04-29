@@ -9,7 +9,7 @@ public class LogicaNPC : MonoBehaviour
     public GameObject panelInteraccionNPC;
     public GameObject panelDialogoNPC;
 
-    [Header("Botón salir (imagen)")]
+    [Header("Botón salir")]
     public Button botonSalirDialogo;
 
     [Header("Textos")]
@@ -35,16 +35,16 @@ public class LogicaNPC : MonoBehaviour
     public AudioClip audioRamaC2;
     public AudioClip audioCierre;
 
-    [Header("Configuración")]
-    public KeyCode teclaHablarTeclado = KeyCode.X;
-    public KeyCode teclaHablarJoystick = KeyCode.JoystickButton3;
-    public KeyCode teclaOpcion1 = KeyCode.JoystickButton11;
-    public KeyCode teclaOpcion2 = KeyCode.JoystickButton7;
-    public KeyCode teclaOpcion3 = KeyCode.JoystickButton4;
-    public float velocidadEscritura = 0.03f;
+    [Header("Detección por distancia")]
+    public Transform player;
+    public float distanciaParaHablar = 2f;
 
-    [Header("Debug")]
+    [Header("Detección por mirada")]
     public bool jugadorCerca = false;
+    public bool jugadorMirando = false;
+
+    [Header("Configuración")]
+    public float velocidadEscritura = 0.03f;
 
     private bool dialogoActivo = false;
     private bool escribiendo = false;
@@ -52,69 +52,123 @@ public class LogicaNPC : MonoBehaviour
 
     private enum EstadoDialogo
     {
-        Inicio, RamaA, RamaA1, RamaA2, RamaB, RamaC, RamaC1, RamaC2, Cierre
+        Inicio,
+        RamaA,
+        RamaA1,
+        RamaA2,
+        RamaB,
+        RamaC,
+        RamaC1,
+        RamaC2,
+        Cierre
     }
 
     private EstadoDialogo estadoActual;
 
     void Awake()
     {
-        if (panelInteraccionNPC != null) panelInteraccionNPC.SetActive(false);
-        if (panelDialogoNPC != null) panelDialogoNPC.SetActive(false);
-        if (botonSalirDialogo != null) botonSalirDialogo.gameObject.SetActive(false);
+        jugadorCerca = false;
+        jugadorMirando = false;
+        dialogoActivo = false;
+        escribiendo = false;
+
+        if (panelInteraccionNPC != null)
+            panelInteraccionNPC.SetActive(false);
+
+        if (panelDialogoNPC != null)
+            panelDialogoNPC.SetActive(false);
+
+        if (botonSalirDialogo != null)
+            botonSalirDialogo.gameObject.SetActive(false);
     }
 
     void Start()
     {
-        if (botonOpcion1 != null) botonOpcion1.onClick.AddListener(Opcion1);
-        if (botonOpcion2 != null) botonOpcion2.onClick.AddListener(Opcion2);
-        if (botonOpcion3 != null) botonOpcion3.onClick.AddListener(Opcion3);
-        if (botonSalirDialogo != null) botonSalirDialogo.onClick.AddListener(CerrarDialogo);
+        if (botonOpcion1 != null)
+            botonOpcion1.onClick.AddListener(Opcion1);
+
+        if (botonOpcion2 != null)
+            botonOpcion2.onClick.AddListener(Opcion2);
+
+        if (botonOpcion3 != null)
+            botonOpcion3.onClick.AddListener(Opcion3);
+
+        if (botonSalirDialogo != null)
+            botonSalirDialogo.onClick.AddListener(CerrarDialogo);
     }
 
     void Update()
     {
-        if (panelInteraccionNPC != null)
-            panelInteraccionNPC.SetActive(jugadorCerca && !dialogoActivo);
+        ActualizarCercaniaPorDistancia();
 
-        if (jugadorCerca && !dialogoActivo &&
-            (Input.GetKeyDown(teclaHablarTeclado) || Input.GetKeyDown(teclaHablarJoystick)))
+        bool puedeHablar = jugadorCerca && jugadorMirando && !dialogoActivo;
+
+        if (panelInteraccionNPC != null)
+            panelInteraccionNPC.SetActive(puedeHablar);
+
+        // 🔹 HABLAR con Y
+        if (puedeHablar && InputManagerCustom.PressY())
         {
             IniciarDialogo();
+            return;
         }
 
-        if (dialogoActivo && InputManagerCustom.PressB())
+        // 🔹 SALIR con X
+        if (dialogoActivo && InputManagerCustom.PressX())
         {
-            Debug.Log("Salir del diálogo manualmente");
             CerrarDialogo();
             return;
         }
 
         if (dialogoActivo && !escribiendo)
         {
-            if (botonOpcion1 != null && botonOpcion1.gameObject.activeSelf && Input.GetKeyDown(teclaOpcion1))
+            if (botonOpcion1 != null && botonOpcion1.gameObject.activeSelf && InputManagerCustom.PressY())
                 Opcion1();
-            if (botonOpcion2 != null && botonOpcion2.gameObject.activeSelf && Input.GetKeyDown(teclaOpcion2))
+
+            if (botonOpcion2 != null && botonOpcion2.gameObject.activeSelf && InputManagerCustom.PressA())
                 Opcion2();
-            if (botonOpcion3 != null && botonOpcion3.gameObject.activeSelf && Input.GetKeyDown(teclaOpcion3))
+
+            if (botonOpcion3 != null && botonOpcion3.gameObject.activeSelf && InputManagerCustom.PressB())
                 Opcion3();
         }
     }
-
-    private void ReproducirAudioDialogo(AudioClip clip)
+    void ActualizarCercaniaPorDistancia()
     {
-        if (fuenteAudio == null || clip == null) return;
-        fuenteAudio.Stop();
-        fuenteAudio.clip = clip;
-        fuenteAudio.Play();
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObj != null)
+                player = playerObj.transform;
+        }
+
+        if (player == null)
+        {
+            jugadorCerca = false;
+            return;
+        }
+
+        float distancia = Vector3.Distance(transform.position, player.position);
+        jugadorCerca = distancia <= distanciaParaHablar;
+    }
+
+    public void SetMirandoNPC(bool mirando)
+    {
+        jugadorMirando = mirando;
     }
 
     private void IniciarDialogo()
     {
         dialogoActivo = true;
-        if (panelInteraccionNPC != null) panelInteraccionNPC.SetActive(false);
-        if (panelDialogoNPC != null) panelDialogoNPC.SetActive(true);
-        if (botonSalirDialogo != null) botonSalirDialogo.gameObject.SetActive(true);
+
+        if (panelInteraccionNPC != null)
+            panelInteraccionNPC.SetActive(false);
+
+        if (panelDialogoNPC != null)
+            panelDialogoNPC.SetActive(true);
+
+        if (botonSalirDialogo != null)
+            botonSalirDialogo.gameObject.SetActive(true);
 
         estadoActual = EstadoDialogo.Inicio;
         MostrarEstadoActual();
@@ -132,12 +186,13 @@ public class LogicaNPC : MonoBehaviour
                     "¡Ey! ¿Quieres jugar conmigo?\nEstoy armando algo… pero me falta una pieza.\n\n¿Me ayudas o estás ocupado?",
                     () =>
                     {
-                        if (textoOpcion1 != null) textoOpcion1.text = "Sí, ¿a qué estás jugando?  Y";
-                        if (textoOpcion2 != null) textoOpcion2.text = "No puedo ahora, tengo que alistarme.  A";
-                        if (textoOpcion3 != null) textoOpcion3.text = "¿Qué estás haciendo?  B";
-                        if (botonOpcion1 != null) botonOpcion1.gameObject.SetActive(true);
-                        if (botonOpcion2 != null) botonOpcion2.gameObject.SetActive(true);
-                        if (botonOpcion3 != null) botonOpcion3.gameObject.SetActive(true);
+                        textoOpcion1.text = "Sí, ¿a qué estás jugando?  Y";
+                        textoOpcion2.text = "No puedo ahora, tengo que alistarme.  A";
+                        textoOpcion3.text = "¿Qué estás haciendo?  B";
+
+                        botonOpcion1.gameObject.SetActive(true);
+                        botonOpcion2.gameObject.SetActive(true);
+                        botonOpcion3.gameObject.SetActive(true);
                     }
                 );
                 break;
@@ -148,12 +203,13 @@ public class LogicaNPC : MonoBehaviour
                     "¡Estoy armando una casita!\nPero siempre se me cae…\n\nTú eres mejor que yo… ¿cierto?",
                     () =>
                     {
-                        if (textoOpcion1 != null) textoOpcion1.text = "Déjame ayudarte.  A";
-                        if (textoOpcion2 != null) textoOpcion2.text = "Está bien así.  B";
-                        if (textoOpcion3 != null) textoOpcion3.text = "";
-                        if (botonOpcion1 != null) botonOpcion1.gameObject.SetActive(true);
-                        if (botonOpcion2 != null) botonOpcion2.gameObject.SetActive(true);
-                        if (botonOpcion3 != null) botonOpcion3.gameObject.SetActive(false);
+                        textoOpcion1.text = "Déjame ayudarte.  Y";
+                        textoOpcion2.text = "Está bien así.  A";
+                        textoOpcion3.text = "";
+
+                        botonOpcion1.gameObject.SetActive(true);
+                        botonOpcion2.gameObject.SetActive(true);
+                        botonOpcion3.gameObject.SetActive(false);
                     }
                 );
                 break;
@@ -162,7 +218,7 @@ public class LogicaNPC : MonoBehaviour
                 ReproducirAudioDialogo(audioRamaA1);
                 IniciarEscritura(
                     "¡Sabía que sí!\nCuando seas grande, seguro vas a hacer cosas increíbles.",
-                    () => { MostrarSoloBotonContinuar(); }
+                    MostrarSoloBotonContinuar
                 );
                 break;
 
@@ -170,7 +226,7 @@ public class LogicaNPC : MonoBehaviour
                 ReproducirAudioDialogo(audioRamaA2);
                 IniciarEscritura(
                     "Bueno… igual me gusta como queda.\nNo todo tiene que ser perfecto.",
-                    () => { MostrarSoloBotonContinuar(); }
+                    MostrarSoloBotonContinuar
                 );
                 break;
 
@@ -178,7 +234,7 @@ public class LogicaNPC : MonoBehaviour
                 ReproducirAudioDialogo(audioRamaB);
                 IniciarEscritura(
                     "Ahh…\nSiempre estás ocupado…\n\nBueno… pero no te demores mucho.\nLuego jugamos, ¿sí?",
-                    () => { MostrarSoloBotonContinuar(); }
+                    MostrarSoloBotonContinuar
                 );
                 break;
 
@@ -188,12 +244,13 @@ public class LogicaNPC : MonoBehaviour
                     "Es una casa…\nPara que vivamos todos…\n\nAsí no se nos olvida nada.\n¿Tú crees que las cosas se olvidan?",
                     () =>
                     {
-                        if (textoOpcion1 != null) textoOpcion1.text = "A veces…  A";
-                        if (textoOpcion2 != null) textoOpcion2.text = "No, si las recuerdas.  B";
-                        if (textoOpcion3 != null) textoOpcion3.text = "";
-                        if (botonOpcion1 != null) botonOpcion1.gameObject.SetActive(true);
-                        if (botonOpcion2 != null) botonOpcion2.gameObject.SetActive(true);
-                        if (botonOpcion3 != null) botonOpcion3.gameObject.SetActive(false);
+                        textoOpcion1.text = "A veces…  Y";
+                        textoOpcion2.text = "No, si las recuerdas.  A";
+                        textoOpcion3.text = "";
+
+                        botonOpcion1.gameObject.SetActive(true);
+                        botonOpcion2.gameObject.SetActive(true);
+                        botonOpcion3.gameObject.SetActive(false);
                     }
                 );
                 break;
@@ -201,140 +258,150 @@ public class LogicaNPC : MonoBehaviour
             case EstadoDialogo.RamaC1:
                 ReproducirAudioDialogo(audioRamaC1);
                 IniciarEscritura(
-                    "Entonces hay que cuidarlas…\nPara que no desaparezcan.",
-                    () => { MostrarSoloBotonContinuar(); }
+                    "Sí… a veces las cosas se van poquito a poquito.",
+                    MostrarSoloBotonContinuar
                 );
                 break;
 
             case EstadoDialogo.RamaC2:
                 ReproducirAudioDialogo(audioRamaC2);
                 IniciarEscritura(
-                    "Entonces está bien…\nPorque yo no quiero olvidar esto.",
-                    () => { MostrarSoloBotonContinuar(); }
+                    "Entonces acuérdate de mí siempre, ¿sí?",
+                    MostrarSoloBotonContinuar
                 );
                 break;
 
             case EstadoDialogo.Cierre:
                 ReproducirAudioDialogo(audioCierre);
                 IniciarEscritura(
-                    "Bueno… ve, que mamá te está llamando.",
-                    () =>
-                    {
-                        if (textoOpcion1 != null) textoOpcion1.text = "Cerrar  A";
-                        if (textoOpcion2 != null) textoOpcion2.text = "";
-                        if (textoOpcion3 != null) textoOpcion3.text = "";
-                        if (botonOpcion1 != null) botonOpcion1.gameObject.SetActive(true);
-                        if (botonOpcion2 != null) botonOpcion2.gameObject.SetActive(false);
-                        if (botonOpcion3 != null) botonOpcion3.gameObject.SetActive(false);
-                    }
+                    "Bueno… ve pues.\nPero vuelve a jugar conmigo.",
+                    MostrarSoloBotonCerrar
                 );
                 break;
         }
     }
 
-    void IniciarEscritura(string mensaje, System.Action alTerminar)
+    private void Opcion1()
     {
-        if (rutinaEscritura != null) StopCoroutine(rutinaEscritura);
-        rutinaEscritura = StartCoroutine(EscribirTexto(mensaje, alTerminar));
+        if (estadoActual == EstadoDialogo.Inicio)
+            estadoActual = EstadoDialogo.RamaA;
+        else if (estadoActual == EstadoDialogo.RamaA)
+            estadoActual = EstadoDialogo.RamaA1;
+        else if (estadoActual == EstadoDialogo.RamaC)
+            estadoActual = EstadoDialogo.RamaC1;
+        else
+            estadoActual = EstadoDialogo.Cierre;
+
+        MostrarEstadoActual();
     }
 
-    IEnumerator EscribirTexto(string mensaje, System.Action alTerminar)
+    private void Opcion2()
+    {
+        if (estadoActual == EstadoDialogo.Inicio)
+            estadoActual = EstadoDialogo.RamaB;
+        else if (estadoActual == EstadoDialogo.RamaA)
+            estadoActual = EstadoDialogo.RamaA2;
+        else if (estadoActual == EstadoDialogo.RamaC)
+            estadoActual = EstadoDialogo.RamaC2;
+        else
+            estadoActual = EstadoDialogo.Cierre;
+
+        MostrarEstadoActual();
+    }
+
+    private void Opcion3()
+    {
+        if (estadoActual == EstadoDialogo.Inicio)
+            estadoActual = EstadoDialogo.RamaC;
+        else
+            estadoActual = EstadoDialogo.Cierre;
+
+        MostrarEstadoActual();
+    }
+
+    private void MostrarSoloBotonContinuar()
+    {
+        OcultarBotones();
+
+        textoOpcion1.text = "Continuar  Y";
+        botonOpcion1.gameObject.SetActive(true);
+    }
+
+    private void MostrarSoloBotonCerrar()
+    {
+        OcultarBotones();
+
+        // Ya no mostramos opción "Cerrar".
+        // El jugador debe usar el botón visual "Salir X".
+    }
+
+    private void OcultarBotones()
+    {
+        if (botonOpcion1 != null)
+            botonOpcion1.gameObject.SetActive(false);
+
+        if (botonOpcion2 != null)
+            botonOpcion2.gameObject.SetActive(false);
+
+        if (botonOpcion3 != null)
+            botonOpcion3.gameObject.SetActive(false);
+    }
+
+    private void IniciarEscritura(string texto, System.Action alTerminar)
+    {
+        if (rutinaEscritura != null)
+            StopCoroutine(rutinaEscritura);
+
+        rutinaEscritura = StartCoroutine(EscribirTexto(texto, alTerminar));
+    }
+
+    private IEnumerator EscribirTexto(string texto, System.Action alTerminar)
     {
         escribiendo = true;
-        if (textoDialogo != null) textoDialogo.text = "";
 
-        foreach (char letra in mensaje)
+        if (textoDialogo != null)
+            textoDialogo.text = "";
+
+        foreach (char letra in texto)
         {
-            if (textoDialogo != null) textoDialogo.text += letra;
+            if (textoDialogo != null)
+                textoDialogo.text += letra;
+
             yield return new WaitForSeconds(velocidadEscritura);
         }
 
         escribiendo = false;
+
         alTerminar?.Invoke();
     }
 
-    void OcultarBotones()
-    {
-        if (botonOpcion1 != null) botonOpcion1.gameObject.SetActive(false);
-        if (botonOpcion2 != null) botonOpcion2.gameObject.SetActive(false);
-        if (botonOpcion3 != null) botonOpcion3.gameObject.SetActive(false);
-        if (textoOpcion1 != null) textoOpcion1.text = "";
-        if (textoOpcion2 != null) textoOpcion2.text = "";
-        if (textoOpcion3 != null) textoOpcion3.text = "";
-    }
-
-    void MostrarSoloBotonContinuar()
-    {
-        if (textoOpcion1 != null) textoOpcion1.text = "Continuar  A";
-        if (textoOpcion2 != null) textoOpcion2.text = "";
-        if (textoOpcion3 != null) textoOpcion3.text = "";
-        if (botonOpcion1 != null) botonOpcion1.gameObject.SetActive(true);
-        if (botonOpcion2 != null) botonOpcion2.gameObject.SetActive(false);
-        if (botonOpcion3 != null) botonOpcion3.gameObject.SetActive(false);
-    }
-
-    public void Opcion1()
-    {
-        switch (estadoActual)
-        {
-            case EstadoDialogo.Inicio: estadoActual = EstadoDialogo.RamaA; break;
-            case EstadoDialogo.RamaA: estadoActual = EstadoDialogo.RamaA1; break;
-            case EstadoDialogo.RamaC: estadoActual = EstadoDialogo.RamaC1; break;
-            case EstadoDialogo.RamaA1:
-            case EstadoDialogo.RamaA2:
-            case EstadoDialogo.RamaB:
-            case EstadoDialogo.RamaC1:
-            case EstadoDialogo.RamaC2: estadoActual = EstadoDialogo.Cierre; break;
-            case EstadoDialogo.Cierre: CerrarDialogo(); return;
-        }
-        MostrarEstadoActual();
-    }
-
-    public void Opcion2()
-    {
-        switch (estadoActual)
-        {
-            case EstadoDialogo.Inicio: estadoActual = EstadoDialogo.RamaB; break;
-            case EstadoDialogo.RamaA: estadoActual = EstadoDialogo.RamaA2; break;
-            case EstadoDialogo.RamaC: estadoActual = EstadoDialogo.RamaC2; break;
-            default: return;
-        }
-        MostrarEstadoActual();
-    }
-
-    public void Opcion3()
-    {
-        switch (estadoActual)
-        {
-            case EstadoDialogo.Inicio: estadoActual = EstadoDialogo.RamaC; break;
-            default: return;
-        }
-        MostrarEstadoActual();
-    }
-
-    public void CerrarDialogo()
+    private void CerrarDialogo()
     {
         dialogoActivo = false;
         escribiendo = false;
 
-        if (rutinaEscritura != null) { StopCoroutine(rutinaEscritura); rutinaEscritura = null; }
-        if (panelDialogoNPC != null) panelDialogoNPC.SetActive(false);
-        if (panelInteraccionNPC != null) panelInteraccionNPC.SetActive(false);
-        if (botonSalirDialogo != null) botonSalirDialogo.gameObject.SetActive(false);
+        if (rutinaEscritura != null)
+            StopCoroutine(rutinaEscritura);
+
+        if (fuenteAudio != null)
+            fuenteAudio.Stop();
+
+        if (panelDialogoNPC != null)
+            panelDialogoNPC.SetActive(false);
+
+        if (botonSalirDialogo != null)
+            botonSalirDialogo.gameObject.SetActive(false);
+
+        OcultarBotones();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void ReproducirAudioDialogo(AudioClip clip)
     {
-        if (other.CompareTag("Player")) { jugadorCerca = true; Debug.Log("Jugador entró al área del NPC"); }
-    }
+        if (fuenteAudio == null || clip == null)
+            return;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            jugadorCerca = false;
-            if (panelInteraccionNPC != null) panelInteraccionNPC.SetActive(false);
-            Debug.Log("Jugador salió del área del NPC");
-        }
+        fuenteAudio.Stop();
+        fuenteAudio.clip = clip;
+        fuenteAudio.Play();
     }
 }

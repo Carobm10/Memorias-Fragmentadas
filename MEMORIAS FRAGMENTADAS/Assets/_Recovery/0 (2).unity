@@ -5335,6 +5335,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0384924749c034ea7e9c56f2b06ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogicaNPC
+  panelInteraccionNPC: {fileID: 0}
+  panelDialogoNPC: {fileID: 0}
+  botonSalirDialogo: {fileID: 0}
+  textoDialogo: {fileID: 0}
+  textoOpcion1: {fileID: 0}
+  textoOpcion2: {fileID: 0}
+  textoOpcion3: {fileID: 0}
+  botonOpcion1: {fileID: 0}
+  botonOpcion2: {fileID: 0}
+  botonOpcion3: {fileID: 0}
+  fuenteAudio: {fileID: 0}
+  audioInicio: {fileID: 0}
+  audioRamaA: {fileID: 0}
+  audioRamaA1: {fileID: 0}
+  audioRamaA2: {fileID: 0}
+  audioRamaB: {fileID: 0}
+  audioRamaC: {fileID: 0}
+  audioRamaC1: {fileID: 0}
+  audioRamaC2: {fileID: 0}
+  audioCierre: {fileID: 0}
+  player: {fileID: 0}
+  distanciaParaHablar: 2
+  jugadorCerca: 0
+  jugadorMirando: 0
+  velocidadEscritura: 0.03
 --- !u!1 &616668806
 GameObject:
   m_ObjectHideFlags: 0
@@ -8396,7 +8421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &892483948
 MonoBehaviour:
   m_ObjectHideFlags: 0

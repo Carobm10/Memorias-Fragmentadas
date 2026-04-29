@@ -100,8 +100,11 @@ public class OjosDespertarIntro : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("OJOS INTRO START");
+
         if (iniciarAutomaticamente)
         {
+            Debug.Log("OJOS INTRO INICIANDO");
             IniciarIntro();
         }
     }
@@ -124,6 +127,8 @@ public class OjosDespertarIntro : MonoBehaviour
 
     private void CrearOverlay()
     {
+        Debug.Log("OJOS INTRO CREANDO OVERLAY");
+        
         if (overlayRoot != null)
         {
             Destroy(overlayRoot);
