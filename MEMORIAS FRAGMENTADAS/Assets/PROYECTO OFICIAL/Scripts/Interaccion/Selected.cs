@@ -2,13 +2,18 @@
 
 public class Selected : MonoBehaviour
 {
-    private LayerMask mask;
+    [Header("Puntero 3D")]
+    public Pointer3DController pointer3D;
 
-    public float distancia = 2f;
-    public Texture2D puntero;
+    [Header("Raycast")]
+    public float distancia = 3f;
+    private LayerMask mask;
 
     [Header("Prompt general")]
     public GameObject TextDetect;
+
+    [Header("Prompt puertas")]
+    public GameObject DoorPromptPanel;
 
     [Header("Prompt clóset")]
     public GameObject MissionPromptPanel;
@@ -28,29 +33,15 @@ public class Selected : MonoBehaviour
     {
         mask = LayerMask.GetMask("Raycast Detect");
 
-        if (MissionPromptPanel != null)
-            MissionPromptPanel.SetActive(false);
-
-        if (ClothingPromptPanel != null)
-            ClothingPromptPanel.SetActive(false);
-
-        if (TextDetect != null)
-            TextDetect.SetActive(false);
+        ApagarPrompts();
     }
 
     void Update()
     {
         if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
         {
-            if (TextDetect != null)
-                TextDetect.SetActive(false);
-
-            if (MissionPromptPanel != null)
-                MissionPromptPanel.SetActive(false);
-
-            if (ClothingPromptPanel != null)
-                ClothingPromptPanel.SetActive(false);
-
+            ApagarPrompts();
+            if (pointer3D != null) pointer3D.SetDetected(false);
             return;
         }
 
@@ -58,6 +49,9 @@ public class Selected : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, distancia, mask))
         {
+            if (pointer3D != null)
+                pointer3D.SetDetected(true);
+
             GameObject objetoDetectado = hit.collider.gameObject;
 
             if (ultimoReconocido != objetoDetectado)
@@ -66,25 +60,29 @@ public class Selected : MonoBehaviour
                 SelectedObject(hit.collider);
             }
 
-            ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
-            if (closet == null)
-                closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
+            // 1. NPC
+            LogicaNPC npc = hit.collider.GetComponent<LogicaNPC>();
+            if (npc == null)
+                npc = hit.collider.GetComponentInParent<LogicaNPC>();
 
+            if (npc != null)
+            {
+                ApagarPrompts();
+                return;
+            }
+
+            // 2. Prendas del clóset
             ClosetClothingItem clothing = hit.collider.GetComponent<ClosetClothingItem>();
             if (clothing == null)
                 clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
 
-            // Si mira una prenda
             if (clothing != null)
             {
-                if (ClothingPromptPanel != null)
-                    ClothingPromptPanel.SetActive(true);
+                MostrarSolo(ClothingPromptPanel);
 
-                if (MissionPromptPanel != null)
-                    MissionPromptPanel.SetActive(false);
-
-                if (TextDetect != null)
-                    TextDetect.SetActive(false);
+                ClosetMissionTrigger closetForClothing = hit.collider.GetComponent<ClosetMissionTrigger>();
+                if (closetForClothing == null)
+                    closetForClothing = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
                 if (InputManagerCustom.PressB())
                 {
@@ -95,27 +93,24 @@ public class Selected : MonoBehaviour
                         closetCanvasManager.AbrirCanvas(
                             clothing.clothingCanvas,
                             clothing.isCorrect,
-                            closet
+                            closetForClothing
                         );
                     }
 
                     return;
                 }
-            }
-            else
-            {
-                if (ClothingPromptPanel != null)
-                    ClothingPromptPanel.SetActive(false);
+
+                return;
             }
 
-            // Si mira el clóset antes de iniciar misión
-            if (clothing == null && closet != null && !closet.missionStarted)
-            {
-                if (MissionPromptPanel != null)
-                    MissionPromptPanel.SetActive(true);
+            // 3. Clóset / misión
+            ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
+            if (closet == null)
+                closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
-                if (TextDetect != null)
-                    TextDetect.SetActive(false);
+            if (closet != null && !closet.missionStarted && !closet.missionCompleted)
+            {
+                MostrarSolo(MissionPromptPanel);
 
                 if (InputManagerCustom.PressX())
                 {
@@ -123,79 +118,126 @@ public class Selected : MonoBehaviour
                     closet.StartClosetMission();
                     return;
                 }
-            }
-            else
-            {
-                if (MissionPromptPanel != null && clothing == null)
-                    MissionPromptPanel.SetActive(false);
+
+                return;
             }
 
-            // Interacción normal si no es prenda ni clóset misión
-            if (clothing == null && closet == null)
+            // 4. Puertas normales
+            DoorInteractable door = hit.collider.GetComponent<DoorInteractable>();
+            if (door == null)
+                door = hit.collider.GetComponentInParent<DoorInteractable>();
+
+            if (door != null)
             {
+                MostrarSolo(DoorPromptPanel);
+
                 if (InputManagerCustom.PressB())
                 {
-                    Debug.Log("Interactuando con objeto normal");
-
-                    SystemDoor door = hit.collider.GetComponent<SystemDoor>();
-                    if (door == null)
-                        door = hit.collider.GetComponentInParent<SystemDoor>();
-
-                    if (door != null)
-                    {
-                        door.ToggleDoor();
-                        return;
-                    }
-
-                    SystemDrawer drawer = hit.collider.GetComponent<SystemDrawer>();
-                    if (drawer == null)
-                        drawer = hit.collider.GetComponentInParent<SystemDrawer>();
-
-                    if (drawer != null)
-                    {
-                        drawer.ToggleDrawer();
-                        return;
-                    }
+                    Debug.Log("Abriendo/cerrando puerta: " + door.gameObject.name);
+                    door.ToggleDoor();
+                    return;
                 }
+
+                return;
             }
 
-            // Inspección
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                InspectableObject inspectable = hit.collider.GetComponent<InspectableObject>();
-                if (inspectable == null)
-                    inspectable = hit.collider.GetComponentInParent<InspectableObject>();
+            // 5. Cajones
+            DrawerInteractable drawer = hit.collider.GetComponent<DrawerInteractable>();
+            if (drawer == null)
+                drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
 
-                if (inspectable != null)
+            if (drawer != null)
+            {
+                MostrarSolo(DoorPromptPanel);
+
+                if (InputManagerCustom.PressB())
+                {
+                    Debug.Log("Abriendo/cerrando cajón: " + drawer.gameObject.name);
+                    drawer.ToggleDrawer();
+                    return;
+                }
+
+                return;
+            }
+
+            // 6. Objetos inspeccionables
+            InspectableObject inspectable = hit.collider.GetComponent<InspectableObject>();
+            if (inspectable == null)
+                inspectable = hit.collider.GetComponentInParent<InspectableObject>();
+
+            if (inspectable != null)
+            {
+                MostrarSolo(TextDetect);
+
+                if (InputManagerCustom.PressX())
                 {
                     currentInspectable = inspectable;
                     inspectable.ToggleInspect();
                     return;
                 }
 
-                ObjetoInteractivo objeto = hit.collider.GetComponent<ObjetoInteractivo>();
-                if (objeto == null)
-                    objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
+                return;
+            }
 
-                if (objeto != null)
+            // 7. Objeto interactivo simple
+            ObjetoInteractivo objeto = hit.collider.GetComponent<ObjetoInteractivo>();
+            if (objeto == null)
+                objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
+
+            if (objeto != null)
+            {
+                MostrarSolo(TextDetect);
+
+                if (InputManagerCustom.PressX())
                 {
                     objeto.ActivarObjeto();
                     return;
                 }
+
+                return;
             }
 
+            ApagarPrompts();
             Debug.DrawRay(transform.position, transform.forward * distancia, Color.red);
         }
         else
         {
-            if (MissionPromptPanel != null)
-                MissionPromptPanel.SetActive(false);
+            if (pointer3D != null)
+                pointer3D.SetDetected(false);
 
-            if (ClothingPromptPanel != null)
-                ClothingPromptPanel.SetActive(false);
-
+            ApagarPrompts();
             Deselect();
         }
+    }
+
+    void MostrarSolo(GameObject panel)
+    {
+        if (TextDetect != null)
+            TextDetect.SetActive(panel == TextDetect);
+
+        if (DoorPromptPanel != null)
+            DoorPromptPanel.SetActive(panel == DoorPromptPanel);
+
+        if (MissionPromptPanel != null)
+            MissionPromptPanel.SetActive(panel == MissionPromptPanel);
+
+        if (ClothingPromptPanel != null)
+            ClothingPromptPanel.SetActive(panel == ClothingPromptPanel);
+    }
+
+    void ApagarPrompts()
+    {
+        if (TextDetect != null)
+            TextDetect.SetActive(false);
+
+        if (DoorPromptPanel != null)
+            DoorPromptPanel.SetActive(false);
+
+        if (MissionPromptPanel != null)
+            MissionPromptPanel.SetActive(false);
+
+        if (ClothingPromptPanel != null)
+            ClothingPromptPanel.SetActive(false);
     }
 
     void SelectedObject(Collider col)
@@ -207,19 +249,15 @@ public class Selected : MonoBehaviour
         if (highlightGroup != null)
         {
             Renderer[] renderers = highlightGroup.GetComponentsInChildren<Renderer>();
+            renderersActuales = renderers;
+            coloresOriginales = new Color[renderers.Length];
 
-            if (renderers != null && renderers.Length > 0)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                renderersActuales = renderers;
-                coloresOriginales = new Color[renderers.Length];
-
-                for (int i = 0; i < renderers.Length; i++)
+                if (renderers[i] != null && renderers[i].material.HasProperty("_Color"))
                 {
-                    if (renderers[i] != null && renderers[i].material.HasProperty("_Color"))
-                    {
-                        coloresOriginales[i] = renderers[i].material.color;
-                        renderers[i].material.color = Color.green;
-                    }
+                    coloresOriginales[i] = renderers[i].material.color;
+                    renderers[i].material.color = Color.green;
                 }
             }
 
@@ -230,8 +268,6 @@ public class Selected : MonoBehaviour
         Renderer renderer = col.GetComponent<Renderer>();
         if (renderer == null)
             renderer = col.GetComponentInParent<Renderer>();
-        if (renderer == null)
-            renderer = col.GetComponentInChildren<Renderer>();
 
         if (renderer != null && renderer.material.HasProperty("_Color"))
         {
@@ -259,51 +295,5 @@ public class Selected : MonoBehaviour
         ultimoReconocido = null;
         renderersActuales = null;
         coloresOriginales = null;
-    }
-
-    void OnGUI()
-    {
-        if (puntero != null)
-        {
-            float size = 12f;
-            Rect rect = new Rect(
-                (Screen.width - size) / 2,
-                (Screen.height - size) / 2,
-                size,
-                size
-            );
-
-            GUI.DrawTexture(rect, puntero);
-        }
-
-        if (TextDetect != null)
-        {
-            if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
-            {
-                TextDetect.SetActive(false);
-                return;
-            }
-
-            bool mirandoCloset = false;
-            bool mirandoPrenda = false;
-
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, distancia, mask))
-            {
-                ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
-                if (closet == null)
-                    closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
-
-                mirandoCloset = closet != null && !closet.missionStarted;
-
-                ClosetClothingItem clothing = hit.collider.GetComponent<ClosetClothingItem>();
-                if (clothing == null)
-                    clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
-
-                mirandoPrenda = clothing != null;
-            }
-
-            TextDetect.SetActive((ultimoReconocido != null || currentInspectable != null) && !mirandoCloset && !mirandoPrenda);
-        }
     }
 }

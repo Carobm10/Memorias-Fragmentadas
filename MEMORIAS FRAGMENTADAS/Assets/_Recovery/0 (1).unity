@@ -4408,7 +4408,7 @@ MonoBehaviour:
   velocidadEscritura: 0.03
   audioSource: {fileID: 0}
   audioInicio: {fileID: 8300000, guid: f580a21879ce4fe45840ece329b0696c, type: 3}
-  audioRamaA: {fileID: 8300000, guid: c1f24ba118c0b6a4ba6a5e8b04960ac1, type: 3}
+  audioRamaA: {fileID: 0}
   audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
   audioRamaA2: {fileID: 8300000, guid: e94b123a84dfd9445a866ee13b835f7e, type: 3}
   audioRamaB: {fileID: 8300000, guid: 8607f96c493fe8f46b922a2552bd0761, type: 3}
@@ -9257,7 +9257,7 @@ MonoBehaviour:
   velocidadEscritura: 0.03
   audioSource: {fileID: 0}
   audioInicio: {fileID: 8300000, guid: f580a21879ce4fe45840ece329b0696c, type: 3}
-  audioRamaA: {fileID: 8300000, guid: c1f24ba118c0b6a4ba6a5e8b04960ac1, type: 3}
+  audioRamaA: {fileID: 0}
   audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
   audioRamaA2: {fileID: 8300000, guid: e94b123a84dfd9445a866ee13b835f7e, type: 3}
   audioRamaB: {fileID: 8300000, guid: 8607f96c493fe8f46b922a2552bd0761, type: 3}

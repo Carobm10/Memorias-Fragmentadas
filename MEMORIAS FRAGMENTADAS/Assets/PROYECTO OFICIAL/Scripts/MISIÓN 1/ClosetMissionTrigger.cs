@@ -6,7 +6,7 @@ public class ClosetMissionTrigger : MonoBehaviour
     private MovimientoVR2 mov;
 
     [Header("Puertas del clóset")]
-    public SystemDoor[] closetDoors;
+    public DoorInteractable[] closetDoors;
 
     [Header("Estado misión")]
     public bool missionStarted = false;
@@ -44,7 +44,7 @@ public class ClosetMissionTrigger : MonoBehaviour
         for (int i = 0; i < closetDoors.Length; i++)
         {
             if (closetDoors[i] != null)
-                closetDoors[i].ToggleDoor();
+                closetDoors[i].OpenDoor();
         }
 
         yield return new WaitForSeconds(delayAfterOpen);
@@ -138,6 +138,14 @@ public class ClosetMissionTrigger : MonoBehaviour
 
         missionCompleted = true;
         missionStarted = false;
+
+        // 🔥 Cerrar puertas del clóset
+        for (int i = 0; i < closetDoors.Length; i++)
+        {
+            if (closetDoors[i] != null)
+                closetDoors[i].CloseDoor();
+        }
+
     }
 
     public void ReactivarSeleccionSinMoverJugador()

@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class ClosetCanvasManager : MonoBehaviour
 {
+    [Header("Bloqueo de cámara")]
+    public CameraLockController cameraLockController;
     public bool uiAbierta = false;
+
+    [Header("Puntero 3D")]
+    public GameObject pointer3D;
 
     private GameObject currentCanvas;
     private ClosetMissionTrigger currentClosetMission;
@@ -23,40 +28,13 @@ public class ClosetCanvasManager : MonoBehaviour
         currentCanvas.SetActive(true);
         uiAbierta = true;
 
+        if (pointer3D != null)
+            pointer3D.SetActive(false);
+
+        if (cameraLockController != null)
+            cameraLockController.LockCamera();
+
         Debug.Log("Canvas abierto: " + currentCanvas.name);
-    }
-
-    void Update()
-    {
-        if (!uiAbierta) return;
-
-        // Si es incorrecta
-        if (!currentChoiceIsCorrect)
-        {
-            if (InputManagerCustom.PressY())
-            {
-                Debug.Log("Probar otra prenda");
-                ProbarOtra();
-                return;
-            }
-
-            if (InputManagerCustom.PressX())
-            {
-                Debug.Log("Cerrar canvas incorrecto");
-                CerrarCanvasActual();
-                return;
-            }
-        }
-        else
-        {
-            // Si es correcta: X cierra y vuelve a cámara original
-            if (InputManagerCustom.PressX())
-            {
-                Debug.Log("Cerrar canvas correcto y volver");
-                SalirCanvasCorrecto();
-                return;
-            }
-        }
     }
 
     public void ProbarOtra()
@@ -81,12 +59,17 @@ public class ClosetCanvasManager : MonoBehaviour
 
     public void CerrarCanvasActual()
     {
+        
         if (currentCanvas != null)
-        {
             currentCanvas.SetActive(false);
-        }
 
         currentCanvas = null;
         uiAbierta = false;
+
+        if (pointer3D != null)
+            pointer3D.SetActive(true);
+
+        if (cameraLockController != null)
+            cameraLockController.UnlockCamera();
     }
 }
