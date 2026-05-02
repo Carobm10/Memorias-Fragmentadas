@@ -326,11 +326,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52404b3a97fd4564dba99266a4e7c700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selected
+  pointer3D: {fileID: 0}
   distancia: 1.5
-  puntero: {fileID: 2800000, guid: cde4a5a5cdb73484fbd47adf23173a39, type: 3}
   TextDetect: {fileID: 1396128308}
+  DoorPromptPanel: {fileID: 0}
   MissionPromptPanel: {fileID: 0}
   ClothingPromptPanel: {fileID: 0}
+  closetCanvasManager: {fileID: 0}
 --- !u!1 &33483669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,11 +2821,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ClosetMissionTrigger
   closetDoors: []
   missionStarted: 0
+  missionCompleted: 0
   delayAfterOpen: 1.5
   cameraFocusPoint: {fileID: 0}
   playerRoot: {fileID: 0}
   cameraTransform: {fileID: 0}
   moveDuration: 1.8
+  returnDuration: 1.5
   movementScript: {fileID: 0}
 --- !u!4 &479686186
 Transform:
@@ -4008,11 +4012,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ClosetMissionTrigger
   closetDoors: []
   missionStarted: 0
+  missionCompleted: 0
   delayAfterOpen: 1.5
   cameraFocusPoint: {fileID: 0}
   playerRoot: {fileID: 0}
   cameraTransform: {fileID: 0}
   moveDuration: 1.8
+  returnDuration: 1.5
   movementScript: {fileID: 0}
 --- !u!1 &738756072
 GameObject:
@@ -5722,13 +5728,42 @@ MonoBehaviour:
   velocidad: 0.46
   camara: {fileID: 14378717}
   gravedad: -9.8
+  puedeMoverse: 1
+  activarHeadBob: 1
+  bobFrecuencia: 8
+  bobAltura: 0.02
+  activarSonidoPasos: 1
+  usarVolumenCaminar: 1
+  volumenCaminar: 1
+  pasosPorSegundoMin: 1
+  pasosPorSegundoMax: 3
+  pitchPasoMin: 0.95
+  pitchPasoMax: 1.05
+  volumenPasoMin: 0.85
+  volumenPasoMax: 1
+  umbralMovimientoPasos: 0.03
+  pasosPorSegundoBase: 1.2
+  paso_madera_1: {fileID: 0}
+  paso_madera_2: {fileID: 0}
+  paso_madera_3: {fileID: 0}
+  paso_piso_1: {fileID: 0}
+  paso_piso_2: {fileID: 0}
+  origenDeteccionSuelo: {fileID: 0}
+  usarCharacterControllerComoOrigen: 1
+  nombresSuperficieMadera:
+  - piso_completo.001
+  - wood
+  nombresSuperficiePiso:
+  - piso_completo.002
+  - decorated tile
+  - tiles detailed
+  - tile
+  mostrarDebugSuperficie: 0
   activarModeloYAnimacion: 0
   animator: {fileID: 393637715}
   modelo: {fileID: 393637716}
   velocidadRotacion: 15
   suavizado: 6
-  bobFrecuencia: 8
-  bobAltura: 0.02
 --- !u!143 &1201270051
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5801,11 +5836,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52404b3a97fd4564dba99266a4e7c700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selected
+  pointer3D: {fileID: 0}
   distancia: 3
-  puntero: {fileID: 2800000, guid: cde4a5a5cdb73484fbd47adf23173a39, type: 3}
   TextDetect: {fileID: 1396128308}
+  DoorPromptPanel: {fileID: 0}
   MissionPromptPanel: {fileID: 0}
   ClothingPromptPanel: {fileID: 0}
+  closetCanvasManager: {fileID: 0}
 --- !u!1 &1214792971 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3538728806232672521, guid: 85980899ceeeb834d88c829d62238bf6, type: 3}
@@ -5982,11 +6019,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ClosetMissionTrigger
   closetDoors: []
   missionStarted: 0
+  missionCompleted: 0
   delayAfterOpen: 1.5
   cameraFocusPoint: {fileID: 0}
   playerRoot: {fileID: 0}
   cameraTransform: {fileID: 0}
   moveDuration: 1.8
+  returnDuration: 1.5
   movementScript: {fileID: 0}
 --- !u!4 &1308933005
 Transform:
