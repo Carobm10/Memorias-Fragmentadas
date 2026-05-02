@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Titulo : MonoBehaviour
 {
-    public float minY = 122f;     // límite derecha
+    public float minY = 153f;     // límite derecha
     public float maxY = 198.5f;   // límite izquierda
 
     void Update()
