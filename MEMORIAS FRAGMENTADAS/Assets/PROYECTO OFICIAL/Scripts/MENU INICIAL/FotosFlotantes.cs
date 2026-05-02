@@ -4,10 +4,10 @@ using UnityEngine;
 public class FotosFlotantes : MonoBehaviour
 {
     public GameObject[] prefabsFotos; // tus 16 fotos
-    public int cantidad = 60;
+    public int cantidad = 20;
 
-    public Vector3 tamanoArea = new Vector3(10f, 5f, 10f); // tamaño del cubo
-    public float alturaFlotacion = 0.5f;
+    public Vector3 tamanoArea = new Vector3(0.9f, 0.5f, 0.59f); // tamaño del cubo
+    public float alturaFlotacion = 0.01f;
     public float velocidadFlotacion = 1f;
 
     private List<GameObject> fotosInstanciadas = new List<GameObject>();
@@ -31,8 +31,8 @@ public class FotosFlotantes : MonoBehaviour
             GameObject foto = Instantiate(prefab, posicion, Quaternion.identity);
 
             // Escala aleatoria
-            float escala = Random.Range(0.5f, 1.5f);
-            float escalaBase = 20f; // AJUSTA este valor
+            float escala = Random.Range(0.5f, 1.1f);
+            float escalaBase = 0.2f; // AJUSTA este valor
             foto.transform.localScale = Vector3.one * escala * escalaBase;
 
             fotosInstanciadas.Add(foto);
