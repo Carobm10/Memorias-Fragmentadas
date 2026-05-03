@@ -31,7 +31,7 @@ public class FotosFlotantes : MonoBehaviour
             GameObject foto = Instantiate(prefab, posicion, Quaternion.identity);
 
             // Escala aleatoria
-            float escala = Random.Range(0.5f, 1.1f);
+            float escala = Random.Range(0.8f, 1.4f);
             float escalaBase = 0.2f; // AJUSTA este valor
             foto.transform.localScale = Vector3.one * escala * escalaBase;
 
