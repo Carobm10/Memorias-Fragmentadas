@@ -55,11 +55,6 @@ public class LogicaNPC : MonoBehaviour
         Inicio,
         RamaA,
         RamaA1,
-        RamaA2,
-        RamaB,
-        RamaC,
-        RamaC1,
-        RamaC2,
         Cierre
     }
 
@@ -80,18 +75,14 @@ public class LogicaNPC : MonoBehaviour
 
         if (botonSalirDialogo != null)
             botonSalirDialogo.gameObject.SetActive(false);
+
+        OcultarBotones();
     }
 
     void Start()
     {
         if (botonOpcion1 != null)
-            botonOpcion1.onClick.AddListener(Opcion1);
-
-        if (botonOpcion2 != null)
-            botonOpcion2.onClick.AddListener(Opcion2);
-
-        if (botonOpcion3 != null)
-            botonOpcion3.onClick.AddListener(Opcion3);
+            botonOpcion1.onClick.AddListener(OpcionPrincipal);
 
         if (botonSalirDialogo != null)
             botonSalirDialogo.onClick.AddListener(CerrarDialogo);
@@ -106,32 +97,29 @@ public class LogicaNPC : MonoBehaviour
         if (panelInteraccionNPC != null)
             panelInteraccionNPC.SetActive(puedeHablar);
 
-        // 🔹 HABLAR con Y
-        if (puedeHablar && InputManagerCustom.PressY())
+        // 🔹 INICIAR DIÁLOGO → BOTÓN A
+        if (puedeHablar && InputManagerCustom.PressA())
         {
             IniciarDialogo();
             return;
         }
 
-        // 🔹 SALIR con X
-        if (dialogoActivo && InputManagerCustom.PressX())
+        // 🔹 AVANZAR DIÁLOGO PRINCIPAL → BOTÓN A
+        if (dialogoActivo && !escribiendo && InputManagerCustom.PressA())
         {
-            CerrarDialogo();
+            OpcionPrincipal();
             return;
         }
 
-        if (dialogoActivo && !escribiendo)
+        // 🔹 SALIR DEL DIÁLOGO → BOTÓN X
+        if (dialogoActivo && InputManagerCustom.PressX())
         {
-            if (botonOpcion1 != null && botonOpcion1.gameObject.activeSelf && InputManagerCustom.PressY())
-                Opcion1();
-
-            if (botonOpcion2 != null && botonOpcion2.gameObject.activeSelf && InputManagerCustom.PressA())
-                Opcion2();
-
-            if (botonOpcion3 != null && botonOpcion3.gameObject.activeSelf && InputManagerCustom.PressB())
-                Opcion3();
+            Debug.Log("Cerrando diálogo con X");
+            CerrarDialogo();
+            return;
         }
     }
+
     void ActualizarCercaniaPorDistancia()
     {
         if (player == null)
@@ -183,16 +171,11 @@ public class LogicaNPC : MonoBehaviour
             case EstadoDialogo.Inicio:
                 ReproducirAudioDialogo(audioInicio);
                 IniciarEscritura(
-                    "¡Ey! ¿Quieres jugar conmigo?\nEstoy armando algo… pero me falta una pieza.\n\n¿Me ayudas o estás ocupado?",
+                    "¡Ey! ¿Quieres jugar conmigo?\nEstoy armando algo… pero me falta una pieza.\n\n¿Me ayudas?",
                     () =>
                     {
-                        textoOpcion1.text = "Sí, ¿a qué estás jugando?  Y";
-                        textoOpcion2.text = "No puedo ahora, tengo que alistarme.  A";
-                        textoOpcion3.text = "¿Qué estás haciendo?  B";
-
+                        textoOpcion1.text = "Sí, quiero ayudarte  X";
                         botonOpcion1.gameObject.SetActive(true);
-                        botonOpcion2.gameObject.SetActive(true);
-                        botonOpcion3.gameObject.SetActive(true);
                     }
                 );
                 break;
@@ -203,13 +186,8 @@ public class LogicaNPC : MonoBehaviour
                     "¡Estoy armando una casita!\nPero siempre se me cae…\n\nTú eres mejor que yo… ¿cierto?",
                     () =>
                     {
-                        textoOpcion1.text = "Déjame ayudarte.  Y";
-                        textoOpcion2.text = "Está bien así.  A";
-                        textoOpcion3.text = "";
-
+                        textoOpcion1.text = "Déjame ayudarte  X";
                         botonOpcion1.gameObject.SetActive(true);
-                        botonOpcion2.gameObject.SetActive(true);
-                        botonOpcion3.gameObject.SetActive(false);
                     }
                 );
                 break;
@@ -217,57 +195,12 @@ public class LogicaNPC : MonoBehaviour
             case EstadoDialogo.RamaA1:
                 ReproducirAudioDialogo(audioRamaA1);
                 IniciarEscritura(
-                    "¡Sabía que sí!\nCuando seas grande, seguro vas a hacer cosas increíbles.",
-                    MostrarSoloBotonContinuar
-                );
-                break;
-
-            case EstadoDialogo.RamaA2:
-                ReproducirAudioDialogo(audioRamaA2);
-                IniciarEscritura(
-                    "Bueno… igual me gusta como queda.\nNo todo tiene que ser perfecto.",
-                    MostrarSoloBotonContinuar
-                );
-                break;
-
-            case EstadoDialogo.RamaB:
-                ReproducirAudioDialogo(audioRamaB);
-                IniciarEscritura(
-                    "Ahh…\nSiempre estás ocupado…\n\nBueno… pero no te demores mucho.\nLuego jugamos, ¿sí?",
-                    MostrarSoloBotonContinuar
-                );
-                break;
-
-            case EstadoDialogo.RamaC:
-                ReproducirAudioDialogo(audioRamaC);
-                IniciarEscritura(
-                    "Es una casa…\nPara que vivamos todos…\n\nAsí no se nos olvida nada.\n¿Tú crees que las cosas se olvidan?",
+                    "¡Sabía que sí!\nCuando seas grande, seguro vas a hacer cosas increíbles.\n\nVe que mamá te está llamando.",
                     () =>
                     {
-                        textoOpcion1.text = "A veces…  Y";
-                        textoOpcion2.text = "No, si las recuerdas.  A";
-                        textoOpcion3.text = "";
-
+                        textoOpcion1.text = "Continuar  X";
                         botonOpcion1.gameObject.SetActive(true);
-                        botonOpcion2.gameObject.SetActive(true);
-                        botonOpcion3.gameObject.SetActive(false);
                     }
-                );
-                break;
-
-            case EstadoDialogo.RamaC1:
-                ReproducirAudioDialogo(audioRamaC1);
-                IniciarEscritura(
-                    "Sí… a veces las cosas se van poquito a poquito.",
-                    MostrarSoloBotonContinuar
-                );
-                break;
-
-            case EstadoDialogo.RamaC2:
-                ReproducirAudioDialogo(audioRamaC2);
-                IniciarEscritura(
-                    "Entonces acuérdate de mí siempre, ¿sí?",
-                    MostrarSoloBotonContinuar
                 );
                 break;
 
@@ -275,64 +208,25 @@ public class LogicaNPC : MonoBehaviour
                 ReproducirAudioDialogo(audioCierre);
                 IniciarEscritura(
                     "Bueno… ve pues.\nPero vuelve a jugar conmigo.",
-                    MostrarSoloBotonCerrar
+                    () =>
+                    {
+                        CerrarDialogo();
+                    }
                 );
                 break;
         }
     }
 
-    private void Opcion1()
+    private void OpcionPrincipal()
     {
         if (estadoActual == EstadoDialogo.Inicio)
             estadoActual = EstadoDialogo.RamaA;
         else if (estadoActual == EstadoDialogo.RamaA)
             estadoActual = EstadoDialogo.RamaA1;
-        else if (estadoActual == EstadoDialogo.RamaC)
-            estadoActual = EstadoDialogo.RamaC1;
         else
             estadoActual = EstadoDialogo.Cierre;
 
         MostrarEstadoActual();
-    }
-
-    private void Opcion2()
-    {
-        if (estadoActual == EstadoDialogo.Inicio)
-            estadoActual = EstadoDialogo.RamaB;
-        else if (estadoActual == EstadoDialogo.RamaA)
-            estadoActual = EstadoDialogo.RamaA2;
-        else if (estadoActual == EstadoDialogo.RamaC)
-            estadoActual = EstadoDialogo.RamaC2;
-        else
-            estadoActual = EstadoDialogo.Cierre;
-
-        MostrarEstadoActual();
-    }
-
-    private void Opcion3()
-    {
-        if (estadoActual == EstadoDialogo.Inicio)
-            estadoActual = EstadoDialogo.RamaC;
-        else
-            estadoActual = EstadoDialogo.Cierre;
-
-        MostrarEstadoActual();
-    }
-
-    private void MostrarSoloBotonContinuar()
-    {
-        OcultarBotones();
-
-        textoOpcion1.text = "Continuar  Y";
-        botonOpcion1.gameObject.SetActive(true);
-    }
-
-    private void MostrarSoloBotonCerrar()
-    {
-        OcultarBotones();
-
-        // Ya no mostramos opción "Cerrar".
-        // El jugador debe usar el botón visual "Salir X".
     }
 
     private void OcultarBotones()
@@ -345,6 +239,12 @@ public class LogicaNPC : MonoBehaviour
 
         if (botonOpcion3 != null)
             botonOpcion3.gameObject.SetActive(false);
+
+        if (textoOpcion2 != null)
+            textoOpcion2.text = "";
+
+        if (textoOpcion3 != null)
+            textoOpcion3.text = "";
     }
 
     private void IniciarEscritura(string texto, System.Action alTerminar)
@@ -371,7 +271,6 @@ public class LogicaNPC : MonoBehaviour
         }
 
         escribiendo = false;
-
         alTerminar?.Invoke();
     }
 

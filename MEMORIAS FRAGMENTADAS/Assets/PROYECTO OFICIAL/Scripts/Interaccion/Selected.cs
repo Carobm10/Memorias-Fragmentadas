@@ -1,8 +1,18 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Selected controla la detección por mirada/raycast del jugador.
+/// 
+/// Regla oficial de botones:
+/// - B = interactuar con objetos, puertas, cajones, ropa e inspecciones.
+/// - A = iniciar misión o diálogo con NPC.
+/// - X = salir/cerrar/cancelar. NO se usa aquí para interactuar.
+/// - Y = queda disponible para opciones adicionales.
+/// </summary>
 public class Selected : MonoBehaviour
 {
     private LogicaNPC ultimoNPCMirado;
+
     [Header("Puntero 3D")]
     public Pointer3DController pointer3D;
 
@@ -10,16 +20,10 @@ public class Selected : MonoBehaviour
     public float distancia = 3f;
     private LayerMask mask;
 
-    [Header("Prompt general")]
+    [Header("Prompts")]
     public GameObject TextDetect;
-
-    [Header("Prompt puertas")]
     public GameObject DoorPromptPanel;
-
-    [Header("Prompt clóset")]
     public GameObject MissionPromptPanel;
-
-    [Header("Prompt prendas")]
     public GameObject ClothingPromptPanel;
 
     [Header("Manager de canvases")]
@@ -28,12 +32,12 @@ public class Selected : MonoBehaviour
     private GameObject ultimoReconocido;
     private Renderer[] renderersActuales;
     private Color[] coloresOriginales;
-    private InspectableObject currentInspectable;
+    [Header("Color de selección")]
+    public Color colorSeleccion = new Color(0.1f, 1f, 0.25f, 1f);
 
     void Start()
     {
         mask = LayerMask.GetMask("Raycast Detect");
-
         ApagarPrompts();
     }
 
@@ -68,16 +72,13 @@ public class Selected : MonoBehaviour
 
             if (npc != null)
             {
-                // Apagar el anterior
                 if (ultimoNPCMirado != null && ultimoNPCMirado != npc)
                     ultimoNPCMirado.SetMirandoNPC(false);
 
                 ultimoNPCMirado = npc;
                 npc.SetMirandoNPC(true);
 
-                // IMPORTANTE: apagar otros prompts
                 ApagarTodosLosPrompts();
-
                 return;
             }
             else
@@ -89,7 +90,7 @@ public class Selected : MonoBehaviour
                 }
             }
 
-            // 2. Prendas del clóset
+            // 2. Prendas del clóset: B selecciona ropa
             ClosetClothingItem clothing = hit.collider.GetComponent<ClosetClothingItem>();
             if (clothing == null)
                 clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
@@ -102,11 +103,9 @@ public class Selected : MonoBehaviour
                 if (closetForClothing == null)
                     closetForClothing = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
-                Debug.Log("INTENTO ABRIR PRENDA");
-
-                if (InputManagerCustom.PressX())
+                if (InputManagerCustom.PressB())
                 {
-                    Debug.Log("Seleccionaste prenda: " + clothing.clothingName);
+                    Debug.Log("Seleccionaste prenda con B: " + clothing.clothingName);
 
                     if (closetCanvasManager != null)
                     {
@@ -123,7 +122,7 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 3. Clóset / misión
+            // 3. Clóset / misión: A inicia misión
             ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
             if (closet == null)
                 closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
@@ -132,9 +131,9 @@ public class Selected : MonoBehaviour
             {
                 MostrarSolo(MissionPromptPanel);
 
-                if (InputManagerCustom.PressX())
+                if (InputManagerCustom.PressA())
                 {
-                    Debug.Log("Iniciando misión del clóset");
+                    Debug.Log("Iniciando misión del clóset con A");
                     closet.StartClosetMission();
                     return;
                 }
@@ -142,7 +141,7 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 4. Puertas normales
+            // 4. Puertas: B abre/cierra
             DoorInteractable door = hit.collider.GetComponent<DoorInteractable>();
             if (door == null)
                 door = hit.collider.GetComponentInParent<DoorInteractable>();
@@ -151,9 +150,9 @@ public class Selected : MonoBehaviour
             {
                 MostrarSolo(DoorPromptPanel);
 
-                if (InputManagerCustom.PressX())
+                if (InputManagerCustom.PressB())
                 {
-                    Debug.Log("Abriendo/cerrando puerta: " + door.gameObject.name);
+                    Debug.Log("Abriendo/cerrando puerta con B: " + door.gameObject.name);
                     door.ToggleDoor();
                     return;
                 }
@@ -161,7 +160,7 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 5. Cajones
+            // 5. Cajones: B abre/cierra
             DrawerInteractable drawer = hit.collider.GetComponent<DrawerInteractable>();
             if (drawer == null)
                 drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
@@ -170,9 +169,9 @@ public class Selected : MonoBehaviour
             {
                 MostrarSolo(DoorPromptPanel);
 
-                if (InputManagerCustom.PressX())
+                if (InputManagerCustom.PressB())
                 {
-                    Debug.Log("Abriendo/cerrando cajón: " + drawer.gameObject.name);
+                    Debug.Log("Abriendo/cerrando cajón con B: " + drawer.gameObject.name);
                     drawer.ToggleDrawer();
                     return;
                 }
@@ -180,26 +179,24 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 6. Objetos inspeccionables
-            InspectableObject inspectable = hit.collider.GetComponent<InspectableObject>();
-            if (inspectable == null)
-                inspectable = hit.collider.GetComponentInParent<InspectableObject>();
+            // 6. Objetos inspeccionables 360: B inspecciona
+            InspectableObject360 inspectable = hit.collider.GetComponentInParent<InspectableObject360>();
 
             if (inspectable != null)
             {
                 MostrarSolo(TextDetect);
 
-                if (InputManagerCustom.PressX())
+                if (InputManagerCustom.PressB())
                 {
-                    currentInspectable = inspectable;
-                    inspectable.ToggleInspect();
+                    ApagarPrompts();
+                    inspectable.StartInspection();
                     return;
                 }
 
                 return;
             }
 
-            // 7. Objeto interactivo simple
+            // 7. Objeto interactivo simple: B activa
             ObjetoInteractivo objeto = hit.collider.GetComponent<ObjetoInteractivo>();
             if (objeto == null)
                 objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
@@ -208,7 +205,7 @@ public class Selected : MonoBehaviour
             {
                 MostrarSolo(TextDetect);
 
-                if (InputManagerCustom.PressX())
+                if (InputManagerCustom.PressB())
                 {
                     objeto.ActivarObjeto();
                     return;
@@ -217,11 +214,30 @@ public class Selected : MonoBehaviour
                 return;
             }
 
+            // 8. Sentarse / Focus Point: B activa
+            SitFocusPointInteractable sit = hit.collider.GetComponentInParent<SitFocusPointInteractable>();
+
+            if (sit != null)
+            {
+                MostrarSolo(TextDetect);
+
+                if (InputManagerCustom.PressB())
+                {
+                    ApagarPrompts();
+                    sit.Sit();
+                    return;
+                }
+
+                return;
+            }
+
             ApagarPrompts();
-            Debug.DrawRay(transform.position, transform.forward * distancia, Color.red);
         }
         else
         {
+            Deselect();
+            ApagarPrompts();
+
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
 
@@ -230,97 +246,94 @@ public class Selected : MonoBehaviour
                 ultimoNPCMirado.SetMirandoNPC(false);
                 ultimoNPCMirado = null;
             }
-
-            ApagarPrompts();
-            Deselect();
-            
         }
     }
 
-    void ApagarTodosLosPrompts()
+    /// <summary>
+    /// Muestra solo un prompt y apaga los demás.
+    /// </summary>
+    void MostrarSolo(GameObject prompt)
     {
-        if (TextDetect != null)
-            TextDetect.SetActive(false);
+        ApagarTodosLosPrompts();
 
-        if (DoorPromptPanel != null)
-            DoorPromptPanel.SetActive(false);
-
-        if (MissionPromptPanel != null)
-            MissionPromptPanel.SetActive(false);
-
-        if (ClothingPromptPanel != null)
-            ClothingPromptPanel.SetActive(false);
+        if (prompt != null)
+            prompt.SetActive(true);
     }
 
-    void MostrarSolo(GameObject panel)
-    {
-        if (TextDetect != null)
-            TextDetect.SetActive(panel == TextDetect);
-
-        if (DoorPromptPanel != null)
-            DoorPromptPanel.SetActive(panel == DoorPromptPanel);
-
-        if (MissionPromptPanel != null)
-            MissionPromptPanel.SetActive(panel == MissionPromptPanel);
-
-        if (ClothingPromptPanel != null)
-            ClothingPromptPanel.SetActive(panel == ClothingPromptPanel);
-    }
-
+    /// <summary>
+    /// Apaga todos los prompts visibles.
+    /// </summary>
     void ApagarPrompts()
     {
-        if (TextDetect != null)
-            TextDetect.SetActive(false);
-
-        if (DoorPromptPanel != null)
-            DoorPromptPanel.SetActive(false);
-
-        if (MissionPromptPanel != null)
-            MissionPromptPanel.SetActive(false);
-
-        if (ClothingPromptPanel != null)
-            ClothingPromptPanel.SetActive(false);
+        ApagarTodosLosPrompts();
     }
 
-    void SelectedObject(Collider col)
+    /// <summary>
+    /// Apaga todos los paneles de ayuda/interacción.
+    /// </summary>
+    void ApagarTodosLosPrompts()
     {
-        HighlightGroup highlightGroup = col.GetComponent<HighlightGroup>();
-        if (highlightGroup == null)
-            highlightGroup = col.GetComponentInParent<HighlightGroup>();
-
-        if (highlightGroup != null)
-        {
-            Renderer[] renderers = highlightGroup.GetComponentsInChildren<Renderer>();
-            renderersActuales = renderers;
-            coloresOriginales = new Color[renderers.Length];
-
-            for (int i = 0; i < renderers.Length; i++)
-            {
-                if (renderers[i] != null && renderers[i].material.HasProperty("_Color"))
-                {
-                    coloresOriginales[i] = renderers[i].material.color;
-                    renderers[i].material.color = Color.green;
-                }
-            }
-
-            ultimoReconocido = highlightGroup.gameObject;
-            return;
-        }
-
-        Renderer renderer = col.GetComponent<Renderer>();
-        if (renderer == null)
-            renderer = col.GetComponentInParent<Renderer>();
-
-        if (renderer != null && renderer.material.HasProperty("_Color"))
-        {
-            renderersActuales = new Renderer[] { renderer };
-            coloresOriginales = new Color[] { renderer.material.color };
-            renderer.material.color = Color.green;
-        }
-
-        ultimoReconocido = col.gameObject;
+        if (TextDetect != null) TextDetect.SetActive(false);
+        if (DoorPromptPanel != null) DoorPromptPanel.SetActive(false);
+        if (MissionPromptPanel != null) MissionPromptPanel.SetActive(false);
+        if (ClothingPromptPanel != null) ClothingPromptPanel.SetActive(false);
     }
 
+    /// <summary>
+    /// Marca visualmente el objeto que el jugador está mirando.
+    /// Si el objeto pertenece a un interactuable grande, como el clóset,
+    /// intenta seleccionar el objeto padre completo.
+    /// </summary>
+    void SelectedObject(Collider colliderDetectado)
+    {
+        Transform raizSeleccion = colliderDetectado.transform;
+
+        // Si pertenece a una misión de clóset, selecciona todo el clóset.
+        ClosetMissionTrigger closet = colliderDetectado.GetComponentInParent<ClosetMissionTrigger>();
+        if (closet != null)
+        {
+            raizSeleccion = closet.transform;
+        }
+
+        // Si pertenece a una puerta, selecciona la puerta completa.
+        DoorInteractable door = colliderDetectado.GetComponentInParent<DoorInteractable>();
+        if (door != null)
+        {
+            raizSeleccion = door.transform;
+        }
+
+        // Si pertenece a un cajón, selecciona el cajón completo.
+        DrawerInteractable drawer = colliderDetectado.GetComponentInParent<DrawerInteractable>();
+        if (drawer != null)
+        {
+            raizSeleccion = drawer.transform;
+        }
+
+        // Si pertenece a una prenda, selecciona la prenda completa.
+        ClosetClothingItem clothing = colliderDetectado.GetComponentInParent<ClosetClothingItem>();
+        if (clothing != null)
+        {
+            raizSeleccion = clothing.transform;
+        }
+
+        ultimoReconocido = raizSeleccion.gameObject;
+
+        renderersActuales = raizSeleccion.GetComponentsInChildren<Renderer>();
+        coloresOriginales = new Color[renderersActuales.Length];
+
+        for (int i = 0; i < renderersActuales.Length; i++)
+        {
+            if (renderersActuales[i] != null && renderersActuales[i].material.HasProperty("_Color"))
+            {
+                coloresOriginales[i] = renderersActuales[i].material.color;
+                renderersActuales[i].material.color = colorSeleccion;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Quita la selección visual y devuelve los colores originales.
+    /// </summary>
     void Deselect()
     {
         if (renderersActuales != null && coloresOriginales != null)

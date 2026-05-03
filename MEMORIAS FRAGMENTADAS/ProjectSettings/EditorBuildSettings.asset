@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/PROYECTO OFICIAL/Scenes/Escena_VideoIntro.unity
     guid: 9e4d4ad1f7c3a004fb06fd846d65b71d
   - enabled: 1
     path: Assets/PROYECTO OFICIAL/Scenes/BASE.unity
     guid: b30a9c647fefea345a39873a45ab65ac
+  - enabled: 0
+    path: Assets/PROYECTO OFICIAL/Scenes/Test_Joystick.unity
+    guid: 800a1a92e76f94c4a8af4f600e675fee
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e891914dce1eda14f9bd5c100b09c98d, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d9d9282a0e357ff44b3c48fc491b5475, type: 2}
