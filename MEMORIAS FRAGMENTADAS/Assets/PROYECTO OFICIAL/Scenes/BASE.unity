@@ -5431,6 +5431,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0384924749c034ea7e9c56f2b06ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogicaNPC
+  nombreNPC: 'Aurora [Hermana]'
+  panelInteraccionNPC: {fileID: 0}
+  panelDialogoNPC: {fileID: 0}
+  textoNombreNPC: {fileID: 0}
+  textoDialogo: {fileID: 0}
+  textoOpcion1: {fileID: 0}
+  textoOpcion2: {fileID: 0}
+  textoOpcion3: {fileID: 0}
+  botonOpcion1: {fileID: 0}
+  botonOpcion2: {fileID: 0}
+  botonOpcion3: {fileID: 0}
+  botonSalirDialogo: {fileID: 0}
+  fuenteAudio: {fileID: 0}
+  audioInicio: {fileID: 0}
+  audioRamaA: {fileID: 0}
+  audioRamaA1: {fileID: 0}
+  audioCierre: {fileID: 0}
+  player: {fileID: 0}
+  distanciaParaHablar: 2
+  jugadorCerca: 0
+  jugadorMirando: 0
+  velocidadEscritura: 0.03
 --- !u!1 &616668806
 GameObject:
   m_ObjectHideFlags: 0
@@ -6200,7 +6222,7 @@ MonoBehaviour:
   audioRamaA1: {fileID: 0}
   audioCierre: {fileID: 0}
   player: {fileID: 1201270053}
-  distanciaParaHablar: 0.5
+  distanciaParaHablar: 5
   jugadorCerca: 0
   jugadorMirando: 0
   velocidadEscritura: 0.03

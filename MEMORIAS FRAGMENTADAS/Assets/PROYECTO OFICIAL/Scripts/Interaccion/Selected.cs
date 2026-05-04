@@ -66,28 +66,36 @@ public class Selected : MonoBehaviour
             }
 
             // 1. NPC
-            LogicaNPC npc = hit.collider.GetComponent<LogicaNPC>();
-            if (npc == null)
-                npc = hit.collider.GetComponentInParent<LogicaNPC>();
+            LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
 
             if (npc != null)
             {
-                if (ultimoNPCMirado != null && ultimoNPCMirado != npc)
-                    ultimoNPCMirado.SetMirandoNPC(false);
+                // Si cambió el NPC que estás mirando
+                if (ultimoNPCMirado != npc)
+                {
+                    // Apagar el anterior
+                    if (ultimoNPCMirado != null)
+                    {
+                        ultimoNPCMirado.SetMirandoNPC(false);
+                    }
 
-                ultimoNPCMirado = npc;
-                npc.SetMirandoNPC(true);
+                    // Guardar el nuevo
+                    ultimoNPCMirado = npc;
+                }
 
+                // Activar el actual
+                ultimoNPCMirado.SetMirandoNPC(true);
+
+                // 🔴 IMPORTANTE: apagar otros prompts
                 ApagarTodosLosPrompts();
+
                 return;
             }
-            else
+            // Si ya no estás mirando un NPC
+            if (ultimoNPCMirado != null)
             {
-                if (ultimoNPCMirado != null)
-                {
-                    ultimoNPCMirado.SetMirandoNPC(false);
-                    ultimoNPCMirado = null;
-                }
+                ultimoNPCMirado.SetMirandoNPC(false);
+                ultimoNPCMirado = null;
             }
 
             // 2. Prendas del clóset: B selecciona ropa
