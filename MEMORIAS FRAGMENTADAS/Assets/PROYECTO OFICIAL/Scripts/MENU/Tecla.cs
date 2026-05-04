@@ -18,7 +18,7 @@ public class Tecla : MonoBehaviour
         }
     }
 
-    void OnMouseEnter()
+    public void Seleccionar()
     {
         if (rend != null)
         {
@@ -26,7 +26,7 @@ public class Tecla : MonoBehaviour
         }
     }
 
-    void OnMouseExit()
+    public void Deseleccionar()
     {
         if (rend != null)
         {
@@ -46,21 +46,19 @@ public class Tecla : MonoBehaviour
             return;
         }
 
-        // 🔴 BOTÓN BORRAR
         if (letra == "BORRAR")
         {
             manager.NuevaHoja();
             return;
         }
 
-        // 🟢 BOTÓN ENVIAR
         if (letra == "ENVIAR")
         {
             string texto = manager.ObtenerTexto().ToUpper();
 
             if (texto == "JUGAR")
             {
-                SceneManager.LoadScene("EscenaJuego"); // cambia por el nombre real
+                SceneManager.LoadScene("BASE");
             }
             else if (texto == "AJUSTES")
             {
@@ -74,7 +72,6 @@ public class Tecla : MonoBehaviour
             return;
         }
 
-        // 🔤 TECLAS NORMALES
         manager.Escribir(letra);
     }
 }

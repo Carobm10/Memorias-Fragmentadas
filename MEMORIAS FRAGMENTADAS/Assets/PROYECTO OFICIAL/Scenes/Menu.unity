@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 61299593}
   - component: {fileID: 61299592}
   - component: {fileID: 61299591}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 169168067}
   - component: {fileID: 169168066}
   - component: {fileID: 169168069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaBorrar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &233038469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 588865104}
   - component: {fileID: 588865103}
   - component: {fileID: 588865102}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 688885827}
   - component: {fileID: 688885826}
   - component: {fileID: 688885825}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1439,6 +1439,7 @@ GameObject:
   - component: {fileID: 940579402}
   - component: {fileID: 940579401}
   - component: {fileID: 940579400}
+  - component: {fileID: 940579405}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1481,6 +1482,7 @@ MonoBehaviour:
   MissionPromptPanel: {fileID: 0}
   ClothingPromptPanel: {fileID: 0}
   closetCanvasManager: {fileID: 0}
+  colorSeleccion: {r: 0.1, g: 1, b: 0.25, a: 1}
 --- !u!114 &940579401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,6 +1568,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &940579405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940579398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4a587147c82d784abe593e23b56b5e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TecladoRaycastInteractor
+  distanciaRaycast: 10
+  layerTeclas:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1074612250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,7 +1597,7 @@ GameObject:
   - component: {fileID: 1074612253}
   - component: {fileID: 1074612252}
   - component: {fileID: 1074612251}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1819,7 +1837,7 @@ GameObject:
   - component: {fileID: 1298099163}
   - component: {fileID: 1298099162}
   - component: {fileID: 1298099161}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2382,7 +2400,7 @@ GameObject:
   - component: {fileID: 1538416041}
   - component: {fileID: 1538416040}
   - component: {fileID: 1538416039}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2510,7 +2528,7 @@ GameObject:
   - component: {fileID: 1612295819}
   - component: {fileID: 1612295818}
   - component: {fileID: 1612295817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2868,7 +2886,7 @@ GameObject:
   - component: {fileID: 1983576683}
   - component: {fileID: 1983576682}
   - component: {fileID: 1983576681}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaJ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3090,7 +3108,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 21.410786, y: 0, z: -4.2060776, w: 4.5951867}
+  m_margin: {x: 21.410786, y: 0.2936813, z: -4.2060776, w: 4.5951867}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -3418,7 +3436,7 @@ GameObject:
   - component: {fileID: 2132883982}
   - component: {fileID: 2132883981}
   - component: {fileID: 2132883980}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeclaEnviar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
