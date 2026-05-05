@@ -165,22 +165,31 @@ public class AudioScriptManager : MonoBehaviour
         float maxDistance = Mathf.Max(0.1f, audioData.distanciaMaxima);
         float intensidad = Mathf.Clamp(audioData.intensidadCercania, 0.25f, 4f);
         float fadeOutZona = Mathf.Clamp(audioData.fadeOutZona, 0.05f, 0.5f);
-        float inicioFade = Mathf.Clamp01(1f - fadeOutZona);
 
         source.rolloffMode = AudioRolloffMode.Custom;
         source.minDistance = 0.01f;
         source.maxDistance = maxDistance;
 
         AnimationCurve curve = new AnimationCurve();
-        const int samples = 24;
+        const int samples = 48;
         for (int i = 0; i <= samples; i++)
         {
             float t = i / (float)samples;
-            float fadeT = Mathf.InverseLerp(inicioFade, 1f, t);
-            float smoothFade = Mathf.SmoothStep(1f, 0f, fadeT);
-            float value = t < inicioFade
-                ? 1f
-                : Mathf.Pow(smoothFade, intensidad * 1.75f);
+            float proximidad = Mathf.Clamp01(1f - t);
+            float value = Mathf.Pow(proximidad, intensidad * 1.4f);
+
+            if (fadeOutZona > 0f)
+            {
+                float inicioFade = 1f - fadeOutZona;
+                if (t >= inicioFade)
+                {
+                    float fadeT = Mathf.InverseLerp(inicioFade, 1f, t);
+                    float smoothFade = Mathf.SmoothStep(1f, 0f, fadeT);
+                    value *= smoothFade;
+                }
+            }
+
+            value = Mathf.SmoothStep(0f, 1f, value);
             curve.AddKey(new Keyframe(t, value));
         }
 
@@ -246,6 +255,7 @@ public class AudioScriptManager : MonoBehaviour
         {
             runtimeSource.loop = true;
             runtimeSource.Play();
+            StartCoroutine(MantenerLoopInfinito(runtimeSource));
             return;
         }
 
@@ -281,6 +291,19 @@ public class AudioScriptManager : MonoBehaviour
         fuentesActivas.Remove(source);
         RemoverBinding(source);
         Destroy(source.gameObject);
+    }
+
+    private IEnumerator MantenerLoopInfinito(AudioSource source)
+    {
+        while (source != null)
+        {
+            if (!source.isPlaying && source.clip != null)
+            {
+                source.Play();
+            }
+
+            yield return null;
+        }
     }
 
     private Vector3 ResolverPosicionReproduccion(AudioClipData audioData, Vector3 fallbackPosition)

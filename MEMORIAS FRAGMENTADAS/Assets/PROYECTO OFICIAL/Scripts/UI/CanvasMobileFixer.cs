@@ -16,7 +16,7 @@ public class CanvasMobileFixer : MonoBehaviour
     [ContextMenu("Arreglar todos los Canvas")]
     public void ArreglarTodosLosCanvas()
     {
-        Canvas[] canvases = FindObjectsOfType<Canvas>(true);
+        Canvas[] canvases = Object.FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
         int order = 100;
 

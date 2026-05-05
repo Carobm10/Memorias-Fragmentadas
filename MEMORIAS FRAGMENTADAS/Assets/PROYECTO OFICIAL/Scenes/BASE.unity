@@ -1726,6 +1726,10 @@ MonoBehaviour:
   localOpenDirection: {x: 1, y: 0, z: 0}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 1
+  soundPitch: 1
 --- !u!65 &152236321
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2230,6 +2234,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 5840e7420f1d1394ebf1bd540f5538aa, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 0c9deb743a0d08c49a55b7481948609b, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!114 &182809119
@@ -2281,6 +2289,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: -1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  soundVolume: 1
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!65 &192854474
@@ -2392,6 +2404,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  soundVolume: 0.095
+  soundPitch: 1.289
   isOpen: 0
   isLocked: 0
 --- !u!1 &233276533
@@ -3257,6 +3273,10 @@ MonoBehaviour:
   localOpenDirection: {x: 1, y: 0, z: 0}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 1
+  soundPitch: 1
 --- !u!65 &395015518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5354,6 +5374,10 @@ MonoBehaviour:
   openAngle: -95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  soundVolume: 0.065
+  soundPitch: 1.367
   isOpen: 0
   isLocked: 0
 --- !u!1 &564236057
@@ -5470,6 +5494,10 @@ MonoBehaviour:
   localOpenDirection: {x: 0, y: 0, z: -1}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
 --- !u!1 &587863003
 GameObject:
   m_ObjectHideFlags: 0
@@ -6180,6 +6208,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  soundVolume: 0.45
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!1 &652122398
@@ -6909,6 +6941,10 @@ MonoBehaviour:
   localOpenDirection: {x: 1, y: 0, z: 0}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 1
+  soundPitch: 1
 --- !u!65 &684364852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9022,6 +9058,10 @@ MonoBehaviour:
   localOpenDirection: {x: 0, y: 0, z: -1}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
 --- !u!1 &892483947
 GameObject:
   m_ObjectHideFlags: 0
@@ -9185,6 +9225,10 @@ MonoBehaviour:
   localOpenDirection: {x: 1, y: 0, z: 0}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 1
+  soundPitch: 1
 --- !u!65 &919472704
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9836,6 +9880,10 @@ MonoBehaviour:
   localOpenDirection: {x: 0, y: 0, z: -1}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
 --- !u!1 &969008140
 GameObject:
   m_ObjectHideFlags: 0
@@ -9932,6 +9980,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: -1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  soundVolume: 1
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!65 &979038381
@@ -10158,6 +10210,10 @@ MonoBehaviour:
   localOpenDirection: {x: 0, y: 0, z: 1}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 1
+  soundPitch: 1
 --- !u!65 &1072556396
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12049,6 +12105,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  soundVolume: 0.621
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!1 &1398904555 stripped
@@ -12121,6 +12181,10 @@ MonoBehaviour:
   localOpenDirection: {x: 1, y: 0, z: 0}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
 --- !u!1 &1417881835 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 50169fcaf33b7964bbd6ee05c7a94b18, type: 3}
@@ -12704,6 +12768,10 @@ MonoBehaviour:
   localOpenDirection: {x: 1, y: 0, z: 0}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
 --- !u!1 &1494375477
 GameObject:
   m_ObjectHideFlags: 0
@@ -13530,6 +13598,10 @@ MonoBehaviour:
   localOpenDirection: {x: 0, y: 0, z: -1}
   isOpen: 0
   isLocked: 0
+  openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
+  closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
 --- !u!1 &1626361291
 GameObject:
   m_ObjectHideFlags: 0
@@ -14076,6 +14148,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  soundVolume: 1
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!65 &1705785698
@@ -14189,6 +14265,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: -1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  soundVolume: 1
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!65 &1724700599
@@ -14618,6 +14698,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  soundVolume: 1
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!65 &1839031965
@@ -14869,7 +14953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1848486269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15281,6 +15365,76 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.021052776, y: 0.022010686, z: 0.16324794}
   m_Center: {x: -0.000023333354, y: 0.00006391432, z: 0.004626807}
+--- !u!1 &1938890484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1938890486}
+  - component: {fileID: 1938890485}
+  m_Layer: 0
+  m_Name: SoundVentanasCalle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1938890485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938890484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbad02ce5361b74bafd09f08bf79d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioScriptManager
+  audiosScheduled:
+  - nombre: Street
+    clip: {fileID: 8300000, guid: 41bde76442a7e12459458d35ab228ebc, type: 3}
+    volumen: 0.019
+    pitch: 1
+    pitchInicializado: 1
+    loop: 1
+    animarVolumen: 0
+    curvaVolumen:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    repeticiones: 0
+    delay: 0
+    reproducirAlInicio: 0
+    usar3D: 1
+    distanciaMaxima: 12
+    intensidadCercania: 1
+    fadeOutZona: 0.25
+    puntoEmisionPersonalizado: {fileID: 0}
+    yaReproducido: 0
+  usarPosicionDeReproduccion: 1
+  puntoEmision3DPorDefecto: {fileID: 0}
+  usarCentroVisualParaGizmos: 1
+--- !u!4 &1938890486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938890484}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.022, y: 0.405, z: 4.781}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1940381554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15985,6 +16139,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  soundVolume: 1
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!65 &1998235089
@@ -16732,6 +16890,10 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 5840e7420f1d1394ebf1bd540f5538aa, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 0c9deb743a0d08c49a55b7481948609b, type: 3}
+  soundVolume: 0.379
+  soundPitch: 1
   isOpen: 0
   isLocked: 0
 --- !u!4 &2092567019
@@ -17770,3 +17932,4 @@ SceneRoots:
   - {fileID: 2115348147}
   - {fileID: 655448573}
   - {fileID: 69177730}
+  - {fileID: 1938890486}

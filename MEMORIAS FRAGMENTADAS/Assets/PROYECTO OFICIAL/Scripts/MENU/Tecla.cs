@@ -38,7 +38,7 @@ public class Tecla : MonoBehaviour
     {
         Debug.Log("Tecla presionada: " + letra);
 
-        EscrituraPapel manager = FindObjectOfType<EscrituraPapel>();
+        EscrituraPapel manager = Object.FindFirstObjectByType<EscrituraPapel>();
 
         if (manager == null)
         {
