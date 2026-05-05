@@ -5810,6 +5810,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0384924749c034ea7e9c56f2b06ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogicaNPC
+  nombreNPC: 'Aurora [Hermana]'
+  panelInteraccionNPC: {fileID: 0}
+  panelDialogoNPC: {fileID: 0}
+  textoNombreNPC: {fileID: 0}
+  textoDialogo: {fileID: 0}
+  textoOpcion1: {fileID: 0}
+  textoOpcion2: {fileID: 0}
+  textoOpcion3: {fileID: 0}
+  botonOpcion1: {fileID: 0}
+  botonOpcion2: {fileID: 0}
+  botonOpcion3: {fileID: 0}
+  botonSalirDialogo: {fileID: 0}
+  fuenteAudio: {fileID: 0}
+  audioInicio: {fileID: 0}
+  audioRamaA: {fileID: 0}
+  audioRamaA1: {fileID: 0}
+  audioCierre: {fileID: 0}
+  player: {fileID: 0}
+  distanciaParaHablar: 2
+  jugadorCerca: 0
+  jugadorMirando: 0
+  velocidadEscritura: 0.03
 --- !u!1 &616668806
 GameObject:
   m_ObjectHideFlags: 0
@@ -13900,7 +13922,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.0761}
-  m_LocalScale: {x: 0.0040463293, y: 0.006195739, z: 0.0040463293}
+  m_LocalScale: {x: 0.0040463293, y: 0.006948177, z: 0.0040463293}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 14378717}
@@ -13918,6 +13940,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pointer3DController
   distanceFromCamera: 0.2
+  sobreponerPuntero: 1
+  overlayLayer: 2
+  overlayCameraDepth: 100
+  mantenerEscalaUniforme: 1
   pointerRenderer: {fileID: 1669511504}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   detectedColor: {r: 0, g: 1, b: 0, a: 1}
