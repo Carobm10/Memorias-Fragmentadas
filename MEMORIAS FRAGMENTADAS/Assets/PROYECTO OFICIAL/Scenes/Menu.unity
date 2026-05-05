@@ -3152,6 +3152,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 23c8a395ffa5f0e4c916948cb5802780, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1821714771}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 23c8a395ffa5f0e4c916948cb5802780, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1821714772}
   m_SourcePrefab: {fileID: 100100000, guid: 23c8a395ffa5f0e4c916948cb5802780, type: 3}
 --- !u!1 &1380855225 stripped
 GameObject:
@@ -3399,8 +3402,8 @@ Transform:
   m_GameObject: {fileID: 1459034921}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1362}
-  m_LocalScale: {x: 0.0054202494, y: 0.008299484, z: 0.0054202494}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0172}
+  m_LocalScale: {x: 0.0023760255, y: 0.0036381697, z: 0.0023760255}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 940579399}
@@ -4126,6 +4129,27 @@ MonoBehaviour:
   hojaActual: {fileID: 1380855225}
   hojaPrefab: {fileID: 7138070480931664164, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
   textoHoja: {fileID: 519214300}
+--- !u!65 &1821714772
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821714769}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1904532835
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,6 +5407,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1821714770}
     m_Modifications:
+    - target: {fileID: 4195571877120699131, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
+      propertyPath: m_fontSize
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4195571877120699131, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5326881823276491868, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5326881823276491868, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5326881823276491868, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 5578661965561232188, guid: fda12a8f0d9720c4cae230bbdd3a2920, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0008142797
