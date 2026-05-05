@@ -2234,8 +2234,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 0.379
   soundPitch: 1
   isOpen: 0
@@ -2289,8 +2289,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: -1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 1
   soundPitch: 1
   isOpen: 0
@@ -2404,8 +2404,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 0.095
   soundPitch: 1.289
   isOpen: 0
@@ -5410,8 +5410,8 @@ MonoBehaviour:
   openAngle: -95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 0.065
   soundPitch: 1.367
   isOpen: 0
@@ -5532,7 +5532,7 @@ MonoBehaviour:
   isLocked: 0
   openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
-  soundVolume: 0.379
+  soundVolume: 0.5
   soundPitch: 1
 --- !u!1 &587863003
 GameObject:
@@ -5810,28 +5810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0384924749c034ea7e9c56f2b06ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogicaNPC
-  nombreNPC: 'Aurora [Hermana]'
-  panelInteraccionNPC: {fileID: 0}
-  panelDialogoNPC: {fileID: 0}
-  textoNombreNPC: {fileID: 0}
-  textoDialogo: {fileID: 0}
-  textoOpcion1: {fileID: 0}
-  textoOpcion2: {fileID: 0}
-  textoOpcion3: {fileID: 0}
-  botonOpcion1: {fileID: 0}
-  botonOpcion2: {fileID: 0}
-  botonOpcion3: {fileID: 0}
-  botonSalirDialogo: {fileID: 0}
-  fuenteAudio: {fileID: 0}
-  audioInicio: {fileID: 0}
-  audioRamaA: {fileID: 0}
-  audioRamaA1: {fileID: 0}
-  audioCierre: {fileID: 0}
-  player: {fileID: 0}
-  distanciaParaHablar: 2
-  jugadorCerca: 0
-  jugadorMirando: 0
-  velocidadEscritura: 0.03
 --- !u!1 &616668806
 GameObject:
   m_ObjectHideFlags: 0
@@ -6266,8 +6244,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 0.45
   soundPitch: 1
   isOpen: 0
@@ -9118,7 +9096,7 @@ MonoBehaviour:
   isLocked: 0
   openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
-  soundVolume: 0.379
+  soundVolume: 0.5
   soundPitch: 1
 --- !u!1 &892483947
 GameObject:
@@ -9940,7 +9918,7 @@ MonoBehaviour:
   isLocked: 0
   openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
-  soundVolume: 0.379
+  soundVolume: 0.5
   soundPitch: 1
 --- !u!1 &969008140
 GameObject:
@@ -10038,8 +10016,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: -1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 1
   soundPitch: 1
   isOpen: 0
@@ -12163,8 +12141,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 0.621
   soundPitch: 1
   isOpen: 0
@@ -12241,7 +12219,7 @@ MonoBehaviour:
   isLocked: 0
   openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
-  soundVolume: 0.379
+  soundVolume: 0.5
   soundPitch: 1
 --- !u!1 &1417881835 stripped
 GameObject:
@@ -12828,7 +12806,7 @@ MonoBehaviour:
   isLocked: 0
   openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
-  soundVolume: 0.379
+  soundVolume: 0.5
   soundPitch: 1
 --- !u!1 &1494375477
 GameObject:
@@ -13658,7 +13636,7 @@ MonoBehaviour:
   isLocked: 0
   openDrawerClip: {fileID: 8300000, guid: 297b8bc4804f52c40bf903a269e8d824, type: 3}
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
-  soundVolume: 0.379
+  soundVolume: 0.5
   soundPitch: 1
 --- !u!1 &1626361291
 GameObject:
@@ -14206,8 +14184,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 1
   soundPitch: 1
   isOpen: 0
@@ -14323,8 +14301,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: -1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 1
   soundPitch: 1
   isOpen: 0
@@ -14756,8 +14734,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 1
   soundPitch: 1
   isOpen: 0
@@ -16197,8 +16175,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 1
   soundPitch: 1
   isOpen: 0
@@ -16948,8 +16926,8 @@ MonoBehaviour:
   openAngle: 95
   speed: 3
   rotationAxis: {x: 0, y: 1, z: 0}
-  openDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
-  closeDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
   soundVolume: 0.379
   soundPitch: 1
   isOpen: 0

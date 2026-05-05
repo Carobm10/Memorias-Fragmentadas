@@ -25,8 +25,8 @@ using UnityEditor;
 /// </summary>
 public class DoorInteractable : MonoBehaviour
 {
-    private const string OpenDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaAbriendose.mp3";
-    private const string CloseDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaCerrandose.mp3";
+    private const string OpenDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaCerrandose.mp3";
+    private const string CloseDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaAbriendose.mp3";
 
     [Header("Configuración de apertura")]
     public bool startsOpen = false;
@@ -194,8 +194,23 @@ public class DoorInteractable : MonoBehaviour
 
     private void CargarSonidosPredeterminados()
     {
-        openDoorClip = CargarClip(OpenDoorClipPath);
-        closeDoorClip = CargarClip(CloseDoorClipPath);
+        if (openDoorClip == null)
+        {
+            openDoorClip = CargarClip(OpenDoorClipPath);
+        }
+
+        if (closeDoorClip == null)
+        {
+            closeDoorClip = CargarClip(CloseDoorClipPath);
+        }
+    }
+
+    [ContextMenu("Intercambiar audios de puerta")]
+    private void IntercambiarAudiosPuerta()
+    {
+        AudioClip clipTemporal = openDoorClip;
+        openDoorClip = closeDoorClip;
+        closeDoorClip = clipTemporal;
     }
 
 #if UNITY_EDITOR
