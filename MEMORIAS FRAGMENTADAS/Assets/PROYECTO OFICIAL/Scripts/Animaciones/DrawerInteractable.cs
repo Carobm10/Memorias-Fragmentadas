@@ -188,15 +188,8 @@ public class DrawerInteractable : MonoBehaviour
 
     private void CargarSonidosPredeterminados()
     {
-        if (openDrawerClip == null)
-        {
-            openDrawerClip = CargarClip(OpenDrawerClipPath);
-        }
-
-        if (closeDrawerClip == null)
-        {
-            closeDrawerClip = CargarClip(CloseDrawerClipPath);
-        }
+        openDrawerClip = CargarClip(OpenDrawerClipPath);
+        closeDrawerClip = CargarClip(CloseDrawerClipPath);
     }
 
 #if UNITY_EDITOR

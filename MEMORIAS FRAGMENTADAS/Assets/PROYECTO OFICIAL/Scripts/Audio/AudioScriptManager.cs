@@ -231,8 +231,15 @@ public class AudioScriptManager : MonoBehaviour
                 binding.source.volume = volumenBase;
             }
 
+            if (binding.audioData.usar3D)
+            {
+                float factorDistancia = CalcularFactorDistancia3D(binding);
+                binding.source.volume = Mathf.Clamp01(binding.source.volume * factorDistancia);
+            }
+
             binding.source.pitch = binding.audioData.pitch;
             binding.source.spatialBlend = binding.audioData.usar3D ? 1f : 0f;
+            binding.source.loop = binding.audioData.repeticiones > 1 && !binding.audioData.loop;
 
             Vector3 posicionFinal = ResolverPosicionReproduccion(binding.audioData, binding.fallbackPosition);
             binding.source.transform.position = posicionFinal;
@@ -253,7 +260,7 @@ public class AudioScriptManager : MonoBehaviour
 
         if (audioData.loop)
         {
-            runtimeSource.loop = true;
+            runtimeSource.loop = false;
             runtimeSource.Play();
             StartCoroutine(MantenerLoopInfinito(runtimeSource));
             return;
@@ -295,15 +302,59 @@ public class AudioScriptManager : MonoBehaviour
 
     private IEnumerator MantenerLoopInfinito(AudioSource source)
     {
+        if (source == null)
+        {
+            yield break;
+        }
+
+        int limiteSamples = source.clip != null ? Mathf.Max(1, source.clip.samples - 1) : 1;
+
         while (source != null)
         {
-            if (!source.isPlaying && source.clip != null)
+            if (source.clip != null)
             {
-                source.Play();
+                if (!source.isPlaying || source.timeSamples >= limiteSamples)
+                {
+                    source.timeSamples = 0;
+                    source.Play();
+                }
             }
 
             yield return null;
         }
+    }
+
+    private float CalcularFactorDistancia3D(RuntimeAudioBinding binding)
+    {
+        if (binding == null || binding.source == null || binding.audioData == null)
+        {
+            return 1f;
+        }
+
+        AudioListener listener = FindFirstObjectByType<AudioListener>();
+        if (listener == null)
+        {
+            return 1f;
+        }
+
+        float maxDistance = Mathf.Max(0.1f, binding.audioData.distanciaMaxima);
+        float distancia = Vector3.Distance(binding.source.transform.position, listener.transform.position);
+        float proximidad = Mathf.Clamp01(1f - (distancia / maxDistance));
+        float intensidad = Mathf.Clamp(binding.audioData.intensidadCercania, 0.25f, 4f);
+        float factor = Mathf.Pow(proximidad, 1f / intensidad);
+
+        if (binding.audioData.fadeOutZona > 0f)
+        {
+            float inicioFade = 1f - Mathf.Clamp(binding.audioData.fadeOutZona, 0.05f, 0.5f);
+            float distanciaNormalizada = Mathf.Clamp01(distancia / maxDistance);
+            if (distanciaNormalizada >= inicioFade)
+            {
+                float fadeT = Mathf.InverseLerp(inicioFade, 1f, distanciaNormalizada);
+                factor *= Mathf.SmoothStep(1f, 0f, fadeT);
+            }
+        }
+
+        return factor;
     }
 
     private Vector3 ResolverPosicionReproduccion(AudioClipData audioData, Vector3 fallbackPosition)

@@ -194,15 +194,8 @@ public class DoorInteractable : MonoBehaviour
 
     private void CargarSonidosPredeterminados()
     {
-        if (openDoorClip == null)
-        {
-            openDoorClip = CargarClip(OpenDoorClipPath);
-        }
-
-        if (closeDoorClip == null)
-        {
-            closeDoorClip = CargarClip(CloseDoorClipPath);
-        }
+        openDoorClip = CargarClip(OpenDoorClipPath);
+        closeDoorClip = CargarClip(CloseDoorClipPath);
     }
 
 #if UNITY_EDITOR
