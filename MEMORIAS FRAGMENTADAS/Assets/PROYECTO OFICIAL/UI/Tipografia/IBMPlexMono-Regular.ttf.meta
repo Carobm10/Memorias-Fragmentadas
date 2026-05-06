@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6249b4e1dcea744419d420d557479ebc
+guid: 985d3ec97c36691469bc9ec480699003
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Special Elite
+  - IBM Plex Mono
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

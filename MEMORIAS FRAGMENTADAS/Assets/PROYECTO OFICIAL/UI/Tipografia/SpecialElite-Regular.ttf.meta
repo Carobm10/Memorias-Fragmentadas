@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1d3d7395b18d77d49ac33d6c9c6230d2
+guid: 90bf43f831c321743ae5bafa74850b57
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Lora
+  - Special Elite
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
