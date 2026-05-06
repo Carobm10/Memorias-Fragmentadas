@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Pointer3DController : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class Pointer3DController : MonoBehaviour
     private int? cullingMaskOriginal;
     private float escalaUniforme = 1f;
     private float escalaMundo = 1f;
+    private Material pointerMaterial;
+    private bool detectedActual;
+    private float alphaActual = 1f;
+    private bool materialPreparadoParaFade;
 
     void Start()
     {
@@ -37,6 +42,11 @@ public class Pointer3DController : MonoBehaviour
 
         if (pointerRenderer == null)
             pointerRenderer = GetComponent<Renderer>();
+
+        if (pointerRenderer != null)
+        {
+            pointerMaterial = pointerRenderer.material;
+        }
 
         escalaUniforme = (transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3f;
         escalaMundo = (transform.lossyScale.x + transform.lossyScale.y + transform.lossyScale.z) / 3f;
@@ -64,8 +74,14 @@ public class Pointer3DController : MonoBehaviour
 
     public void SetDetected(bool detected)
     {
-        if (pointerRenderer != null)
-            pointerRenderer.material.color = detected ? detectedColor : normalColor;
+        detectedActual = detected;
+        AplicarColorActual();
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        alphaActual = Mathf.Clamp01(alpha);
+        AplicarColorActual();
     }
 
     private void ConfigurarOverlayCamera()
@@ -95,6 +111,74 @@ public class Pointer3DController : MonoBehaviour
         overlayCamera.cullingMask = 1 << overlayLayer;
         overlayCamera.depth = Mathf.Max(mainCamera.depth + 1f, overlayCameraDepth);
         overlayCamera.useOcclusionCulling = false;
+    }
+
+    private void AplicarColorActual()
+    {
+        if (pointerRenderer == null)
+        {
+            return;
+        }
+
+        if (pointerMaterial == null)
+        {
+            pointerMaterial = pointerRenderer.material;
+        }
+
+        if (pointerMaterial == null)
+        {
+            return;
+        }
+
+        if (alphaActual < 1f)
+        {
+            PrepararMaterialParaFade(pointerMaterial);
+        }
+
+        Color color = detectedActual ? detectedColor : normalColor;
+        color.a *= alphaActual;
+        pointerMaterial.color = color;
+
+        if (!pointerRenderer.enabled)
+        {
+            pointerRenderer.enabled = true;
+        }
+    }
+
+    private void PrepararMaterialParaFade(Material material)
+    {
+        if (materialPreparadoParaFade || material == null)
+        {
+            return;
+        }
+
+        if (material.HasProperty("_Surface"))
+        {
+            material.SetFloat("_Surface", 1f);
+            material.SetOverrideTag("RenderType", "Transparent");
+            material.SetInt("_SrcBlend", (int)BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.DisableKeyword("_SURFACE_TYPE_OPAQUE");
+            material.renderQueue = 3000;
+            materialPreparadoParaFade = true;
+            return;
+        }
+
+        if (material.HasProperty("_Mode"))
+        {
+            material.SetFloat("_Mode", 3f);
+            material.SetOverrideTag("RenderType", "Transparent");
+            material.SetInt("_SrcBlend", (int)BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.DisableKeyword("_ALPHATEST_ON");
+            material.EnableKeyword("_ALPHABLEND_ON");
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.renderQueue = 3000;
+            materialPreparadoParaFade = true;
+        }
     }
 
     private void AjustarEscalaUniforme()

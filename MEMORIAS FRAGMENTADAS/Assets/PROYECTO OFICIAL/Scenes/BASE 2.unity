@@ -12135,12 +12135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f30e1b49fd97a44d8647736b3224df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OjosDespertarIntro
-  esperaInicial: 0.15
+  esperaInicial: 0
   parpadeosPrevios: 1
   duracionParpadeo: 0.12
   duracionAperturaFinal: 0.9
   pausaEntreParpadeos: 0.08
-  fpsAnimacion: 24
+  fpsAnimacion: 30
   altoOjoCerrado: 0.06
   altoOjoAbierto: 0.42
   anchoOjo: 0.94
