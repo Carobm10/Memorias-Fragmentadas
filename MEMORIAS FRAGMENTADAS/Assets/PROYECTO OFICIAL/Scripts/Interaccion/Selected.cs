@@ -60,6 +60,37 @@ public class Selected : MonoBehaviour
                 pointer3D.SetDetected(true);
 
             GameObject objetoDetectado = hit.collider.gameObject;
+            LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
+            InspectableObject360 inspectable = hit.collider.GetComponentInParent<InspectableObject360>();
+            bool npcBloqueado = npc != null && !npc.PuedeSerSeleccionado();
+
+            if (npcBloqueado)
+            {
+                Deselect();
+                ApagarTodosLosPrompts();
+
+                if (pointer3D != null)
+                    pointer3D.SetDetected(false);
+
+                if (ultimoNPCMirado != null)
+                {
+                    ultimoNPCMirado.SetMirandoNPC(false);
+                    ultimoNPCMirado = null;
+                }
+
+                return;
+            }
+
+            if (inspectable != null && inspectable.IsInspecting())
+            {
+                Deselect();
+                ApagarTodosLosPrompts();
+
+                if (pointer3D != null)
+                    pointer3D.SetDetected(false);
+
+                return;
+            }
 
             if (ultimoReconocido != objetoDetectado)
             {
@@ -68,8 +99,6 @@ public class Selected : MonoBehaviour
             }
 
             // 1. NPC
-            LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
-
             if (npc != null)
             {
                 ApagarTelefonoMirado();
@@ -208,8 +237,6 @@ public class Selected : MonoBehaviour
             }
 
             // 7. Objetos inspeccionables 360
-            InspectableObject360 inspectable = hit.collider.GetComponentInParent<InspectableObject360>();
-
             if (inspectable != null)
             {
                 MostrarSolo(TextDetect);
@@ -218,6 +245,7 @@ public class Selected : MonoBehaviour
                 {
                     ApagarTodosLosPrompts();
                     inspectable.StartInspection();
+                    Deselect();
                     return;
                 }
 

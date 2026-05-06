@@ -287,7 +287,8 @@ public class VideoSceneController : MonoBehaviour
         if (imgContinuar != null && continuarNormal != null)
             imgContinuar.sprite = continuarNormal;
 
-        Debug.Log("Cargando escena siguiente: " + nextSceneName);
+        Debug.Log("Cargando siguiente escena: " + nextSceneName);
+
         changingScene = true;
         SceneManager.LoadScene(nextSceneName);
     }

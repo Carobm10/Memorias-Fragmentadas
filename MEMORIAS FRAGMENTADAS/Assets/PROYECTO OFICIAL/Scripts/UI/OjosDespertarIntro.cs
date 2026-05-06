@@ -7,7 +7,7 @@ public class OjosDespertarIntro : MonoBehaviour
     [Header("Secuencia")]
     [Tooltip("Tiempo de espera antes de comenzar la animacion, en segundos.")]
     [Min(0f)]
-    [SerializeField] private float esperaInicial = 0.15f;
+    [SerializeField] private float esperaInicial = 0f;
 
     [Tooltip("Cantidad de parpadeos cortos antes de abrir completamente los ojos.")]
     [Min(0)]
@@ -106,11 +106,16 @@ public class OjosDespertarIntro : MonoBehaviour
     private void Awake()
     {
         PrepararInicioVisual();
+
+        if (iniciarAutomaticamente)
+        {
+            IniciarIntro();
+        }
     }
 
     private void Start()
     {
-        if (iniciarAutomaticamente)
+        if (iniciarAutomaticamente && secuenciaCoroutine == null)
         {
             IniciarIntro();
         }
