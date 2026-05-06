@@ -50,6 +50,10 @@ public class DrawerInteractable : MonoBehaviour
     [Range(0.5f, 2f)]
     private float soundPitch = 1f;
 
+    [SerializeField]
+    [Range(0f, 0.2f)]
+    private float soundStartOffset = 0.03f;
+
     private Vector3 closedLocalPosition;
     private Vector3 openLocalPosition;
     private AudioSource audioSource;
@@ -161,7 +165,10 @@ public class DrawerInteractable : MonoBehaviour
         }
 
         audioSource.pitch = soundPitch;
-        audioSource.PlayOneShot(clip, soundVolume);
+        audioSource.clip = clip;
+        audioSource.volume = soundVolume;
+        audioSource.time = Mathf.Clamp(soundStartOffset, 0f, Mathf.Max(0f, clip.length - 0.01f));
+        audioSource.Play();
     }
 
     private void PrepararAudio()

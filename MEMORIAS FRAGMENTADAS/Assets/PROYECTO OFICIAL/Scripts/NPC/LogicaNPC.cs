@@ -51,6 +51,7 @@ public class LogicaNPC : MonoBehaviour
     public AudioClip audioRamaA;
     public AudioClip audioRamaA1;
     public AudioClip audioCierre;
+    public AudioClip audioMamaRegano;
 
     // =========================================================
     // DETECCIÓN DEL PLAYER
@@ -75,6 +76,13 @@ public class LogicaNPC : MonoBehaviour
 
     private bool dialogoActivo = false;
     private bool escribiendo = false;
+    private bool reproducirMamaReganoAlCerrar = false;
+    private bool mamaReganoYaReproducido = false;
+    private bool opcionAUsada = false;
+    private bool opcionBUsada = false;
+    private bool opcionYUsada = false;
+    private bool seleccionDeshabilitada = false;
+    private bool ramaPrincipalCompletada = false;
     private Coroutine rutinaEscritura;
 
     private enum EstadoDialogo
@@ -114,7 +122,7 @@ public class LogicaNPC : MonoBehaviour
     {
         ActualizarCercaniaPorDistancia();
 
-        bool puedeHablar = jugadorCerca && jugadorMirando && !dialogoActivo;
+        bool puedeHablar = !seleccionDeshabilitada && jugadorCerca && jugadorMirando && !dialogoActivo;
 
         if (panelInteraccionNPC != null)
             panelInteraccionNPC.SetActive(puedeHablar);
@@ -170,12 +178,22 @@ public class LogicaNPC : MonoBehaviour
         jugadorMirando = mirando;
     }
 
+    public bool PuedeSerSeleccionado()
+    {
+        return !seleccionDeshabilitada;
+    }
+
     // =========================================================
     // DIÁLOGO
     // =========================================================
 
     private void IniciarDialogo()
     {
+        if (seleccionDeshabilitada)
+        {
+            return;
+        }
+
         dialogoActivo = true;
         estadoActual = EstadoDialogo.Inicio;
 
@@ -201,19 +219,19 @@ public class LogicaNPC : MonoBehaviour
         switch (estadoActual)
         {
             case EstadoDialogo.Inicio:
+                reproducirMamaReganoAlCerrar = false;
                 ReproducirAudioDialogo(audioInicio);
                 IniciarEscritura(
                     "¡Ey! ¿Quieres jugar conmigo?\nEstoy armando algo… pero me falta una pieza.\n¿Me ayudas?",
                     () =>
                     {
-                        MostrarOpcion1("Sí, quiero ayudarte  A");
-                        MostrarOpcion2("No puedo ahora  B");
-                        MostrarOpcion3("¿Qué estás haciendo?  Y");
+                        MostrarOpcionesInicialesDisponibles();
                     }
                 );
                 break;
 
             case EstadoDialogo.RamaA:
+                reproducirMamaReganoAlCerrar = false;
                 ReproducirAudioDialogo(audioRamaA);
                 IniciarEscritura(
                     "¡Estoy armando una casita!\nPero siempre se me cae…\nTú eres mejor que yo… ¿cierto?",
@@ -225,6 +243,8 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.RamaA1:
+                reproducirMamaReganoAlCerrar = true;
+                ramaPrincipalCompletada = true;
                 ReproducirAudioDialogo(audioRamaA1);
                 IniciarEscritura(
                     "¡Sabía que sí!\nCuando seas grande, seguro vas a hacer cosas increíbles.\nVe que mamá te está llamando.",
@@ -236,6 +256,7 @@ public class LogicaNPC : MonoBehaviour
                 break;
 
             case EstadoDialogo.Cierre:
+                reproducirMamaReganoAlCerrar = true;
                 ReproducirAudioDialogo(audioCierre);
                 IniciarEscritura(
                     "Bueno… ve pues.\nPero vuelve a jugar conmigo.",
@@ -277,6 +298,10 @@ public class LogicaNPC : MonoBehaviour
     {
         if (estadoActual == EstadoDialogo.Inicio)
         {
+            if (opcionAUsada)
+                return;
+
+            ConsumirRutaPrincipal();
             estadoActual = EstadoDialogo.RamaA;
         }
         else if (estadoActual == EstadoDialogo.RamaA)
@@ -301,6 +326,10 @@ public class LogicaNPC : MonoBehaviour
     {
         if (estadoActual == EstadoDialogo.Inicio)
         {
+            if (opcionBUsada)
+                return;
+
+            opcionBUsada = true;
             estadoActual = EstadoDialogo.Cierre;
             MostrarEstadoActual();
         }
@@ -310,6 +339,10 @@ public class LogicaNPC : MonoBehaviour
     {
         if (estadoActual == EstadoDialogo.Inicio)
         {
+            if (opcionYUsada)
+                return;
+
+            ConsumirRutaPrincipal();
             estadoActual = EstadoDialogo.RamaA;
             MostrarEstadoActual();
         }
@@ -367,6 +400,46 @@ public class LogicaNPC : MonoBehaviour
             textoOpcion3.text = "";
     }
 
+    private void MostrarOpcionesInicialesDisponibles()
+    {
+        bool algunaDisponible = false;
+
+        if (!opcionAUsada)
+        {
+            MostrarOpcion1("Sí, quiero ayudarte  A");
+            algunaDisponible = true;
+        }
+
+        if (!opcionBUsada)
+        {
+            MostrarOpcion2("No puedo ahora  B");
+            algunaDisponible = true;
+        }
+
+        if (!opcionYUsada)
+        {
+            MostrarOpcion3("¿Qué estás haciendo?  Y");
+            algunaDisponible = true;
+        }
+
+        if (opcionAUsada && opcionYUsada && !opcionBUsada)
+        {
+            MostrarOpcion2("No puedo ahora  B");
+            algunaDisponible = true;
+        }
+
+        if (!algunaDisponible)
+        {
+            IniciarEscritura(
+                "Ya jugamos bastante por ahora.",
+                () =>
+                {
+                    CerrarDialogo();
+                }
+            );
+        }
+    }
+
     // =========================================================
     // EFECTO DE ESCRITURA
     // =========================================================
@@ -420,6 +493,25 @@ public class LogicaNPC : MonoBehaviour
             botonSalirDialogo.gameObject.SetActive(false);
 
         OcultarBotones();
+
+        if (reproducirMamaReganoAlCerrar)
+        {
+            if (!mamaReganoYaReproducido)
+            {
+                ReproducirAudioDialogo(audioMamaRegano);
+                mamaReganoYaReproducido = true;
+            }
+
+            reproducirMamaReganoAlCerrar = false;
+        }
+
+        if (!seleccionDeshabilitada && ramaPrincipalCompletada)
+        {
+            seleccionDeshabilitada = true;
+
+            if (panelInteraccionNPC != null)
+                panelInteraccionNPC.SetActive(false);
+        }
     }
 
     // =========================================================
@@ -434,5 +526,11 @@ public class LogicaNPC : MonoBehaviour
         fuenteAudio.Stop();
         fuenteAudio.clip = clip;
         fuenteAudio.Play();
+    }
+
+    private void ConsumirRutaPrincipal()
+    {
+        opcionAUsada = true;
+        opcionYUsada = true;
     }
 }

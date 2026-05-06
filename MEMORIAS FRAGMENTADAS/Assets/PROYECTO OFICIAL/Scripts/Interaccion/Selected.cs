@@ -63,6 +63,25 @@ public class Selected : MonoBehaviour
                 pointer3D.SetDetected(true);
 
             GameObject objetoDetectado = hit.collider.gameObject;
+            LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
+            bool npcBloqueado = npc != null && !npc.PuedeSerSeleccionado();
+
+            if (npcBloqueado)
+            {
+                Deselect();
+                ApagarTodosLosPrompts();
+
+                if (pointer3D != null)
+                    pointer3D.SetDetected(false);
+
+                if (ultimoNPCMirado != null)
+                {
+                    ultimoNPCMirado.SetMirandoNPC(false);
+                    ultimoNPCMirado = null;
+                }
+
+                return;
+            }
 
             if (ultimoReconocido != objetoDetectado)
             {
@@ -71,8 +90,6 @@ public class Selected : MonoBehaviour
             }
 
             // 1. NPC
-            LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
-
             if (npc != null)
             {
                 // Si cambió el NPC que estás mirando
