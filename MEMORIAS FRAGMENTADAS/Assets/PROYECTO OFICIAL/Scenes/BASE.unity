@@ -1551,6 +1551,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &138321596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138321597}
+  m_Layer: 0
+  m_Name: SitFocusPoint_Caballito
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &138321597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138321596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.18981227, y: 0.6618719, z: 1.7057968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1115360049}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &142483111
 GameObject:
   m_ObjectHideFlags: 0
@@ -4300,6 +4331,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -8003673931148789798, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.802
+      objectReference: {fileID: 0}
+    - target: {fileID: -8003673931148789798, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.577
+      objectReference: {fileID: 0}
     - target: {fileID: -7917422265036556909, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -5337,9 +5376,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: 103
       addedObject: {fileID: 198587654}
+    - targetCorrespondingSourceObject: {fileID: -8003673931148789798, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 138321597}
     - targetCorrespondingSourceObject: {fileID: 4294054599712914006, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 952454541}
+    - targetCorrespondingSourceObject: {fileID: -1658690611478935977, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1032928750}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
@@ -11447,6 +11492,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024490968}
   m_CullTransparentMesh: 1
+--- !u!1 &1032928749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1032928750}
+  m_Layer: 0
+  m_Name: SitFocusPoint_Caballito
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1032928750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032928749}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.036195945, z: 0.0034006517}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2128136508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1040765830 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 129977550234810152, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
@@ -12113,20 +12189,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115360039}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65e253714c9f3204192df49b0056f43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SitInteractable
-  sitFocusPoint: {fileID: 0}
-  playerRoot: {fileID: 0}
-  cameraTransform: {fileID: 0}
-  movementScript: {fileID: 0}
+  sitFocusPoint: {fileID: 138321597}
+  playerRoot: {fileID: 1201270053}
+  cameraTransform: {fileID: 14378717}
+  movementScript: {fileID: 1201270050}
   pointer3D: {fileID: 1669511503}
   canvasSalir: {fileID: 720529101}
   cameraLock: {fileID: 14378723}
   moveDuration: 1.2
   returnDuration: 1
+--- !u!4 &1115360049 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8003673931148789798, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1115411811
 GameObject:
   m_ObjectHideFlags: 0
@@ -17330,7 +17411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioScriptManager
   audiosScheduled:
   - nombre: Street
-    clip: {fileID: 8300000, guid: 41bde76442a7e12459458d35ab228ebc, type: 3}
+    clip: {fileID: 8300000, guid: ca9345efcfb9c4f4f894857dac04eeb5, type: 3}
     volumen: 0.04
     pitch: 1
     pitchInicializado: 1
@@ -19166,15 +19247,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e253714c9f3204192df49b0056f43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SitInteractable
-  sitFocusPoint: {fileID: 0}
+  sitFocusPoint: {fileID: 1032928750}
   playerRoot: {fileID: 1201270053}
   cameraTransform: {fileID: 641113639}
-  movementScript: {fileID: 0}
+  movementScript: {fileID: 1201270050}
   pointer3D: {fileID: 1669511503}
   canvasSalir: {fileID: 720529101}
   cameraLock: {fileID: 14378723}
   moveDuration: 1.2
   returnDuration: 1
+--- !u!4 &2128136508 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1658690611478935977, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2142003848
 PrefabInstance:
   m_ObjectHideFlags: 0
