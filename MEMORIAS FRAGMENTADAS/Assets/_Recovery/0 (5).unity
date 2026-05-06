@@ -2583,7 +2583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192854469}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80779f19777b4694aad2d1e68654b3a1, type: 3}
   m_Name: 
@@ -2978,7 +2978,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.018022774, y: 0.22056465, z: 0.18097351}
-  m_Center: {x: 0, y: 0.01, z: -0.04}
+  m_Center: {x: -2.1380112, y: 0.10123698, z: 6.725627}
 --- !u!23 &251642555
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4911,10 +4911,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.5014
       objectReference: {fileID: 0}
-    - target: {fileID: -1767428936405873407, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: -1755787999460364491, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -5209,7 +5205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1605267966424688541, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1651644859092204306, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_Layer
@@ -5318,10 +5314,6 @@ PrefabInstance:
     - target: {fileID: 4294054599712914006, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.032
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319523895876893557, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4337838385640659697, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -5461,11 +5453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6960852973913914993, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6960852973913914993, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7002338934098487107, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_Layer
@@ -9277,7 +9265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &736333641
 Transform:
   m_ObjectHideFlags: 0
@@ -9341,7 +9329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715cb6162a53df146b7e9afa7d85ebbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryFrameInteractable
-  videoQuad: {fileID: 1201270047}
+  videoQuad: {fileID: 0}
   videoPlayer: {fileID: 0}
   inspectPoint: {fileID: 0}
   moveSpeed: 3
@@ -11047,6 +11035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 896565274}
   - component: {fileID: 896565273}
+  - component: {fileID: 896565272}
   m_Layer: 8
   m_Name: Pivot_Puerta_Cajon_Cocina_3
   m_TagString: Untagged
@@ -11054,6 +11043,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &896565272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896565271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80779f19777b4694aad2d1e68654b3a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorInteractable
+  startsOpen: 0
+  openAngle: 95
+  speed: 3
+  rotationAxis: {x: 0, y: 1, z: 0}
+  openDoorClip: {fileID: 8300000, guid: 780d210cdded21543857f76ea9274e81, type: 3}
+  closeDoorClip: {fileID: 8300000, guid: 01b975e9ce0b16b4cb5d6af88bd83960, type: 3}
+  soundVolume: 1
+  soundPitch: 1
+  isOpen: 0
+  isLocked: 0
 --- !u!114 &896565273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12042,7 +12053,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979038376}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80779f19777b4694aad2d1e68654b3a1, type: 3}
   m_Name: 
@@ -12074,10 +12085,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.018021818, y: 0.2202797, z: 0.18}
-  m_Center: {x: 0.01, y: 0, z: 0.04}
+  m_Size: {x: 0.018021818, y: 0.2202797, z: 0.1811094}
+  m_Center: {x: -2.1380124, y: 0.100420654, z: 7.2997217}
 --- !u!1 &980635897 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -305191291272397344, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
@@ -12604,7 +12615,7 @@ GameObject:
   - component: {fileID: 1098235602}
   - component: {fileID: 1098235601}
   - component: {fileID: 1098235600}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: pasted__puerta_rep_tres
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16020,7 +16031,7 @@ GameObject:
   - component: {fileID: 1577071414}
   - component: {fileID: 1577071413}
   - component: {fileID: 1577071412}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pasted__puerta_co_dos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16062,7 +16073,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.018021822, y: 0.22589195, z: 0.18130589}
-  m_Center: {x: 0, y: -0.01, z: 0.03}
+  m_Center: {x: -2.138012, y: 0.099566996, z: 6.9153967}
 --- !u!23 &1577071413
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18150,7 +18161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1848486269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18174,7 +18185,7 @@ Transform:
   m_GameObject: {fileID: 1848486268}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.106, y: 0.4054, z: 4.525}
+  m_LocalPosition: {x: 1.813, y: 0.4054, z: 4.525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21110,7 +21121,7 @@ Transform:
   m_GameObject: {fileID: 2143998432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.199, y: 0.4425, z: 4.5683}
+  m_LocalPosition: {x: -0.264, y: 0.4921, z: 3.966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
