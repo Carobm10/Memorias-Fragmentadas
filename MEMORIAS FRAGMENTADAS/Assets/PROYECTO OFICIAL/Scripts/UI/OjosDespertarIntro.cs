@@ -75,6 +75,10 @@ public class OjosDespertarIntro : MonoBehaviour
     [Tooltip("Color del parpado/overlay. Normalmente negro.")]
     [SerializeField] private Color colorParpado = Color.black;
 
+    [Header("Reticula")]
+    [Tooltip("Reticula 3D que se oculta al inicio y reaparece con transparencia.")]
+    [SerializeField] private Pointer3DController reticula;
+
     [Tooltip("Si esta activo, el efecto crea su propio overlay de pantalla completa.")]
     [SerializeField] private bool crearOverlayAutomatico = true;
 
@@ -97,14 +101,17 @@ public class OjosDespertarIntro : MonoBehaviour
     private float coberturaActual = 1f;
     private float alphaPantallaActual = 1f;
     private float expansionFinalActual = 0f;
+    private Selected selectedController;
+
+    private void Awake()
+    {
+        PrepararInicioVisual();
+    }
 
     private void Start()
     {
-        Debug.Log("OJOS INTRO START");
-
         if (iniciarAutomaticamente)
         {
-            Debug.Log("OJOS INTRO INICIANDO");
             IniciarIntro();
         }
     }
@@ -112,6 +119,8 @@ public class OjosDespertarIntro : MonoBehaviour
     [ContextMenu("Iniciar Intro")]
     public void IniciarIntro()
     {
+        PrepararInicioVisual();
+
         if (secuenciaCoroutine != null)
         {
             StopCoroutine(secuenciaCoroutine);
@@ -127,8 +136,6 @@ public class OjosDespertarIntro : MonoBehaviour
 
     private void CrearOverlay()
     {
-        Debug.Log("OJOS INTRO CREANDO OVERLAY");
-        
         if (overlayRoot != null)
         {
             Destroy(overlayRoot);
@@ -175,21 +182,63 @@ public class OjosDespertarIntro : MonoBehaviour
         DibujarMascara(1f);
     }
 
+    private void PrepararInicioVisual()
+    {
+        if (selectedController == null)
+        {
+            selectedController = FindFirstObjectByType<Selected>(FindObjectsInactive.Include);
+        }
+
+        if (selectedController != null)
+        {
+            selectedController.enabled = false;
+        }
+
+        if (reticula == null)
+        {
+            reticula = FindFirstObjectByType<Pointer3DController>(FindObjectsInactive.Include);
+        }
+
+        if (reticula != null)
+        {
+            reticula.SetDetected(false);
+            reticula.SetAlpha(0f);
+        }
+
+        if (crearOverlayAutomatico && overlayRoot == null)
+        {
+            CrearOverlay();
+        }
+        else if (overlayImage != null)
+        {
+            alphaPantallaActual = 1f;
+            coberturaActual = 1f;
+            expansionFinalActual = 0f;
+            AplicarAlphaPantalla();
+            DibujarMascara(1f);
+        }
+    }
+
     private IEnumerator SeccionDespertar()
     {
         DesactivarScriptsOpcionales(true);
 
-        yield return new WaitForSecondsRealtime(esperaInicial);
+        yield return EsperaRealtimeSiNecesario(esperaInicial);
 
         for (int i = 0; i < parpadeosPrevios; i++)
         {
             yield return AnimarCobertura(1f, 0.18f, duracionParpadeo);
-            yield return new WaitForSecondsRealtime(pausaEntreParpadeos);
+            yield return EsperaRealtimeSiNecesario(pausaEntreParpadeos);
             yield return AnimarCobertura(0.18f, 1f, duracionParpadeo);
-            yield return new WaitForSecondsRealtime(pausaEntreParpadeos);
+            yield return EsperaRealtimeSiNecesario(pausaEntreParpadeos);
         }
 
         yield return AnimarAperturaFinalConFade();
+
+        if (selectedController != null)
+        {
+            selectedController.enabled = true;
+        }
 
         DesactivarScriptsOpcionales(false);
 
@@ -203,7 +252,7 @@ public class OjosDespertarIntro : MonoBehaviour
 
     private IEnumerator AnimarCobertura(float coberturaInicio, float coberturaFin, float duracion)
     {
-        int fps = Mathf.Clamp(fpsAnimacion, 12, 60);
+        int fps = Mathf.Clamp(Mathf.Max(fpsAnimacion, 30), 12, 60);
         float paso = 1f / fps;
         int pasos = Mathf.Max(1, Mathf.CeilToInt(duracion * fps));
 
@@ -222,7 +271,7 @@ public class OjosDespertarIntro : MonoBehaviour
 
     private IEnumerator AnimarAperturaFinalConFade()
     {
-        int fps = Mathf.Clamp(fpsAnimacion, 12, 60);
+        int fps = Mathf.Clamp(Mathf.Max(fpsAnimacion, 30), 12, 60);
         float paso = 1f / fps;
         int pasos = Mathf.Max(1, Mathf.CeilToInt(duracionAperturaFinal * fps));
 
@@ -238,6 +287,11 @@ public class OjosDespertarIntro : MonoBehaviour
             float fadeT = Mathf.InverseLerp(fadeStart, 1f, t);
             alphaPantallaActual = Mathf.Lerp(1f, 0f, Mathf.SmoothStep(0f, 1f, fadeT));
 
+            if (reticula != null)
+            {
+                reticula.SetAlpha(Mathf.SmoothStep(0f, 1f, fadeT));
+            }
+
             AplicarMicroMovimiento(t, suave);
             DibujarMascara(coberturaActual);
             AplicarAlphaPantalla();
@@ -250,7 +304,19 @@ public class OjosDespertarIntro : MonoBehaviour
         expansionFinalActual = 1f;
         DibujarMascara(coberturaActual);
         AplicarAlphaPantalla();
+        if (reticula != null)
+        {
+            reticula.SetAlpha(1f);
+        }
         RestablecerTransformacionOverlay();
+    }
+
+    private IEnumerator EsperaRealtimeSiNecesario(float segundos)
+    {
+        if (segundos > 0f)
+        {
+            yield return new WaitForSecondsRealtime(segundos);
+        }
     }
 
     private void AplicarMicroMovimiento(float progreso, float suavizado)

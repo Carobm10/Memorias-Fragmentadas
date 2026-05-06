@@ -35,6 +35,11 @@ public class Selected : MonoBehaviour
     [Header("Color de selección")]
     public Color colorSeleccion = new Color(0.1f, 1f, 0.25f, 1f);
 
+    void Awake()
+    {
+        ApagarPrompts();
+    }
+
     void Start()
     {
         mask = LayerMask.GetMask("Raycast Detect");

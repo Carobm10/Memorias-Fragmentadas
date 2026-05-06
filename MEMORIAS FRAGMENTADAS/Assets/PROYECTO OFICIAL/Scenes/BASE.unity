@@ -6762,6 +6762,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0384924749c034ea7e9c56f2b06ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogicaNPC
+  nombreNPC: 'Aurora [Hermana]'
+  panelInteraccionNPC: {fileID: 0}
+  panelDialogoNPC: {fileID: 0}
+  textoNombreNPC: {fileID: 0}
+  textoDialogo: {fileID: 0}
+  textoOpcion1: {fileID: 0}
+  textoOpcion2: {fileID: 0}
+  textoOpcion3: {fileID: 0}
+  botonOpcion1: {fileID: 0}
+  botonOpcion2: {fileID: 0}
+  botonOpcion3: {fileID: 0}
+  botonSalirDialogo: {fileID: 0}
+  fuenteAudio: {fileID: 0}
+  audioInicio: {fileID: 0}
+  audioRamaA: {fileID: 0}
+  audioRamaA1: {fileID: 0}
+  audioCierre: {fileID: 0}
+  player: {fileID: 0}
+  distanciaParaHablar: 2
+  jugadorCerca: 0
+  jugadorMirando: 0
+  velocidadEscritura: 0.03
 --- !u!1 &616668806
 GameObject:
   m_ObjectHideFlags: 0
@@ -15152,12 +15174,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f30e1b49fd97a44d8647736b3224df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OjosDespertarIntro
-  esperaInicial: 0.15
+  esperaInicial: 0
   parpadeosPrevios: 1
   duracionParpadeo: 0.12
   duracionAperturaFinal: 0.9
   pausaEntreParpadeos: 0.08
-  fpsAnimacion: 24
+  fpsAnimacion: 30
   altoOjoCerrado: 0.06
   altoOjoAbierto: 0.42
   anchoOjo: 0.94
@@ -15169,6 +15191,7 @@ MonoBehaviour:
   microMovimientoApertura: 0.35
   inicioFadePantalla: 0.45
   colorParpado: {r: 0, g: 0, b: 0, a: 1}
+  reticula: {fileID: 0}
   crearOverlayAutomatico: 1
   iniciarAutomaticamente: 1
   scriptsParaDesactivar: []
@@ -17308,7 +17331,7 @@ MonoBehaviour:
   audiosScheduled:
   - nombre: Street
     clip: {fileID: 8300000, guid: 41bde76442a7e12459458d35ab228ebc, type: 3}
-    volumen: 0.143
+    volumen: 0.04
     pitch: 1
     pitchInicializado: 1
     loop: 1
@@ -17320,14 +17343,14 @@ MonoBehaviour:
       m_PostInfinity: 0
       m_RotationOrder: 0
     repeticiones: 0
-    delay: 0
+    delay: 4
     reproducirAlInicio: 0
     usar3D: 1
-    distanciaMaxima: 3
+    distanciaMaxima: 2.2
     intensidadCercania: 1
     fadeOutZona: 0.25
     puntoEmisionPersonalizado: {fileID: 0}
-    yaReproducido: 0
+    yaReproducido: 1
   usarPosicionDeReproduccion: 1
   puntoEmision3DPorDefecto: {fileID: 0}
   usarCentroVisualParaGizmos: 1
