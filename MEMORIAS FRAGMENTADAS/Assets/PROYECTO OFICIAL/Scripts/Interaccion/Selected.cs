@@ -1,17 +1,9 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Selected controla la detección por mirada/raycast del jugador.
-/// 
-/// Regla oficial de botones:
-/// - B = interactuar con objetos, puertas, cajones, ropa e inspecciones.
-/// - A = iniciar misión o diálogo con NPC.
-/// - X = salir/cerrar/cancelar. NO se usa aquí para interactuar.
-/// - Y = queda disponible para opciones adicionales.
-/// </summary>
 public class Selected : MonoBehaviour
 {
     private LogicaNPC ultimoNPCMirado;
+    private PhoneMissionController ultimoTelefonoMirado;
 
     [Header("Puntero 3D")]
     public Pointer3DController pointer3D;
@@ -32,6 +24,7 @@ public class Selected : MonoBehaviour
     private GameObject ultimoReconocido;
     private Renderer[] renderersActuales;
     private Color[] coloresOriginales;
+
     [Header("Color de selección")]
     public Color colorSeleccion = new Color(0.1f, 1f, 0.25f, 1f);
 
@@ -43,15 +36,19 @@ public class Selected : MonoBehaviour
     void Start()
     {
         mask = LayerMask.GetMask("Raycast Detect");
-        ApagarPrompts();
+        ApagarTodosLosPrompts();
     }
 
     void Update()
     {
         if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
         {
-            ApagarPrompts();
-            if (pointer3D != null) pointer3D.SetDetected(false);
+            LimpiarMiradas();
+            ApagarTodosLosPrompts();
+
+            if (pointer3D != null)
+                pointer3D.SetDetected(false);
+
             return;
         }
 
@@ -92,46 +89,50 @@ public class Selected : MonoBehaviour
             // 1. NPC
             if (npc != null)
             {
-                // Si cambió el NPC que estás mirando
-                if (ultimoNPCMirado != npc)
-                {
-                    // Apagar el anterior
-                    if (ultimoNPCMirado != null)
-                    {
-                        ultimoNPCMirado.SetMirandoNPC(false);
-                    }
+                ApagarTelefonoMirado();
 
-                    // Guardar el nuevo
-                    ultimoNPCMirado = npc;
-                }
+                if (ultimoNPCMirado != null && ultimoNPCMirado != npc)
+                    ultimoNPCMirado.SetMirandoNPC(false);
 
-                // Activar el actual
+                ultimoNPCMirado = npc;
                 ultimoNPCMirado.SetMirandoNPC(true);
 
-                // 🔴 IMPORTANTE: apagar otros prompts
                 ApagarTodosLosPrompts();
+                return;
+            }
+            else
+            {
+                ApagarNPCMirado();
+            }
+
+            // 2. TELÉFONO
+            PhoneMissionController phone = hit.collider.GetComponentInParent<PhoneMissionController>();
+
+            if (phone != null)
+            {
+                ApagarNPCMirado();
+
+                if (ultimoTelefonoMirado != null && ultimoTelefonoMirado != phone)
+                    ultimoTelefonoMirado.SetMirandoTelefono(false);
+
+                ultimoTelefonoMirado = phone;
+                ultimoTelefonoMirado.SetMirandoTelefono(true);
 
                 return;
             }
-            // Si ya no estás mirando un NPC
-            if (ultimoNPCMirado != null)
+            else
             {
-                ultimoNPCMirado.SetMirandoNPC(false);
-                ultimoNPCMirado = null;
+                ApagarTelefonoMirado();
             }
 
-            // 2. Prendas del clóset: B selecciona ropa
-            ClosetClothingItem clothing = hit.collider.GetComponent<ClosetClothingItem>();
-            if (clothing == null)
-                clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
+            // 3. Prendas del clóset
+            ClosetClothingItem clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
 
             if (clothing != null)
             {
                 MostrarSolo(ClothingPromptPanel);
 
-                ClosetMissionTrigger closetForClothing = hit.collider.GetComponent<ClosetMissionTrigger>();
-                if (closetForClothing == null)
-                    closetForClothing = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
+                ClosetMissionTrigger closetForClothing = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
                 if (InputManagerCustom.PressB())
                 {
@@ -152,10 +153,8 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 3. Clóset / misión: A inicia misión
-            ClosetMissionTrigger closet = hit.collider.GetComponent<ClosetMissionTrigger>();
-            if (closet == null)
-                closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
+            // 4. Clóset / misión
+            ClosetMissionTrigger closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
             if (closet != null && !closet.missionStarted && !closet.missionCompleted)
             {
@@ -171,10 +170,8 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 4. Puertas: B abre/cierra
-            DoorInteractable door = hit.collider.GetComponent<DoorInteractable>();
-            if (door == null)
-                door = hit.collider.GetComponentInParent<DoorInteractable>();
+            // 5. Puertas
+            DoorInteractable door = hit.collider.GetComponentInParent<DoorInteractable>();
 
             if (door != null)
             {
@@ -190,10 +187,8 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 5. Cajones: B abre/cierra
-            DrawerInteractable drawer = hit.collider.GetComponent<DrawerInteractable>();
-            if (drawer == null)
-                drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
+            // 6. Cajones
+            DrawerInteractable drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
 
             if (drawer != null)
             {
@@ -209,7 +204,7 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 6. Objetos inspeccionables 360: B inspecciona
+            // 7. Objetos inspeccionables 360
             InspectableObject360 inspectable = hit.collider.GetComponentInParent<InspectableObject360>();
 
             if (inspectable != null)
@@ -218,7 +213,7 @@ public class Selected : MonoBehaviour
 
                 if (InputManagerCustom.PressB())
                 {
-                    ApagarPrompts();
+                    ApagarTodosLosPrompts();
                     inspectable.StartInspection();
                     return;
                 }
@@ -226,10 +221,8 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 7. Objeto interactivo simple: B activa
-            ObjetoInteractivo objeto = hit.collider.GetComponent<ObjetoInteractivo>();
-            if (objeto == null)
-                objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
+            // 8. Objeto interactivo simple
+            ObjetoInteractivo objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
 
             if (objeto != null)
             {
@@ -244,44 +237,19 @@ public class Selected : MonoBehaviour
                 return;
             }
 
-            // 8. Sentarse / Focus Point: B activa
-            SitFocusPointInteractable sit = hit.collider.GetComponentInParent<SitFocusPointInteractable>();
-
-            if (sit != null)
-            {
-                MostrarSolo(TextDetect);
-
-                if (InputManagerCustom.PressB())
-                {
-                    ApagarPrompts();
-                    sit.Sit();
-                    return;
-                }
-
-                return;
-            }
-
-            ApagarPrompts();
+            ApagarTodosLosPrompts();
         }
         else
         {
             Deselect();
-            ApagarPrompts();
+            LimpiarMiradas();
+            ApagarTodosLosPrompts();
 
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
-
-            if (ultimoNPCMirado != null)
-            {
-                ultimoNPCMirado.SetMirandoNPC(false);
-                ultimoNPCMirado = null;
-            }
         }
     }
 
-    /// <summary>
-    /// Muestra solo un prompt y apaga los demás.
-    /// </summary>
     void MostrarSolo(GameObject prompt)
     {
         ApagarTodosLosPrompts();
@@ -290,17 +258,6 @@ public class Selected : MonoBehaviour
             prompt.SetActive(true);
     }
 
-    /// <summary>
-    /// Apaga todos los prompts visibles.
-    /// </summary>
-    void ApagarPrompts()
-    {
-        ApagarTodosLosPrompts();
-    }
-
-    /// <summary>
-    /// Apaga todos los paneles de ayuda/interacción.
-    /// </summary>
     void ApagarTodosLosPrompts()
     {
         if (TextDetect != null) TextDetect.SetActive(false);
@@ -309,42 +266,53 @@ public class Selected : MonoBehaviour
         if (ClothingPromptPanel != null) ClothingPromptPanel.SetActive(false);
     }
 
-    /// <summary>
-    /// Marca visualmente el objeto que el jugador está mirando.
-    /// Si el objeto pertenece a un interactuable grande, como el clóset,
-    /// intenta seleccionar el objeto padre completo.
-    /// </summary>
+    void LimpiarMiradas()
+    {
+        ApagarNPCMirado();
+        ApagarTelefonoMirado();
+    }
+
+    void ApagarNPCMirado()
+    {
+        if (ultimoNPCMirado != null)
+        {
+            ultimoNPCMirado.SetMirandoNPC(false);
+            ultimoNPCMirado = null;
+        }
+    }
+
+    void ApagarTelefonoMirado()
+    {
+        if (ultimoTelefonoMirado != null)
+        {
+            ultimoTelefonoMirado.SetMirandoTelefono(false);
+            ultimoTelefonoMirado = null;
+        }
+    }
+
     void SelectedObject(Collider colliderDetectado)
     {
         Transform raizSeleccion = colliderDetectado.transform;
 
-        // Si pertenece a una misión de clóset, selecciona todo el clóset.
         ClosetMissionTrigger closet = colliderDetectado.GetComponentInParent<ClosetMissionTrigger>();
         if (closet != null)
-        {
             raizSeleccion = closet.transform;
-        }
 
-        // Si pertenece a una puerta, selecciona la puerta completa.
         DoorInteractable door = colliderDetectado.GetComponentInParent<DoorInteractable>();
         if (door != null)
-        {
             raizSeleccion = door.transform;
-        }
 
-        // Si pertenece a un cajón, selecciona el cajón completo.
         DrawerInteractable drawer = colliderDetectado.GetComponentInParent<DrawerInteractable>();
         if (drawer != null)
-        {
             raizSeleccion = drawer.transform;
-        }
 
-        // Si pertenece a una prenda, selecciona la prenda completa.
         ClosetClothingItem clothing = colliderDetectado.GetComponentInParent<ClosetClothingItem>();
         if (clothing != null)
-        {
             raizSeleccion = clothing.transform;
-        }
+
+        PhoneMissionController phone = colliderDetectado.GetComponentInParent<PhoneMissionController>();
+        if (phone != null)
+            raizSeleccion = phone.transform;
 
         ultimoReconocido = raizSeleccion.gameObject;
 
@@ -361,9 +329,6 @@ public class Selected : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Quita la selección visual y devuelve los colores originales.
-    /// </summary>
     void Deselect()
     {
         if (renderersActuales != null && coloresOriginales != null)
