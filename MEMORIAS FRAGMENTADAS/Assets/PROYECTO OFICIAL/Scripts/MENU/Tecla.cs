@@ -58,7 +58,7 @@ public class Tecla : MonoBehaviour
 
             if (texto == "JUGAR")
             {
-                SceneManager.LoadScene("Escena_VideoIntro");
+                SceneManager.LoadScene("BASE");
             }
             else if (texto == "AJUSTES")
             {

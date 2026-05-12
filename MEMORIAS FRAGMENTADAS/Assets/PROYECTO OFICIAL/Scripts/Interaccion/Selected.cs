@@ -30,7 +30,7 @@ public class Selected : MonoBehaviour
 
     void Awake()
     {
-        ApagarTodosLosPrompts();
+        ApagarPrompts();
     }
 
     void Start()
@@ -135,26 +135,6 @@ public class Selected : MonoBehaviour
             else
             {
                 ApagarTelefonoMirado();
-            }
-
-            MemoryFrameInteractable frame =
-                hit.collider.GetComponentInParent<MemoryFrameInteractable>();
-
-            if (frame != null)
-            {
-                frame.SetMirando(true);
-
-                if (Input.GetKeyDown(KeyCode.V))
-                {
-                    // el propio script ya lo maneja
-                }
-
-                return;
-            }
-
-            else
-            {
-                frame.SetMirando(false);
             }
 
             // 3. Prendas del clóset
