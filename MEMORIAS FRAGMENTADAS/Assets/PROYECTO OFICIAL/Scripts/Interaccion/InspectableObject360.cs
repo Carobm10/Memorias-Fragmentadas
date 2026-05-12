@@ -4,8 +4,8 @@ public class InspectableObject360 : MonoBehaviour
 {
     [Header("Cámara")]
     public Transform cameraTransform;
-
     private Quaternion lockedCameraRotation;
+
     [Header("Prefab visual")]
     public GameObject visualPrefab;
 
@@ -28,7 +28,11 @@ public class InspectableObject360 : MonoBehaviour
     [Header("Escala copia")]
     public float inspectScale = 1f;
 
+    [Header("Debug")]
+    public bool showDebug = true;
+
     private GameObject currentClone;
+    private GameObject visualWrapper;
     private bool inspecting = false;
 
     public bool IsInspecting()
@@ -46,6 +50,12 @@ public class InspectableObject360 : MonoBehaviour
             return;
         }
 
+        if (inspectPoint == null)
+        {
+            Debug.LogError("No hay InspectPoint asignado en " + gameObject.name);
+            return;
+        }
+
         inspecting = true;
 
         if (cameraTransform == null && Camera.main != null)
@@ -54,35 +64,37 @@ public class InspectableObject360 : MonoBehaviour
         if (cameraTransform != null)
             lockedCameraRotation = cameraTransform.rotation;
 
-        currentClone = Instantiate(
-            visualPrefab,
-            inspectPoint.position,
-            Quaternion.identity
-        );
+        // Creamos un contenedor limpio en el punto de inspección.
+        visualWrapper = new GameObject("INSPECCION_360_" + visualPrefab.name);
+        visualWrapper.transform.SetParent(inspectPoint);
+        visualWrapper.transform.localPosition = Vector3.zero;
+        visualWrapper.transform.localRotation = Quaternion.identity;
+        visualWrapper.transform.localScale = Vector3.one;
 
-        currentClone.transform.SetParent(inspectPoint);
-
+        // Creamos la copia visual dentro del contenedor.
+        currentClone = Instantiate(visualPrefab, visualWrapper.transform);
+        currentClone.name = visualPrefab.name + "_CLON_360";
         currentClone.transform.localPosition = Vector3.zero;
         currentClone.transform.localRotation = Quaternion.identity;
         currentClone.transform.localScale = Vector3.one * inspectScale;
 
-        Collider[] cloneCols = currentClone.GetComponentsInChildren<Collider>();
-
+        // Desactivamos física/colliders del clon para que no empuje nada.
+        Collider[] cloneCols = currentClone.GetComponentsInChildren<Collider>(true);
         foreach (Collider col in cloneCols)
             col.enabled = false;
 
-        Rigidbody[] rbs = currentClone.GetComponentsInChildren<Rigidbody>();
-
+        Rigidbody[] rbs = currentClone.GetComponentsInChildren<Rigidbody>(true);
         foreach (Rigidbody rb in rbs)
         {
             rb.isKinematic = true;
             rb.useGravity = false;
         }
 
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+        // Centramos el clon usando sus renderers.
+        CenterCloneByRenderers();
 
-        foreach (MeshRenderer r in renderers)
-            r.enabled = false;
+        // Ocultamos el objeto original.
+        SetOriginalVisible(false);
 
         if (playerMovement != null)
             playerMovement.puedeMoverse = false;
@@ -92,6 +104,58 @@ public class InspectableObject360 : MonoBehaviour
 
         if (exitCanvas != null)
             exitCanvas.SetActive(true);
+
+        if (showDebug)
+        {
+            Debug.Log("===== DEBUG 360 =====");
+            Debug.Log("Original: " + gameObject.name);
+            Debug.Log("Visual Prefab: " + visualPrefab.name);
+            Debug.Log("InspectPoint: " + inspectPoint.name);
+            Debug.Log("InspectPoint mundo: " + inspectPoint.position);
+            Debug.Log("InspectPoint local: " + inspectPoint.localPosition);
+            Debug.Log("Wrapper mundo: " + visualWrapper.transform.position);
+            Debug.Log("Clon localPosition final: " + currentClone.transform.localPosition);
+            Debug.Log("Clon escala: " + currentClone.transform.localScale);
+        }
+    }
+
+    void CenterCloneByRenderers()
+    {
+        if (currentClone == null) return;
+
+        Renderer[] renderers = currentClone.GetComponentsInChildren<Renderer>(true);
+
+        if (renderers == null || renderers.Length == 0)
+        {
+            Debug.LogWarning("El clon no tiene renderers para centrar: " + currentClone.name);
+            return;
+        }
+
+        Bounds bounds = renderers[0].bounds;
+
+        for (int i = 1; i < renderers.Length; i++)
+        {
+            bounds.Encapsulate(renderers[i].bounds);
+        }
+
+        Vector3 worldCenter = bounds.center;
+        Vector3 localCenter = currentClone.transform.InverseTransformPoint(worldCenter);
+
+        currentClone.transform.localPosition -= localCenter;
+
+        if (showDebug)
+        {
+            Debug.Log("Centro visual mundo: " + worldCenter);
+            Debug.Log("Centro visual local: " + localCenter);
+        }
+    }
+
+    void SetOriginalVisible(bool visible)
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
+
+        foreach (Renderer r in renderers)
+            r.enabled = visible;
     }
 
     public void StopInspect()
@@ -100,13 +164,12 @@ public class InspectableObject360 : MonoBehaviour
 
         inspecting = false;
 
-        if (currentClone != null)
+        if (visualWrapper != null)
+            Destroy(visualWrapper);
+        else if (currentClone != null)
             Destroy(currentClone);
 
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-
-        foreach (MeshRenderer r in renderers)
-            r.enabled = true;
+        SetOriginalVisible(true);
 
         if (playerMovement != null)
             playerMovement.puedeMoverse = true;
@@ -128,18 +191,18 @@ public class InspectableObject360 : MonoBehaviour
             return;
         }
 
-        if (currentClone == null) return;
+        if (visualWrapper == null) return;
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        currentClone.transform.Rotate(
+        visualWrapper.transform.Rotate(
             Vector3.up,
             -horizontal * rotationSpeed * Time.deltaTime,
             Space.World
         );
 
-        currentClone.transform.Rotate(
+        visualWrapper.transform.Rotate(
             Vector3.right,
             vertical * rotationSpeed * Time.deltaTime,
             Space.World
@@ -150,13 +213,13 @@ public class InspectableObject360 : MonoBehaviour
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
 
-            currentClone.transform.Rotate(
+            visualWrapper.transform.Rotate(
                 Vector3.up,
                 -mouseX * mouseRotationSpeed,
                 Space.World
             );
 
-            currentClone.transform.Rotate(
+            visualWrapper.transform.Rotate(
                 Vector3.right,
                 mouseY * mouseRotationSpeed,
                 Space.World
