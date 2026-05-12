@@ -357,4 +357,18 @@ public class Selected : MonoBehaviour
         renderersActuales = null;
         coloresOriginales = null;
     }
+    void ApagarPrompts()
+    {
+        if (TextDetect != null)
+            TextDetect.SetActive(false);
+
+        if (DoorPromptPanel != null)
+            DoorPromptPanel.SetActive(false);
+
+        if (MissionPromptPanel != null)
+            MissionPromptPanel.SetActive(false);
+
+        if (ClothingPromptPanel != null)
+            ClothingPromptPanel.SetActive(false);
+    }
 }

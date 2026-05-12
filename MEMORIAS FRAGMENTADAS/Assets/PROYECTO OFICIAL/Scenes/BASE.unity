@@ -131,14 +131,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 40
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &14378716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,7 +1718,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xA1Has escogido la prenda incorrecta, escoge otra!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_sharedMaterial: {fileID: 8125025808374932309, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1783,7 +1785,7 @@ MonoBehaviour:
   m_margin: {x: -207.78311, y: -51.880733, z: -120.1201, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &142483114
@@ -1896,6 +1898,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 1
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!65 &152236321
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2172,8 +2175,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "S\xED, \xBFa qu\xE9 est\xE1s jugando?  "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2335,8 +2338,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Y
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2815,14 +2818,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 0.1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &233276533
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,8 +3100,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xBFQu\xE9 est\xE1s haciendo? "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3342,8 +3347,8 @@ MonoBehaviour:
   m_text: "\xA1Ey! \xBFQuieres jugar conmigo?\nEstoy armando algo\u2026 pero me falta
     una pieza.\n\xBFMe ayudas o est\xE1s ocupado?"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3777,14 +3782,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!95 &393637715 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 945e76f903921b54ca550e29daec61c3, type: 3}
@@ -3822,6 +3829,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 1
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!65 &395015518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6110,14 +6118,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &479665646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6130,14 +6140,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &479665647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6150,14 +6162,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 10
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &479665648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6170,14 +6184,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &479665655
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6769,6 +6785,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 0.5
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!1 &587863003
 GameObject:
   m_ObjectHideFlags: 0
@@ -6828,7 +6845,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xA1Has escogido la prenda correcta, muy bien!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_sharedMaterial: {fileID: 8125025808374932309, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6895,7 +6912,7 @@ MonoBehaviour:
   m_margin: {x: -207.78311, y: -51.880733, z: -120.1201, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &587863006
@@ -7117,6 +7134,7 @@ MonoBehaviour:
   audioRamaA: {fileID: 0}
   audioRamaA1: {fileID: 0}
   audioCierre: {fileID: 0}
+  audioMamaRegano: {fileID: 0}
   player: {fileID: 0}
   distanciaParaHablar: 2
   jugadorCerca: 0
@@ -7181,7 +7199,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Presiona B para Interactuar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76b7de7208e753842a632be09132706e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_sharedMaterial: {fileID: -3542638231083062816, guid: 76b7de7208e753842a632be09132706e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7248,7 +7266,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 68.26465, w: 39.69922}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &616668809
@@ -7461,7 +7479,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Presiona A para hablar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76b7de7208e753842a632be09132706e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_sharedMaterial: {fileID: -3542638231083062816, guid: 76b7de7208e753842a632be09132706e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7528,7 +7546,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 68.26465, w: 39.69922}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &643008931
@@ -7551,14 +7569,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &643681918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7657,7 +7677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &652122399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7919,8 +7939,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: B
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8179,6 +8199,7 @@ MonoBehaviour:
   audioRamaA: {fileID: 0}
   audioRamaA1: {fileID: 0}
   audioCierre: {fileID: 0}
+  audioMamaRegano: {fileID: 0}
   player: {fileID: 1201270053}
   distanciaParaHablar: 5
   jugadorCerca: 0
@@ -8508,6 +8529,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 1
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!65 &684364852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9010,8 +9032,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: No puedo ahora, tengo que alistarme.  A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9189,7 +9211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &724437405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10756,6 +10778,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 0.5
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!1 &892483947
 GameObject:
   m_ObjectHideFlags: 0
@@ -11001,6 +11024,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 1
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!65 &919472704
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11277,7 +11301,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0037600473
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11322,6 +11346,10 @@ PrefabInstance:
     - target: {fileID: -4129372766541966229, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1781317450869901896, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.014
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
       propertyPath: m_Name
@@ -11379,14 +11407,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &952454545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11399,14 +11429,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 25
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &952454552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11773,6 +11805,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 0.5
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!1 &969008140
 GameObject:
   m_ObjectHideFlags: 0
@@ -12104,14 +12137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 50
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &1072378623
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12175,6 +12210,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 1
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!65 &1072556396
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13580,14 +13616,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &1222776365
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13841,7 +13879,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xA1Has escogido la prenda incorrecta, escoge otra!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_sharedMaterial: {fileID: 8125025808374932309, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -13908,7 +13946,7 @@ MonoBehaviour:
   m_margin: {x: -207.78311, y: -51.880733, z: -120.1201, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1226677666
@@ -14616,14 +14654,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &1385294557
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14831,6 +14871,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 0.5
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!1 &1417881835 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 50169fcaf33b7964bbd6ee05c7a94b18, type: 3}
@@ -14993,6 +15034,7 @@ MonoBehaviour:
   audioRamaA: {fileID: 8300000, guid: c1f24ba118c0b6a4ba6a5e8b04960ac1, type: 3}
   audioRamaA1: {fileID: 8300000, guid: 7d744ac2aaa63eb42a54527fdf0f82a7, type: 3}
   audioCierre: {fileID: 8300000, guid: b3abb9eed1e5aa640b6bea03553850e5, type: 3}
+  audioMamaRegano: {fileID: 0}
   player: {fileID: 1201270053}
   distanciaParaHablar: 0.5
   jugadorCerca: 0
@@ -15266,8 +15308,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Aurora [Hermana]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -15418,6 +15460,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 0.5
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!1 &1494375477
 GameObject:
   m_ObjectHideFlags: 0
@@ -16349,6 +16392,7 @@ MonoBehaviour:
   closeDrawerClip: {fileID: 8300000, guid: b371f70b2517e13498680bbc6c95f686, type: 3}
   soundVolume: 0.5
   soundPitch: 1
+  soundStartOffset: 0.03
 --- !u!1 &1626361291
 GameObject:
   m_ObjectHideFlags: 0
@@ -16955,8 +16999,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Presiona B para abrir el candado
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76b7de7208e753842a632be09132706e, type: 2}
-  m_sharedMaterial: {fileID: -3542638231083062816, guid: 76b7de7208e753842a632be09132706e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
+  m_sharedMaterial: {fileID: -5585404358578870470, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17022,7 +17066,7 @@ MonoBehaviour:
   m_margin: {x: -30.504059, y: 0, z: 31.803696, w: 39.69922}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1687433489
@@ -17635,14 +17679,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1839031960 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5119526090280599689, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
@@ -17825,8 +17871,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Presiona B para vestir esta prenda
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76b7de7208e753842a632be09132706e, type: 2}
-  m_sharedMaterial: {fileID: -3542638231083062816, guid: 76b7de7208e753842a632be09132706e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
+  m_sharedMaterial: {fileID: -5585404358578870470, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17892,7 +17938,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 68.26465, w: 39.69922}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1844645925
@@ -17919,7 +17965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1848486269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18579,14 +18625,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 0}
+  cameraTransform: {fileID: 0}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 0}
+  inspectedScale: 1
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &1935833364
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18756,7 +18804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1940600423
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19157,8 +19205,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Presiona A para comenzar misi\xF3n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76b7de7208e753842a632be09132706e, type: 2}
-  m_sharedMaterial: {fileID: -3542638231083062816, guid: 76b7de7208e753842a632be09132706e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
+  m_sharedMaterial: {fileID: -5585404358578870470, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -19224,7 +19272,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 68.26465, w: 39.69922}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1984009354
@@ -19247,14 +19295,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 50
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &1989369995
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19361,7 +19411,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Presiona B para abrir/cerrar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76b7de7208e753842a632be09132706e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b76ca7cfa4dec4944bc4d463c9c0ae36, type: 2}
   m_sharedMaterial: {fileID: -3542638231083062816, guid: 76b7de7208e753842a632be09132706e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -19428,7 +19478,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 68.26465, w: 39.69922}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1991936636
@@ -20363,14 +20413,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  inspectPoint: {fileID: 1715238135}
-  movimientoPlayer: {fileID: 1201270050}
-  pointer3D: {fileID: 1669511503}
-  canvasInspect: {fileID: 720529101}
-  cameraLock: {fileID: 14378723}
-  moveSpeed: 8
   rotationSpeed: 120
-  inspectScale: 1
+  mouseRotationSpeed: 5
+  inspectPoint: {fileID: 1715238135}
+  playerMovement: {fileID: 1201270050}
+  cameraTransform: {fileID: 14378717}
+  exitCanvas: {fileID: 720529101}
+  pointer3D: {fileID: 1669511501}
+  inspectedScale: 60
+  inspectedLocalPosition: {x: 0, y: 0, z: 0}
+  inspectedLocalRotation: {x: 0, y: 0, z: 0}
 --- !u!65 &2107967980
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20392,72 +20444,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.21191272, y: 0.46595234, z: 0.33475456}
   m_Center: {x: -1.9014437, y: 0.2417643, z: -0.90934575}
---- !u!1001 &2115348147
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1217
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.255
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 5.6683
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_Name
-      value: carritos (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7811658716286322693, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.0667
-      objectReference: {fileID: 0}
-    - target: {fileID: 7811658716286322693, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5687
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: -4129372766541966229, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
 --- !u!1 &2117240542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3014658301941756604, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
@@ -20543,8 +20529,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 366780e107143904d8997f998602d388, type: 2}
-  m_sharedMaterial: {fileID: 1541840531297926947, guid: 366780e107143904d8997f998602d388, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -21505,7 +21491,6 @@ SceneRoots:
   - {fileID: 676639809}
   - {fileID: 443001865}
   - {fileID: 1676380370}
-  - {fileID: 2115348147}
   - {fileID: 655448573}
   - {fileID: 69177730}
   - {fileID: 1938890486}
