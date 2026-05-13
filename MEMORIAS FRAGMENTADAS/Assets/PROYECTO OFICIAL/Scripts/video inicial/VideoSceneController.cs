@@ -48,6 +48,7 @@ public class VideoSceneController : MonoBehaviour
 
     private Camera resolvedTargetCamera;
     private RenderTexture runtimeVideoTexture;
+    private SceneTransitionManager transitionManager;
 
     void Start()
     {
@@ -61,34 +62,85 @@ public class VideoSceneController : MonoBehaviour
 
         resolvedTargetCamera = ResolveTargetCamera();
 
-        if (autoConfigureForVR)
+        transitionManager = FindFirstObjectByType<SceneTransitionManager>();
+        if (transitionManager == null)
         {
-            ConfigureVideoForVR();
+            Debug.LogWarning("No se encontró SceneTransitionManager. Creando uno nuevo.");
+            GameObject managerGO = new GameObject("SceneTransitionManager");
+            transitionManager = managerGO.AddComponent<SceneTransitionManager>();
         }
+
+        if (autoConfigureForVR)
+            ConfigureVideoForVR();
 
 #if UNITY_EDITOR
         if (autoAddCardboardSimulatorInEditor)
-        {
             EnsureEditorCardboardPreview();
-        }
 #endif
 
-        Debug.Log("Video clip asignado: " + (videoPlayer.clip != null ? videoPlayer.clip.name : "NINGUNO"));
+        ResetUI();
+
+        // Iniciar reproducción con una corutina robusta:
+        // espera a que el SceneTransitionManager termine su transición (si la hay)
+        // y luego arranca el video de forma segura.
+        StartCoroutine(StartVideoWhenReady());
+    }
+
+    /// <summary>
+    /// Espera a que cualquier transición en curso termine y luego reproduce el video.
+    /// Esto evita que PreloadMultimediaContent (u otro código post-carga) detenga el video.
+    /// </summary>
+    private IEnumerator StartVideoWhenReady()
+    {
+        // Si hay una transición activa, esperar a que termine (máx. 5 segundos)
+        float timeout = 5f;
+        float elapsed = 0f;
+        while (transitionManager != null && transitionManager.IsTransitioning && elapsed < timeout)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (elapsed >= timeout)
+            Debug.LogWarning("VideoSceneController: timeout esperando fin de transición.");
+
+        // Un frame extra de seguridad
+        yield return null;
+
+        if (videoPlayer == null) yield break;
+
+        // Asegurar que el clip esté asignado
+        if (videoPlayer.clip == null)
+        {
+            Debug.LogError("VideoPlayer no tiene clip asignado.");
+            yield break;
+        }
+
+        Debug.Log($"▶ Iniciando video: {videoPlayer.clip.name}");
+
+        // Preparar el VideoPlayer para que el primer frame aparezca sin retraso
+        videoPlayer.playOnAwake = false;
+        videoPlayer.Stop();
+        videoPlayer.Prepare();
+
+        // Esperar a que esté preparado (máx. 3 segundos)
+        float prepTimeout = 3f;
+        float prepElapsed = 0f;
+        while (!videoPlayer.isPrepared && prepElapsed < prepTimeout)
+        {
+            prepElapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
 
         videoPlayer.Play();
         isPaused = false;
-
-        ResetUI();
+        Debug.Log("✓ Video reproduciéndose");
     }
 
     Camera ResolveTargetCamera()
     {
-        if (targetCameraOverride != null)
-            return targetCameraOverride;
-
-        if (videoPlayer != null && videoPlayer.targetCamera != null)
-            return videoPlayer.targetCamera;
-
+        if (targetCameraOverride != null) return targetCameraOverride;
+        if (videoPlayer != null && videoPlayer.targetCamera != null) return videoPlayer.targetCamera;
         return Camera.main;
     }
 
@@ -98,7 +150,7 @@ public class VideoSceneController : MonoBehaviour
 
         if (runtimeVideoTexture == null)
         {
-            Debug.LogWarning("No se pudo crear la textura de video. El video seguirá usando la configuración actual.");
+            Debug.LogWarning("No se pudo crear la textura de video.");
             return;
         }
 
@@ -108,24 +160,14 @@ public class VideoSceneController : MonoBehaviour
         videoPlayer.waitForFirstFrame = true;
         videoPlayer.skipOnDrop = true;
 
-        Debug.Log("Video configurado para renderizar detrás del Canvas.");
+        Debug.Log("Video configurado para RenderTexture.");
     }
 
     void SetupVideoBackground()
     {
         if (videoBackground == null)
         {
-            Canvas canvas = null;
-
-            if (imgAtras != null)
-            {
-                canvas = imgAtras.canvas;
-            }
-
-            if (canvas == null)
-            {
-                canvas = FindFirstObjectByType<Canvas>();
-            }
+            Canvas canvas = (imgAtras != null) ? imgAtras.canvas : FindFirstObjectByType<Canvas>();
 
             if (canvas != null)
             {
@@ -133,17 +175,17 @@ public class VideoSceneController : MonoBehaviour
 
                 if (videoBackground == null)
                 {
-                    GameObject backgroundObject = new GameObject("VideoBackground", typeof(RectTransform), typeof(CanvasRenderer), typeof(RawImage));
-                    backgroundObject.transform.SetParent(canvas.transform, false);
-                    backgroundObject.transform.SetAsFirstSibling();
+                    GameObject bgObj = new GameObject("VideoBackground",
+                        typeof(RectTransform), typeof(CanvasRenderer), typeof(RawImage));
+                    bgObj.transform.SetParent(canvas.transform, false);
+                    bgObj.transform.SetAsFirstSibling();
 
-                    RectTransform rectTransform = backgroundObject.GetComponent<RectTransform>();
-                    rectTransform.anchorMin = Vector2.zero;
-                    rectTransform.anchorMax = Vector2.one;
-                    rectTransform.offsetMin = Vector2.zero;
-                    rectTransform.offsetMax = Vector2.zero;
+                    RectTransform rt = bgObj.GetComponent<RectTransform>();
+                    rt.anchorMin = Vector2.zero;
+                    rt.anchorMax = Vector2.one;
+                    rt.offsetMin = rt.offsetMax = Vector2.zero;
 
-                    videoBackground = backgroundObject.GetComponent<RawImage>();
+                    videoBackground = bgObj.GetComponent<RawImage>();
                 }
             }
         }
@@ -173,103 +215,79 @@ public class VideoSceneController : MonoBehaviour
 #if UNITY_EDITOR
     void EnsureEditorCardboardPreview()
     {
-        if (resolvedTargetCamera == null)
-            return;
+        if (resolvedTargetCamera == null) return;
 
-        Transform simulatorRoot = resolvedTargetCamera.transform.parent != null
+        Transform root = resolvedTargotCamera_SafeRoot();
+        if (root.GetComponent<CardboardSimulator>() == null)
+        {
+            root.gameObject.AddComponent<CardboardSimulator>();
+            Debug.Log("CardboardSimulator añadido para previsualización.");
+        }
+    }
+
+    private Transform resolvedTargotCamera_SafeRoot()
+    {
+        return resolvedTargetCamera.transform.parent != null
             ? resolvedTargetCamera.transform.parent
             : resolvedTargetCamera.transform;
-
-        if (simulatorRoot.GetComponent<CardboardSimulator>() == null)
-        {
-            simulatorRoot.gameObject.AddComponent<CardboardSimulator>();
-            Debug.Log("Se añadió CardboardSimulator para previsualización en editor.");
-        }
     }
 #endif
 
     void Update()
     {
-        if (changingScene || inputLocked)
-            return;
+        if (changingScene || inputLocked) return;
 
         if (InputManagerCustom.PressA())
         {
-            Debug.Log("Se detectó A");
+            Debug.Log("Input: A → Atrás");
             StartCoroutine(PressAtrasAndGoBack());
-            return;
         }
-
-        if (InputManagerCustom.PressX())
+        else if (InputManagerCustom.PressX())
         {
-            Debug.Log("Se detectó X");
+            Debug.Log("Input: X → Play/Pause");
             StartCoroutine(PressPlayPause());
-            return;
         }
-
-        if (InputManagerCustom.PressY())
+        else if (InputManagerCustom.PressY())
         {
-            Debug.Log("Se detectó Y");
+            Debug.Log("Input: Y → Continuar");
             StartCoroutine(PressContinuar());
-            return;
         }
     }
 
     void ResetUI()
     {
-        if (imgAtras != null && atrasNormal != null)
-            imgAtras.sprite = atrasNormal;
-
-        if (imgPlayPause != null && playNormal != null)
-            imgPlayPause.sprite = playNormal;
-
-        if (imgContinuar != null && continuarNormal != null)
-            imgContinuar.sprite = continuarNormal;
+        if (imgAtras     != null && atrasNormal    != null) imgAtras.sprite     = atrasNormal;
+        if (imgPlayPause != null && playNormal      != null) imgPlayPause.sprite = playNormal;
+        if (imgContinuar != null && continuarNormal != null) imgContinuar.sprite = continuarNormal;
     }
 
     IEnumerator PressAtrasAndGoBack()
     {
         inputLocked = true;
-
-        if (imgAtras != null && atrasGris != null)
-            imgAtras.sprite = atrasGris;
-
+        if (imgAtras != null && atrasGris != null) imgAtras.sprite = atrasGris;
         yield return new WaitForSeconds(pressFeedbackTime);
+        if (imgAtras != null && atrasNormal != null) imgAtras.sprite = atrasNormal;
 
-        if (imgAtras != null && atrasNormal != null)
-            imgAtras.sprite = atrasNormal;
-
-        Debug.Log("Cargando escena anterior: " + previousSceneName);
         changingScene = true;
-        SceneManager.LoadScene(previousSceneName);
+        Debug.Log("← Escena anterior: " + previousSceneName);
+
+        if (transitionManager != null)
+            transitionManager.LoadScene(previousSceneName);
+        else
+            SceneManager.LoadScene(previousSceneName);
     }
 
     IEnumerator PressPlayPause()
     {
         inputLocked = true;
-
-        if (imgPlayPause != null && playGris != null)
-            imgPlayPause.sprite = playGris;
-
+        if (imgPlayPause != null && playGris != null) imgPlayPause.sprite = playGris;
         yield return new WaitForSeconds(pressFeedbackTime);
-
-        if (imgPlayPause != null && playNormal != null)
-            imgPlayPause.sprite = playNormal;
+        if (imgPlayPause != null && playNormal != null) imgPlayPause.sprite = playNormal;
 
         if (videoPlayer != null)
         {
-            if (isPaused)
-            {
-                Debug.Log("Reanudando video");
-                videoPlayer.Play();
-                isPaused = false;
-            }
-            else
-            {
-                Debug.Log("Pausando video");
-                videoPlayer.Pause();
-                isPaused = true;
-            }
+            if (isPaused) { videoPlayer.Play();  isPaused = false; Debug.Log("▶ Video reanudado"); }
+            else          { videoPlayer.Pause(); isPaused = true;  Debug.Log("⏸ Video pausado");  }
         }
 
         inputLocked = false;
@@ -278,18 +296,16 @@ public class VideoSceneController : MonoBehaviour
     IEnumerator PressContinuar()
     {
         inputLocked = true;
-
-        if (imgContinuar != null && continuarGris != null)
-            imgContinuar.sprite = continuarGris;
-
+        if (imgContinuar != null && continuarGris != null) imgContinuar.sprite = continuarGris;
         yield return new WaitForSeconds(pressFeedbackTime);
-
-        if (imgContinuar != null && continuarNormal != null)
-            imgContinuar.sprite = continuarNormal;
-
-        Debug.Log("Cargando siguiente escena: " + nextSceneName);
+        if (imgContinuar != null && continuarNormal != null) imgContinuar.sprite = continuarNormal;
 
         changingScene = true;
-        SceneManager.LoadScene(nextSceneName);
+        Debug.Log("→ Escena siguiente: " + nextSceneName);
+
+        if (transitionManager != null)
+            transitionManager.LoadScene(nextSceneName);
+        else
+            SceneManager.LoadScene(nextSceneName);
     }
 }

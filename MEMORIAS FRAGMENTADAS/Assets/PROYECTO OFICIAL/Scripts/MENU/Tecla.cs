@@ -7,6 +7,7 @@ public class Tecla : MonoBehaviour
 
     private Renderer rend;
     private Color colorOriginal;
+    private SceneTransitionManager transitionManager;
 
     void Start()
     {
@@ -15,6 +16,15 @@ public class Tecla : MonoBehaviour
         if (rend != null)
         {
             colorOriginal = rend.material.color;
+        }
+
+        // Obtener el SceneTransitionManager
+        transitionManager = FindFirstObjectByType<SceneTransitionManager>();
+        if (transitionManager == null)
+        {
+            Debug.LogWarning("No se encontró SceneTransitionManager. Se creará uno automáticamente.");
+            GameObject managerGO = new GameObject("SceneTransitionManager");
+            transitionManager = managerGO.AddComponent<SceneTransitionManager>();
         }
     }
 
@@ -58,7 +68,15 @@ public class Tecla : MonoBehaviour
 
             if (texto == "JUGAR")
             {
-                SceneManager.LoadScene("BASE");
+                // Usar el SceneTransitionManager para cargar la siguiente escena
+                if (transitionManager != null)
+                {
+                    transitionManager.LoadNextScene();
+                }
+                else
+                {
+                    SceneManager.LoadScene("Escena_VideoIntro");
+                }
             }
             else if (texto == "AJUSTES")
             {
