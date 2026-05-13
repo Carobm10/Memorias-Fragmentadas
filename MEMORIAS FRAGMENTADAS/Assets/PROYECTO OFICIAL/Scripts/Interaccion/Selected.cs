@@ -30,6 +30,7 @@ public class Selected : MonoBehaviour
     private RadioFinalUse ultimaRadioFinalMirada;
     private PhoneMissionController ultimoTelefonoMirado;
     private ServicioNPCMission ultimaMuchachaMirada;
+    private PhotoVideoInteractable ultimaFotoVideoMirada;
     private RadioMissionInteractable ultimaRadioMirada;
     private RadioBackCover ultimaTapaRadioMirada;
     private BatteryPickup ultimasPilasPickupMiradas;
@@ -39,6 +40,7 @@ public class Selected : MonoBehaviour
     private RadioAnimacionesSimple ultimaRadioAnimacionSimpleMirada;
     private BatteryPickup pilaReciente;
     private float tiempoUltimaPila = -10f;
+    
     public float margenTiempoPila = 1f;
 
     // =========================
@@ -179,6 +181,32 @@ public class Selected : MonoBehaviour
             {
                 Deselect();
                 SelectedObject(hit.collider);
+            }
+            // ======================================================
+            // FOTO / CUADRO INTERACTIVO CON VIDEO
+            // ======================================================
+
+            PhotoVideoInteractable fotoVideo = hit.collider.GetComponentInParent<PhotoVideoInteractable>();
+
+            if (fotoVideo != null)
+            {
+                LimpiarMiradas();
+
+                if (ultimaFotoVideoMirada != null && ultimaFotoVideoMirada != fotoVideo)
+                    ultimaFotoVideoMirada.DejarMirarFoto();
+
+                ultimaFotoVideoMirada = fotoVideo;
+                fotoVideo.MirarFoto();
+
+                return;
+            }
+            else
+            {
+                if (ultimaFotoVideoMirada != null)
+                {
+                    ultimaFotoVideoMirada.DejarMirarFoto();
+                    ultimaFotoVideoMirada = null;
+                }
             }
 
             // ======================================================
@@ -670,6 +698,11 @@ public class Selected : MonoBehaviour
         ApagarTapaRadioTriggerMirada();
         ApagarRadioFinalMirada();
         ApagarRadioAnimacionSimpleMirada();
+        if (ultimaFotoVideoMirada != null)
+        {
+            ultimaFotoVideoMirada.DejarMirarFoto();
+            ultimaFotoVideoMirada = null;
+        }
     }
 
     void ApagarNPCMirado()

@@ -4,6 +4,8 @@ using System.Collections;
 
 public class RadioAnimacionesSimple : MonoBehaviour
 {
+    [Header("Tiempos pilas")]
+    public float tiempoAnimacionPila = 6f;
     [Header("Velocidad animaciones pilas")]
     public float velocidadAnimacionPilas = 0.35f;
     [Header("Control pilas")]
@@ -433,39 +435,31 @@ public class RadioAnimacionesSimple : MonoBehaviour
     {
         if (animandoPila) return;
 
-        if (numeroPila == 1 && pila1Puesta) return;
-        if (numeroPila == 2 && pila2Puesta) return;
-        if (numeroPila == 3 && pila3Puesta) return;
-
-        StartCoroutine(SecuenciaPonerPila(numeroPila));
+        StartCoroutine(SecuenciaPonerPilaSimple(numeroPila));
     }
 
-    IEnumerator SecuenciaPonerPila(int numeroPila)
+    IEnumerator SecuenciaPonerPilaSimple(int numeroPila)
     {
         animandoPila = true;
 
-        // IMPORTANTE:
-        // NO apagamos radioAbiertoConTresPilas completo,
-        // porque ahí viven las pilas/colliders.
-        OcultarRenderers(radioAbiertoConTresPilas);
+        // Apagar radio base para que NO tape la animación
+        if (radioAbiertoConTresPilas != null)
+            radioAbiertoConTresPilas.SetActive(false);
+
+        if (radioAbiertoSinPilas != null)
+            radioAbiertoSinPilas.SetActive(false);
+
+        if (tapaCerrarMusica != null)
+            tapaCerrarMusica.SetActive(false);
 
         GameObject animacionActual = null;
 
         if (numeroPila == 1)
-        {
-            pila1Puesta = true;
             animacionActual = primeraPila;
-        }
         else if (numeroPila == 2)
-        {
-            pila2Puesta = true;
             animacionActual = segundaPila;
-        }
         else if (numeroPila == 3)
-        {
-            pila3Puesta = true;
             animacionActual = terceraPila;
-        }
 
         if (animacionActual != null)
         {
@@ -475,26 +469,43 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
             if (anim != null)
             {
-                anim.enabled = true;
-                anim.speed = velocidadAnimacionPilas;
+                anim.speed = 0.35f;
                 anim.Play(0, 0, 0f);
             }
 
             Debug.Log("Reproduciendo animación pila: " + numeroPila);
         }
+        else
+        {
+            Debug.LogError("No asignaste la animación de la pila " + numeroPila);
+        }
 
-        // Espera para no permitir doble clic mientras corre la animación
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(tiempoAnimacionPila);
 
-        // NO apagamos la animación.
-        // La dejamos en su último frame/posición final.
-        animandoPila = false;
+        // Después de pila 1 y 2, vuelve el radio base para seleccionar la siguiente pila
+        if (numeroPila == 1 || numeroPila == 2)
+        {
+            if (animacionActual != null)
+                animacionActual.SetActive(false);
 
+            if (radioAbiertoConTresPilas != null)
+                radioAbiertoConTresPilas.SetActive(true);
+        }
+
+        // Después de pila 3, ya NO vuelve al radio con tres pilas
         if (numeroPila == 3)
         {
+            if (animacionActual != null)
+                animacionActual.SetActive(false);
+
+            if (radioAbiertoSinPilas != null)
+                radioAbiertoSinPilas.SetActive(true);
+
             if (tapaCerrarMusica != null)
                 tapaCerrarMusica.SetActive(true);
         }
+
+        animandoPila = false;
     }
     void OcultarRenderers(GameObject obj)
     {

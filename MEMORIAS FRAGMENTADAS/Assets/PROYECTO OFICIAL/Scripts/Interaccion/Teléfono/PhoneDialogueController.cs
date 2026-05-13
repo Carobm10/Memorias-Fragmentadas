@@ -186,8 +186,8 @@ public class PhoneDialogueController : MonoBehaviour
                         "¿Aló…?",
                         "¡Joselito! Soy yo… ¿me escuchas?",
                         "Sí… ¿eres tú, María?",
-                        "¡Sí! Oye, llamaba para preguntarte si mañana nos reunimos a ver el alunizaje en vivo.",
-                        "Mi papá dice que lo van a dar por la televisión…"
+                        "¡Sí! ",
+                        "Oye, llamaba para preguntarte si mañana nos reunimos a ver el alunizaje en vivo. yMi papá dice que lo van a dar por la televisión…"
                     },
                     new AudioClip[]
                     {
