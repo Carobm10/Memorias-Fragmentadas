@@ -6,7 +6,6 @@ using System.Collections;
 
 /// <summary>
 /// Gestor centralizado de transiciones entre escenas.
-/// Maneja precarga, indicadores de carga, desactivación de cámaras, y control de multimedia.
 /// </summary>
 public class SceneTransitionManager : MonoBehaviour
 {
@@ -14,21 +13,16 @@ public class SceneTransitionManager : MonoBehaviour
 
     [Header("Configuración de Carga")]
     [SerializeField] private bool useAsyncLoading = true;
-    [SerializeField] private float minLoadingScreenTime = 1f;
+    [SerializeField] private float minLoadingScreenTime = 1.5f;
 
-    [Header("Canvas de Carga")]
-    [SerializeField] private Canvas loadingCanvasPrefab;
     private Canvas currentLoadingCanvas;
     private LoadingScreenAnimator currentLoadingAnimator;
-
     private bool isTransitioning = false;
 
-    // Diccionario de escenas en orden
     private string[] sceneSequence = { "Menu", "Escena_VideoIntro", "BASE" };
 
     void Awake()
     {
-        // Implementar singleton
         if (instance == null)
         {
             instance = this;
@@ -40,14 +34,11 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Cambia a la siguiente escena en la secuencia
-    /// </summary>
     public void LoadNextScene()
     {
         if (isTransitioning)
         {
-            Debug.LogWarning("⚠ Ya hay una transición en proceso. Ignorando nuevo click.");
+            Debug.LogWarning("⚠ Ya hay una transición en proceso.");
             return;
         }
 
@@ -55,29 +46,18 @@ public class SceneTransitionManager : MonoBehaviour
         int currentIndex = System.Array.IndexOf(sceneSequence, currentScene);
 
         if (currentIndex >= 0 && currentIndex < sceneSequence.Length - 1)
-        {
             LoadScene(sceneSequence[currentIndex + 1]);
-        }
         else if (currentIndex == sceneSequence.Length - 1)
-        {
-            // Si es la última escena, vuelve al menú
             LoadScene(sceneSequence[0]);
-        }
         else
-        {
-            Debug.LogWarning($"Escena actual '{currentScene}' no está en la secuencia");
             LoadScene("Menu");
-        }
     }
 
-    /// <summary>
-    /// Cambia a la escena anterior en la secuencia
-    /// </summary>
     public void LoadPreviousScene()
     {
         if (isTransitioning)
         {
-            Debug.LogWarning("⚠ Ya hay una transición en proceso. Ignorando nuevo click.");
+            Debug.LogWarning("⚠ Ya hay una transición en proceso.");
             return;
         }
 
@@ -85,29 +65,18 @@ public class SceneTransitionManager : MonoBehaviour
         int currentIndex = System.Array.IndexOf(sceneSequence, currentScene);
 
         if (currentIndex > 0)
-        {
             LoadScene(sceneSequence[currentIndex - 1]);
-        }
         else if (currentIndex == 0)
-        {
-            // Si es el menú, va a la última escena
             LoadScene(sceneSequence[sceneSequence.Length - 1]);
-        }
         else
-        {
-            Debug.LogWarning($"Escena actual '{currentScene}' no está en la secuencia");
             LoadScene("Menu");
-        }
     }
 
-    /// <summary>
-    /// Carga una escena específica por nombre
-    /// </summary>
     public void LoadScene(string sceneName)
     {
         if (isTransitioning)
         {
-            Debug.LogWarning("⚠ Ya hay una transición en proceso. Ignorando nuevo click.");
+            Debug.LogWarning("⚠ Ya hay una transición en proceso.");
             return;
         }
 
@@ -120,118 +89,105 @@ public class SceneTransitionManager : MonoBehaviour
         isTransitioning = true;
         Debug.Log($"[TRANSICIÓN] Iniciando: {sceneName}");
 
-        // Mostrar pantalla de carga
+        // --- 1. Mostrar pantalla de carga ANTES de cargar la escena ---
         ShowLoadingScreen();
 
-        float loadStartTime = Time.time;
+        // Esperar un frame para asegurar que el canvas se renderizó
+        yield return null;
+        yield return null;
+
+        float loadStartTime = Time.realtimeSinceStartup;
 
         if (useAsyncLoading)
         {
-            // Precarga asincrónica de la escena
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+            // No activar la escena todavía: mantener la pantalla de carga visible
             asyncLoad.allowSceneActivation = false;
 
-            // Esperar a que la escena esté precargada (pero no activada)
-            while (!asyncLoad.isDone && asyncLoad.progress < 0.9f)
+            // Esperar a que la precarga termine (progress llega a 0.9 = 90%)
+            while (asyncLoad.progress < 0.9f)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
 
-            // Permitir que pase el tiempo mínimo de carga
-            while (Time.time - loadStartTime < minLoadingScreenTime)
+            // Esperar el tiempo mínimo de pantalla de carga
+            while (Time.realtimeSinceStartup - loadStartTime < minLoadingScreenTime)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
 
-            // Permitir la activación de la escena
+            // Ahora sí activar la escena
             asyncLoad.allowSceneActivation = true;
+
+            // Esperar a que la escena esté completamente activa
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
         }
         else
         {
-            // Carga sincrónica
-            while (Time.time - loadStartTime < minLoadingScreenTime)
+            while (Time.realtimeSinceStartup - loadStartTime < minLoadingScreenTime)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
-
             SceneManager.LoadScene(sceneName);
+            yield return null;
         }
 
-        // Esperar a que la escena esté completamente cargada y activa
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
+        // --- 2. La escena ya está cargada y activa ---
+        // Esperar dos frames para que Awake/Start de los nuevos objetos se ejecuten
+        yield return null;
+        yield return null;
 
-        // Precarga de contenido multimedia (pero no reproducción automática)
-        PreloadMultimediaContent();
+        // Ejecutar tareas post-carga en try/catch: un error aquí no debe
+        // impedir que la pantalla de carga se destruya.
+        try
+        {
+            EnsureAudioListener();
+            EnsureCameraActive();
+            SceneDebugNavigator.CreateDebugNavigatorUI();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[TRANSICIÓN] Error en post-carga (no crítico): {e.Message}");
+        }
 
-        // Crear UI de debug automáticamente
-        SceneDebugNavigator.CreateDebugNavigatorUI();
-
-        // Asegurar que haya cámaras activas en la nueva escena
-        EnsureCameraActive();
-
-        // Ocultar pantalla de carga
-        HideLoadingScreen();
-
-        // Permitir que el contenido comience cuando esté listo (sin reproducir automáticamente)
-        yield return new WaitForEndOfFrame();
+        // --- 3. Ocultar pantalla de carga y finalizar ---
+        // Se ejecuta SIEMPRE, incluso si hubo error arriba.
+        yield return StartCoroutine(HideLoadingScreenAndFinish());
 
         Debug.Log($"[TRANSICIÓN] ✓ Completada: {sceneName}");
         isTransitioning = false;
-        Debug.Log("[TRANSICIÓN] Flag reseteado - Listo para nueva transición");
     }
 
     private void EnsureCameraActive()
     {
-        // Asegurar que la nueva escena tenga al menos una cámara activa
         Camera[] cameras = FindObjectsByType<Camera>(FindObjectsSortMode.None);
-        
-        bool cameraActive = false;
+        bool anyActive = false;
+
         foreach (Camera cam in cameras)
         {
             if (cam.gameObject.activeSelf)
             {
-                cameraActive = true;
+                anyActive = true;
                 break;
             }
         }
 
-        // Si no hay cámara activa, activar la primera que encuentre
-        if (!cameraActive && cameras.Length > 0)
+        if (!anyActive && cameras.Length > 0)
         {
             cameras[0].gameObject.SetActive(true);
             Debug.Log($"✓ Cámara activada: {cameras[0].gameObject.name}");
         }
-        else if (cameras.Length > 0)
-        {
-            Debug.Log($"✓ Cámara ya activa en la escena");
-        }
-        else
-        {
-            Debug.LogWarning("⚠ No hay cámaras en la escena");
-        }
     }
 
-    private void PreloadMultimediaContent()
+    /// <summary>
+    /// Solo garantiza que haya un AudioListener en la escena para evitar warnings.
+    /// No toca VideoPlayers ni AudioSources: eso es responsabilidad de cada escena.
+    /// </summary>
+    private void EnsureAudioListener()
     {
-        // Buscar VideoPlayers y pausarlos
-        VideoPlayer[] videoPlayers = FindObjectsByType<VideoPlayer>(FindObjectsSortMode.None);
-        foreach (VideoPlayer player in videoPlayers)
-        {
-            player.Stop();
-            player.playOnAwake = false;
-        }
-
-        // Buscar AudioSources y silenciarlos
-        AudioSource[] audioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
-        foreach (AudioSource source in audioSources)
-        {
-            source.Stop();
-            source.playOnAwake = false;
-        }
-
-        // Asegurar que hay un AudioListener (evita warnings de audio)
         if (FindFirstObjectByType<AudioListener>() == null)
         {
             Camera cam = FindFirstObjectByType<Camera>();
@@ -241,51 +197,75 @@ public class SceneTransitionManager : MonoBehaviour
                 Debug.Log("✓ AudioListener añadido a la cámara");
             }
         }
-
-        Debug.Log("Contenido multimedia precargado (sin reproducción automática)");
     }
 
     private void ShowLoadingScreen()
     {
-        if (currentLoadingCanvas != null)
-        {
-            Destroy(currentLoadingCanvas.gameObject);
-        }
-
-        // Crear la pantalla de carga visualmente mejorada
-        currentLoadingCanvas = SceneDebugNavigator.CreateLoadingScreen();
-        if (currentLoadingCanvas != null)
-        {
-            DontDestroyOnLoad(currentLoadingCanvas.gameObject);
-            currentLoadingAnimator = currentLoadingCanvas.GetComponent<LoadingScreenAnimator>();
-        }
-
-        Debug.Log("Pantalla de carga mostrada");
-    }
-
-    private void HideLoadingScreen()
-    {
-        if (currentLoadingAnimator != null)
-        {
-            currentLoadingAnimator.Complete();
-        }
-
-        StartCoroutine(DestroyLoadingScreenDelayed());
-    }
-
-    private IEnumerator DestroyLoadingScreenDelayed()
-    {
-        // Esperar un poco para que se vea el "¡Listo!" y la barra completa
-        yield return new WaitForSeconds(0.5f);
-
+        // Destruir pantalla anterior si existe
         if (currentLoadingCanvas != null)
         {
             Destroy(currentLoadingCanvas.gameObject);
             currentLoadingCanvas = null;
-            currentLoadingAnimator = null;
         }
 
-        Debug.Log("Pantalla de carga ocultada");
+        currentLoadingCanvas = SceneDebugNavigator.CreateLoadingScreen();
+
+        if (currentLoadingCanvas != null)
+        {
+            DontDestroyOnLoad(currentLoadingCanvas.gameObject);
+            currentLoadingAnimator = currentLoadingCanvas.GetComponent<LoadingScreenAnimator>();
+            Debug.Log("✓ Pantalla de carga mostrada");
+        }
+        else
+        {
+            Debug.LogError("✗ No se pudo crear la pantalla de carga");
+        }
+    }
+
+    /// <summary>
+    /// Completa la animación, espera y destruye la pantalla de carga.
+    /// Garantizado: el canvas se destruye SIEMPRE, incluso si hay errores previos.
+    /// </summary>
+    private IEnumerator HideLoadingScreenAndFinish()
+    {
+        // Completar animación (barra al 100%, texto "¡Listo!")
+        try
+        {
+            if (currentLoadingAnimator != null)
+                currentLoadingAnimator.Complete();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"[CARGA] Error al completar animación: {e.Message}");
+        }
+
+        // Breve pausa para que el jugador vea el 100%
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        // Destruir el canvas de carga — esto DEBE ocurrir pase lo que pase
+        ForceDestroyLoadingCanvas();
+    }
+
+    /// <summary>
+    /// Destruye el canvas de carga de forma incondicional.
+    /// Llamado también desde OnDestroy como seguro extra.
+    /// </summary>
+    private void ForceDestroyLoadingCanvas()
+    {
+        if (currentLoadingCanvas != null)
+        {
+            try   { Destroy(currentLoadingCanvas.gameObject); }
+            catch { /* el objeto ya fue destruido externamente */ }
+            currentLoadingCanvas = null;
+            currentLoadingAnimator = null;
+            Debug.Log("✓ Pantalla de carga destruida");
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Si el manager se destruye por alguna razón, limpiar el canvas huérfano
+        ForceDestroyLoadingCanvas();
     }
 
     public bool IsTransitioning => isTransitioning;

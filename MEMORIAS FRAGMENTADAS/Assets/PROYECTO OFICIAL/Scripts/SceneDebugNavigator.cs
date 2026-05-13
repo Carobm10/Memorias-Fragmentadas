@@ -5,307 +5,311 @@ using System.Collections;
 
 /// <summary>
 /// Navegador de debug para transitar entre escenas.
-/// Se añade a un Canvas pequeño en la esquina derecha de cada escena.
 /// </summary>
 public class SceneDebugNavigator : MonoBehaviour
 {
-    [Header("Configuración de UI")]
-    [SerializeField] private Color buttonColor = new Color(0.2f, 0.2f, 0.2f, 0.8f);
-    [SerializeField] private Color buttonTextColor = Color.white;
-    [SerializeField] private Color hoverColor = new Color(0.4f, 0.4f, 0.4f, 0.9f);
+    /// <summary>
+    /// Devuelve la fuente built-in correcta según la versión de Unity.
+    /// Unity 2023+ eliminó "Arial.ttf" y lo reemplazó por "LegacyRuntime.ttf".
+    /// </summary>
+    private static Font GetBuiltinFont()
+    {
+        // Intentar primero LegacyRuntime (Unity 2023+)
+        Font font = null;
+        try { font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"); } catch { }
+        if (font != null) return font;
 
-    private SceneTransitionManager transitionManager;
-    private bool isInitialized = false;
+        // Fallback para versiones anteriores
+        try { font = Resources.GetBuiltinResource<Font>("Arial.ttf"); } catch { }
+        if (font != null) return font;
+
+        // Último recurso: cualquier fuente disponible en el proyecto
+        Debug.LogWarning("No se encontró fuente built-in. Usando Font por defecto.");
+        return new Font();
+    }
 
     void Awake()
     {
-        // Buscar el manager de transiciones
-        transitionManager = FindFirstObjectByType<SceneTransitionManager>();
-
-        if (transitionManager == null)
+        // Buscar o crear el SceneTransitionManager
+        if (FindFirstObjectByType<SceneTransitionManager>() == null)
         {
-            Debug.LogWarning("No se encontró SceneTransitionManager en la escena. Creando uno nuevo...");
             GameObject managerGO = new GameObject("SceneTransitionManager");
-            transitionManager = managerGO.AddComponent<SceneTransitionManager>();
+            managerGO.AddComponent<SceneTransitionManager>();
+            Debug.Log("SceneDebugNavigator: SceneTransitionManager creado automáticamente");
         }
-
-        isInitialized = true;
-    }
-
-    void Start()
-    {
-        if (!isInitialized)
-        {
-            Awake();
-        }
-
-        // El Canvas ya debería estar creado si este script está asignado al GameObject correcto
     }
 
     /// <summary>
-    /// Crea el Canvas de debug con los botones de navegación
-    /// Dos botones simples en esquinas superiores - sin texto
+    /// Crea el Canvas de debug con botones de navegación en las esquinas superiores.
     /// </summary>
     public static void CreateDebugNavigatorUI()
     {
-        // Buscar si ya existe
-        SceneDebugNavigator existingNavigator = FindFirstObjectByType<SceneDebugNavigator>();
-        if (existingNavigator != null)
+        // Evitar duplicados
+        if (FindFirstObjectByType<SceneDebugNavigator>() != null)
         {
             Debug.LogWarning("SceneDebugNavigator ya existe en esta escena");
             return;
         }
 
-        // IMPORTANTE: Asegurar que existe EventSystem (necesario para UI)
+        // EventSystem necesario para que los botones respondan
         if (FindFirstObjectByType<EventSystem>() == null)
         {
-            GameObject eventSystemGO = new GameObject("EventSystem");
-            eventSystemGO.AddComponent<EventSystem>();
-            eventSystemGO.AddComponent<StandaloneInputModule>();
+            GameObject esGO = new GameObject("EventSystem");
+            esGO.AddComponent<EventSystem>();
+            esGO.AddComponent<StandaloneInputModule>();
             Debug.Log("EventSystem creado para UI");
         }
 
-        // Crear Canvas
+        // Canvas
         GameObject canvasGO = new GameObject("SceneDebugNavigator");
         Canvas canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        CanvasScaler canvasScaler = canvasGO.AddComponent<CanvasScaler>();
-        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-
-        GraphicRaycaster raycaster = canvasGO.AddComponent<GraphicRaycaster>();
-
-        RectTransform rectTransform = canvasGO.GetComponent<RectTransform>();
-        rectTransform.anchorMin = Vector2.zero;
-        rectTransform.anchorMax = Vector2.one;
-        rectTransform.offsetMin = Vector2.zero;
-        rectTransform.offsetMax = Vector2.zero;
-
-        // Botón "Anterior" - Esquina superior izquierda
-        CreateSimpleButton(canvasGO, "Anterior", new Vector2(0, 1), new Vector2(0, 1), new Vector2(60, 60), new Vector2(35, -35), () =>
-        {
-            Debug.Log("→ Click en botón ANTERIOR");
-            SceneTransitionManager manager = FindFirstObjectByType<SceneTransitionManager>();
-            if (manager != null)
-            {
-                manager.LoadPreviousScene();
-            }
-            else
-            {
-                Debug.LogError("✗ No se encontró SceneTransitionManager");
-            }
-        });
-
-        // Botón "Siguiente" - Esquina superior derecha
-        CreateSimpleButton(canvasGO, "Siguiente", new Vector2(1, 1), new Vector2(1, 1), new Vector2(60, 60), new Vector2(-35, -35), () =>
-        {
-            Debug.Log("→ Click en botón SIGUIENTE");
-            SceneTransitionManager manager = FindFirstObjectByType<SceneTransitionManager>();
-            if (manager != null)
-            {
-                manager.LoadNextScene();
-            }
-            else
-            {
-                Debug.LogError("✗ No se encontró SceneTransitionManager");
-            }
-        });
-
-        // Añadir el componente SceneDebugNavigator al Canvas
-        SceneDebugNavigator navigator = canvasGO.AddComponent<SceneDebugNavigator>();
         canvas.sortingOrder = 10000;
 
-        Debug.Log("SceneDebugNavigator UI creado - Botones en esquinas superiores");
+        CanvasScaler scaler = canvasGO.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1080, 1920);
+
+        canvasGO.AddComponent<GraphicRaycaster>();
+
+        RectTransform rt = canvasGO.GetComponent<RectTransform>();
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+
+        // Botón ANTERIOR — esquina superior izquierda
+        // pivot (0,1): la esquina superior-izquierda del botón se ancla al borde
+        CreateNavButton(canvasGO, "Anterior",
+            anchor: new Vector2(0, 1),
+            pivot:  new Vector2(0, 1),
+            size: new Vector2(90, 90),
+            position: new Vector2(10, -10),
+            label: "◀",
+            onClick: () =>
+            {
+                SceneTransitionManager manager = FindFirstObjectByType<SceneTransitionManager>();
+                if (manager != null)
+                    manager.LoadPreviousScene();
+                else
+                    Debug.LogError("✗ No se encontró SceneTransitionManager");
+            });
+
+        // Botón SIGUIENTE — esquina superior derecha
+        // pivot (1,1): la esquina superior-derecha del botón se ancla al borde → nunca se corta
+        CreateNavButton(canvasGO, "Siguiente",
+            anchor: new Vector2(1, 1),
+            pivot:  new Vector2(1, 1),
+            size: new Vector2(90, 90),
+            position: new Vector2(-10, -10),
+            label: "▶",
+            onClick: () =>
+            {
+                SceneTransitionManager manager = FindFirstObjectByType<SceneTransitionManager>();
+                if (manager != null)
+                    manager.LoadNextScene();
+                else
+                    Debug.LogError("✗ No se encontró SceneTransitionManager");
+            });
+
+        canvasGO.AddComponent<SceneDebugNavigator>();
+
+        Debug.Log("SceneDebugNavigator creado con botones ◀ ▶");
     }
 
-    private static void CreateSimpleButton(GameObject parent, string buttonName, Vector2 anchorMin, Vector2 anchorMax, Vector2 sizeDelta, Vector2 anchoredPosition, UnityEngine.Events.UnityAction onClick)
+    private static void CreateNavButton(
+        GameObject parent,
+        string name,
+        Vector2 anchor,
+        Vector2 pivot,
+        Vector2 size, Vector2 position,
+        string label,
+        UnityEngine.Events.UnityAction onClick)
     {
-        GameObject buttonGO = new GameObject("Button_" + buttonName);
-        buttonGO.transform.SetParent(parent.transform, false);
+        GameObject go = new GameObject("Btn_" + name);
+        go.transform.SetParent(parent.transform, false);
 
-        RectTransform buttonRect = buttonGO.AddComponent<RectTransform>();
-        buttonRect.anchorMin = anchorMin;
-        buttonRect.anchorMax = anchorMax;
-        buttonRect.sizeDelta = sizeDelta;
-        buttonRect.anchoredPosition = anchoredPosition;
-        buttonRect.pivot = new Vector2(0.5f, 0.5f);
+        RectTransform rect = go.AddComponent<RectTransform>();
+        // Mismo valor en anchorMin y anchorMax = tamaño fijo (no se estira)
+        rect.anchorMin = anchor;
+        rect.anchorMax = anchor;
+        rect.pivot = pivot;
+        rect.sizeDelta = size;
+        rect.anchoredPosition = position;
 
-        // Image - Base del botón
-        Image buttonImage = buttonGO.AddComponent<Image>();
-        buttonImage.color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
-        buttonImage.raycastTarget = true;
+        Image img = go.AddComponent<Image>();
+        img.color = new Color(0.15f, 0.15f, 0.15f, 0.85f);
+        img.raycastTarget = true;
 
-        // Button - Componente interactivo
-        Button button = buttonGO.AddComponent<Button>();
-        button.targetGraphic = buttonImage;
-        button.interactable = true;
-        
-        ColorBlock colors = ColorBlock.defaultColorBlock;
-        colors.normalColor = new Color(0.3f, 0.3f, 0.3f, 0.8f);
-        colors.highlightedColor = new Color(0.6f, 0.6f, 0.6f, 0.9f);
-        colors.pressedColor = new Color(0.1f, 0.1f, 0.1f, 0.95f);
-        colors.selectedColor = new Color(0.5f, 0.5f, 0.5f, 0.9f);
-        colors.disabledColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
-        colors.colorMultiplier = 1f;
-        colors.fadeDuration = 0.1f;
-        button.colors = colors;
+        Button btn = go.AddComponent<Button>();
+        btn.targetGraphic = img;
 
-        // Registrar click con Try-Catch para evitar errores
-        try
-        {
-            button.onClick.AddListener(onClick);
-            Debug.Log($"✓ Botón '{buttonName}' creado y listo para clicks");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"✗ Error al crear botón '{buttonName}': {e.Message}");
-        }
+        ColorBlock cb = ColorBlock.defaultColorBlock;
+        cb.normalColor    = new Color(0.15f, 0.15f, 0.15f, 0.85f);
+        cb.highlightedColor = new Color(0.5f, 0.5f, 0.5f, 0.95f);
+        cb.pressedColor   = new Color(0.05f, 0.05f, 0.05f, 1f);
+        cb.selectedColor  = cb.highlightedColor;
+        cb.colorMultiplier = 1f;
+        cb.fadeDuration   = 0.1f;
+        btn.colors = cb;
+
+        btn.onClick.AddListener(onClick);
+
+        // Texto del botón
+        GameObject textGO = new GameObject("Label");
+        textGO.transform.SetParent(go.transform, false);
+
+        RectTransform textRect = textGO.AddComponent<RectTransform>();
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = Vector2.zero;
+        textRect.offsetMax = Vector2.zero;
+
+        Text text = textGO.AddComponent<Text>();
+        text.text = label;
+        text.font = GetBuiltinFont();
+        text.fontSize = 36;
+        text.fontStyle = FontStyle.Bold;
+        text.alignment = TextAnchor.MiddleCenter;
+        text.color = Color.white;
+        text.raycastTarget = false; // El raycaster va en el Image padre
+
+        Debug.Log($"✓ Botón '{name}' creado");
     }
 
     /// <summary>
-    /// Crea un canvas de carga con barra de progreso animada
+    /// Crea la pantalla de carga animada.
     /// </summary>
     public static Canvas CreateLoadingScreen()
     {
+        // EventSystem necesario para evitar warnings de UI
+        if (FindFirstObjectByType<EventSystem>() == null)
+        {
+            GameObject esGO = new GameObject("EventSystem");
+            esGO.AddComponent<EventSystem>();
+            esGO.AddComponent<StandaloneInputModule>();
+        }
+
         GameObject canvasGO = new GameObject("LoadingCanvas");
         Canvas canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        CanvasScaler canvasScaler = canvasGO.AddComponent<CanvasScaler>();
-        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        canvasScaler.referenceResolution = new Vector2(1080, 1920);
+        canvas.sortingOrder = 9999;
+
+        CanvasScaler scaler = canvasGO.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1080, 1920);
+
         canvasGO.AddComponent<GraphicRaycaster>();
 
-        RectTransform rectTransform = canvasGO.GetComponent<RectTransform>();
-        rectTransform.anchorMin = Vector2.zero;
-        rectTransform.anchorMax = Vector2.one;
-        rectTransform.offsetMin = Vector2.zero;
-        rectTransform.offsetMax = Vector2.zero;
-
-        // Fondo oscuro de pantalla completa
-        GameObject bgGO = new GameObject("Background");
-        bgGO.transform.SetParent(canvasGO.transform, false);
-
-        RectTransform bgRect = bgGO.AddComponent<RectTransform>();
+        // Fondo oscuro
+        GameObject bg = new GameObject("Background");
+        bg.transform.SetParent(canvasGO.transform, false);
+        RectTransform bgRect = bg.AddComponent<RectTransform>();
         bgRect.anchorMin = Vector2.zero;
         bgRect.anchorMax = Vector2.one;
-        bgRect.offsetMin = Vector2.zero;
-        bgRect.offsetMax = Vector2.zero;
+        bgRect.offsetMin = bgRect.offsetMax = Vector2.zero;
+        Image bgImg = bg.AddComponent<Image>();
+        bgImg.color = new Color(0.04f, 0.04f, 0.07f, 0.97f);
 
-        Image bgImage = bgGO.AddComponent<Image>();
-        bgImage.color = new Color(0.05f, 0.05f, 0.08f, 0.95f); // Casi negro, muy opaco
-
-        // Panel central con contenido
-        GameObject panelGO = new GameObject("LoadingPanel");
-        panelGO.transform.SetParent(canvasGO.transform, false);
-
-        RectTransform panelRect = panelGO.AddComponent<RectTransform>();
+        // Panel central
+        GameObject panel = new GameObject("Panel");
+        panel.transform.SetParent(canvasGO.transform, false);
+        RectTransform panelRect = panel.AddComponent<RectTransform>();
         panelRect.anchoredPosition = Vector2.zero;
-        panelRect.sizeDelta = new Vector2(600, 400);
+        panelRect.sizeDelta = new Vector2(700, 300);
+        Image panelImg = panel.AddComponent<Image>();
+        panelImg.color = new Color(0.1f, 0.1f, 0.15f, 0.9f);
 
-        Image panelImage = panelGO.AddComponent<Image>();
-        panelImage.color = new Color(0.1f, 0.1f, 0.15f, 0.8f); // Panel gris oscuro
-
-        // Texto "Cargando" animado
+        // Texto "Cargando..."
         GameObject textGO = new GameObject("LoadingText");
-        textGO.transform.SetParent(panelGO.transform, false);
-
+        textGO.transform.SetParent(panel.transform, false);
         RectTransform textRect = textGO.AddComponent<RectTransform>();
-        textRect.anchoredPosition = new Vector2(0, 80);
-        textRect.sizeDelta = new Vector2(500, 100);
-
+        textRect.anchoredPosition = new Vector2(0, 70);
+        textRect.sizeDelta = new Vector2(600, 80);
         Text text = textGO.AddComponent<Text>();
         text.text = "Cargando.";
-        text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-        text.fontSize = 48;
+        text.font = GetBuiltinFont();
+        text.fontSize = 52;
         text.fontStyle = FontStyle.Bold;
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.white;
 
-        // Barra de progreso - Contenedor
-        GameObject barContainerGO = new GameObject("ProgressBarContainer");
-        barContainerGO.transform.SetParent(panelGO.transform, false);
+        // Contenedor barra de progreso
+        GameObject barBG = new GameObject("BarBackground");
+        barBG.transform.SetParent(panel.transform, false);
+        RectTransform barBGRect = barBG.AddComponent<RectTransform>();
+        barBGRect.anchoredPosition = new Vector2(0, -10);
+        barBGRect.sizeDelta = new Vector2(580, 36);
+        Image barBGImg = barBG.AddComponent<Image>();
+        barBGImg.color = new Color(0.2f, 0.2f, 0.25f, 1f);
 
-        RectTransform barContainerRect = barContainerGO.AddComponent<RectTransform>();
-        barContainerRect.anchoredPosition = new Vector2(0, -20);
-        barContainerRect.sizeDelta = new Vector2(500, 40);
-
-        Image barContainerImage = barContainerGO.AddComponent<Image>();
-        barContainerImage.color = new Color(0.2f, 0.2f, 0.25f, 1f); // Gris claro para el fondo
-
-        // Barra de progreso - Fill
-        GameObject barFillGO = new GameObject("ProgressBarFill");
-        barFillGO.transform.SetParent(barContainerGO.transform, false);
-
-        RectTransform barFillRect = barFillGO.AddComponent<RectTransform>();
+        // Fill de la barra
+        GameObject barFill = new GameObject("BarFill");
+        barFill.transform.SetParent(barBG.transform, false);
+        RectTransform barFillRect = barFill.AddComponent<RectTransform>();
         barFillRect.anchorMin = Vector2.zero;
-        barFillRect.anchorMax = new Vector2(1, 1);
-        barFillRect.offsetMin = Vector2.zero;
-        barFillRect.offsetMax = Vector2.zero;
-
-        Image barFillImage = barFillGO.AddComponent<Image>();
-        barFillImage.color = new Color(0.2f, 0.8f, 1f, 1f); // Azul claro - barra de progreso
-
-        // Configurar la barra como Image con Fill
-        barFillImage.type = Image.Type.Filled;
-        barFillImage.fillMethod = Image.FillMethod.Horizontal;
-        barFillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
-        barFillImage.fillAmount = 0.2f; // Iniciar en 20%
+        barFillRect.anchorMax = Vector2.one;
+        barFillRect.offsetMin = barFillRect.offsetMax = Vector2.zero;
+        Image barFillImg = barFill.AddComponent<Image>();
+        barFillImg.color = new Color(0.2f, 0.8f, 1f, 1f);
+        barFillImg.type = Image.Type.Filled;
+        barFillImg.fillMethod = Image.FillMethod.Horizontal;
+        barFillImg.fillOrigin = (int)Image.OriginHorizontal.Left;
+        barFillImg.fillAmount = 0f;
 
         // Texto de porcentaje
-        GameObject percentGO = new GameObject("PercentText");
-        percentGO.transform.SetParent(panelGO.transform, false);
+        GameObject pctGO = new GameObject("PercentText");
+        pctGO.transform.SetParent(panel.transform, false);
+        RectTransform pctRect = pctGO.AddComponent<RectTransform>();
+        pctRect.anchoredPosition = new Vector2(0, -75);
+        pctRect.sizeDelta = new Vector2(580, 50);
+        Text pctText = pctGO.AddComponent<Text>();
+        pctText.text = "0%";
+        pctText.font = GetBuiltinFont();
+        pctText.fontSize = 30;
+        pctText.fontStyle = FontStyle.Bold;
+        pctText.alignment = TextAnchor.MiddleCenter;
+        pctText.color = new Color(0.2f, 0.8f, 1f, 1f);
 
-        RectTransform percentRect = percentGO.AddComponent<RectTransform>();
-        percentRect.anchoredPosition = new Vector2(0, -80);
-        percentRect.sizeDelta = new Vector2(500, 60);
-
-        Text percentText = percentGO.AddComponent<Text>();
-        percentText.text = "0%";
-        percentText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-        percentText.fontSize = 32;
-        percentText.fontStyle = FontStyle.Bold;
-        percentText.alignment = TextAnchor.MiddleCenter;
-        percentText.color = new Color(0.2f, 0.8f, 1f, 1f); // Azul claro
-
-        // Animador
+        // Animador: único responsable de barra y texto
         LoadingScreenAnimator animator = canvasGO.AddComponent<LoadingScreenAnimator>();
-        animator.Initialize(text, barFillImage);
+        animator.Initialize(text, barFillImg);
 
-        // Crear un MonoBehaviour helper para la corutina
+        // Actualizador de porcentaje (separado para no contaminar el animador)
         PercentageUpdater updater = canvasGO.AddComponent<PercentageUpdater>();
-        updater.StartUpdating(percentText, barFillImage, animator);
-
-        canvas.sortingOrder = 9999;
+        updater.StartUpdating(pctText, barFillImg);
 
         return canvas;
     }
-
 }
 
 /// <summary>
-/// Helper para actualizar el porcentaje en la pantalla de carga
+/// Actualiza el texto de porcentaje según el fillAmount de la barra.
 /// </summary>
 public class PercentageUpdater : MonoBehaviour
 {
     private Text percentText;
     private Image progressBar;
-    private LoadingScreenAnimator animator;
 
-    public void StartUpdating(Text pText, Image pBar, LoadingScreenAnimator pAnimator)
+    public void StartUpdating(Text pText, Image pBar)
     {
         percentText = pText;
         progressBar = pBar;
-        animator = pAnimator;
-        StartCoroutine(UpdatePercentageText());
+        StartCoroutine(UpdateLoop());
     }
 
-    private IEnumerator UpdatePercentageText()
+    private IEnumerator UpdateLoop()
     {
-        while (percentText != null && progressBar != null)
+        while (this != null && percentText != null && progressBar != null)
         {
-            int percentage = (int)(progressBar.fillAmount * 100f);
-            percentText.text = percentage + "%";
-            animator.SetProgress(progressBar.fillAmount + Random.Range(0.01f, 0.05f));
-            yield return new WaitForSeconds(0.1f);
+            int pct = Mathf.RoundToInt(progressBar.fillAmount * 100f);
+            percentText.text = pct + "%";
+
+            // Parar cuando llegue al 100%
+            if (pct >= 100)
+                yield break;
+
+            yield return new WaitForSecondsRealtime(0.1f);
         }
     }
 }

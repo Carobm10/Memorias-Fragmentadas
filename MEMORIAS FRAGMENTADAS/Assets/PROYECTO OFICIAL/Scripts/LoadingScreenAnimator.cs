@@ -4,84 +4,90 @@ using System.Collections;
 
 /// <summary>
 /// Animador visual de la pantalla de carga.
-/// Maneja animaciones de progreso y texto dinámico.
 /// </summary>
 public class LoadingScreenAnimator : MonoBehaviour
 {
     private Text loadingText;
     private Image progressBar;
+
     private float currentProgress = 0f;
-    private float targetProgress = 0f;
-    private bool isAnimating = true;
+    private float targetProgress = 0.1f;  // Arranca visible desde el principio
+    private bool isComplete = false;
 
     public void Initialize(Text textComponent, Image progressBarImage)
     {
         loadingText = textComponent;
         progressBar = progressBarImage;
         currentProgress = 0f;
-        targetProgress = 0f;
-        isAnimating = true;
+        targetProgress = 0.1f;
+        isComplete = false;
+
+        if (progressBar != null)
+            progressBar.fillAmount = 0f;
+
         StartCoroutine(AnimateLoadingText());
         StartCoroutine(AnimateProgressBar());
     }
 
     public void SetProgress(float progress)
     {
-        targetProgress = Mathf.Clamp01(progress);
+        if (!isComplete)
+            targetProgress = Mathf.Clamp01(progress);
     }
 
     public void Complete()
     {
-        isAnimating = false;
+        isComplete = true;
         targetProgress = 1f;
         currentProgress = 1f;
+
         if (progressBar != null)
-        {
             progressBar.fillAmount = 1f;
-        }
+
+        if (loadingText != null)
+            loadingText.text = "¡Listo!";
     }
 
     private IEnumerator AnimateLoadingText()
     {
-        string[] frames = new string[] { "Cargando.", "Cargando..", "Cargando..." };
-        int frameIndex = 0;
+        string[] frames = { "Cargando.", "Cargando..", "Cargando..." };
+        int i = 0;
 
-        while (isAnimating)
+        while (!isComplete)
         {
             if (loadingText != null)
             {
-                loadingText.text = frames[frameIndex];
-                frameIndex = (frameIndex + 1) % frames.Length;
+                loadingText.text = frames[i];
+                i = (i + 1) % frames.Length;
             }
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSecondsRealtime(0.4f);
         }
 
-        if (loadingText != null)
-        {
-            loadingText.text = "¡Listo!";
-        }
+        // El texto "¡Listo!" lo pone Complete(), no hace falta repetirlo aquí
     }
 
     private IEnumerator AnimateProgressBar()
     {
-        while (isAnimating)
+        while (!isComplete)
         {
-            // Animar suavemente hacia el progreso objetivo
-            currentProgress = Mathf.Lerp(currentProgress, targetProgress, Time.deltaTime * 2f);
+            // Lerp suave hacia el objetivo
+            currentProgress = Mathf.Lerp(currentProgress, targetProgress, Time.unscaledDeltaTime * 3f);
 
             if (progressBar != null)
-            {
                 progressBar.fillAmount = currentProgress;
-            }
 
-            // Si está muy cerca del objetivo, avanzar automáticamente un poco
-            if (isAnimating && targetProgress < 0.9f && currentProgress > targetProgress - 0.05f)
+            // Avance automático aleatorio mientras no se haya completado
+            if (targetProgress < 0.85f)
             {
-                targetProgress += Random.Range(0.05f, 0.15f);
+                targetProgress += Random.Range(0.005f, 0.02f);
                 targetProgress = Mathf.Clamp01(targetProgress);
             }
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
+
+        // Asegurar barra llena al completar
+        if (progressBar != null)
+            progressBar.fillAmount = 1f;
     }
 }
