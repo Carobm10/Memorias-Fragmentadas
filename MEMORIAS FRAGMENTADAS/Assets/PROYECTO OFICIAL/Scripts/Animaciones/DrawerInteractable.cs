@@ -199,6 +199,11 @@ public class DrawerInteractable : MonoBehaviour
         closeDrawerClip = CargarClip(CloseDrawerClipPath);
     }
 
+    public bool EstaAbierto()
+    {
+        return isOpen;
+    }
+
 #if UNITY_EDITOR
     private static AudioClip CargarClip(string assetPath)
     {

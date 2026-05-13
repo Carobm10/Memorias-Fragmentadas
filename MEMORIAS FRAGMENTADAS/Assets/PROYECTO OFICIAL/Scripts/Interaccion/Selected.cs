@@ -37,6 +37,9 @@ public class Selected : MonoBehaviour
     private RadioBatteryTrigger ultimaPilaRadioMirada;
     private RadioCoverTrigger ultimaTapaRadioTriggerMirada;
     private RadioAnimacionesSimple ultimaRadioAnimacionSimpleMirada;
+    private BatteryPickup pilaReciente;
+    private float tiempoUltimaPila = -10f;
+    public float margenTiempoPila = 1f;
 
     // =========================
     // PUNTERO 3D
@@ -64,6 +67,7 @@ public class Selected : MonoBehaviour
     public GameObject DoorPromptPanel;
     public GameObject MissionPromptPanel;
     public GameObject ClothingPromptPanel;
+    public static bool bloquearPromptCajones = false;
 
     // =========================
     // MANAGER MISIÓN ARMARIO
@@ -94,7 +98,7 @@ public class Selected : MonoBehaviour
 
     void Start()
     {
-        mask = LayerMask.GetMask("Raycast Detect");
+        mask = LayerMask.GetMask("Raycast Detect", "PickupItem");
         ApagarTodosLosPrompts();
     }
 
@@ -126,6 +130,18 @@ public class Selected : MonoBehaviour
                 pointer3D.SetDetected(true);
 
             GameObject objetoDetectado = hit.collider.gameObject;
+            RadioCoverTrigger debugTapa = hit.collider.GetComponentInParent<RadioCoverTrigger>();
+            RadioAnimacionesSimple debugRadio = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
+
+            Debug.Log(
+                "RAYCAST EXACTO => " +
+                "Collider: " + hit.collider.name +
+                " | Objeto: " + hit.collider.gameObject.name +
+                " | Padre: " + hit.collider.transform.parent?.name +
+                " | Layer: " + LayerMask.LayerToName(hit.collider.gameObject.layer) +
+                " | Tiene RadioCoverTrigger: " + (debugTapa != null) +
+                " | Tiene RadioAnimacionesSimple: " + (debugRadio != null)
+            );
 
             // Detectamos componentes generales.
             LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
@@ -184,6 +200,46 @@ public class Selected : MonoBehaviour
             else
             {
                 ApagarMuchachaMirada();
+            }
+
+            // ======================================================
+            // TAPA INTERACTIVA DE LA RADIO
+            // ======================================================
+
+            RadioCoverTrigger tapaRadioTrigger = hit.collider.GetComponentInParent<RadioCoverTrigger>();
+
+            if (tapaRadioTrigger != null)
+            {
+                if (ultimaTapaRadioTriggerMirada != null && ultimaTapaRadioTriggerMirada != tapaRadioTrigger)
+                {
+                    ultimaTapaRadioTriggerMirada.DejarMirarTapa();
+                }
+
+                ultimaTapaRadioTriggerMirada = tapaRadioTrigger;
+                tapaRadioTrigger.MirarTapa();
+
+                return;
+            }
+            else
+            {
+                ApagarTapaRadioTriggerMirada();
+            }
+
+            RadioFinalUse radioFinal = hit.collider.GetComponentInParent<RadioFinalUse>();
+
+            if (radioFinal != null)
+            {
+                if (ultimaRadioFinalMirada != null && ultimaRadioFinalMirada != radioFinal)
+                    ultimaRadioFinalMirada.DejarMirarRadioFinal();
+
+                ultimaRadioFinalMirada = radioFinal;
+                radioFinal.MirarRadioFinal();
+
+                return;
+            }
+            else
+            {
+                ApagarRadioFinalMirada();
             }
 
             // ======================================================
@@ -249,11 +305,15 @@ public class Selected : MonoBehaviour
             // 4. PILAS DENTRO DEL CAJÓN
             // ======================================================
 
-            BatteryPickup pilasPickup = hit.collider.GetComponentInParent<BatteryPickup>();
+             BatteryPickup pilasPickup = hit.collider.GetComponentInParent<BatteryPickup>();
 
             if (pilasPickup != null)
             {
-                LimpiarTodoMenosPilasPickup(pilasPickup);
+                pilaReciente = pilasPickup;
+                tiempoUltimaPila = Time.time;
+
+                if (ultimasPilasPickupMiradas != null && ultimasPilasPickupMiradas != pilasPickup)
+                    ultimasPilasPickupMiradas.StopLookingAtBatteries();
 
                 ultimasPilasPickupMiradas = pilasPickup;
                 ultimasPilasPickupMiradas.LookAtBatteries();
@@ -394,15 +454,36 @@ public class Selected : MonoBehaviour
 
                 return;
             }
+            // ========================================
+            // PILAS RADIO
+            // ========================================
+
+            RadioBatteryInsertTrigger pilaRadio =
+                hit.collider.GetComponentInParent<RadioBatteryInsertTrigger>();
+
+            if (pilaRadio != null)
+            {
+                pilaRadio.MirarPila();
+
+                return;
+            }
 
             // ======================================================
             // 11. CAJONES
             // ======================================================
 
-            DrawerInteractable drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
+             DrawerInteractable drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
 
             if (drawer != null)
             {
+                if (pilaReciente != null && 
+                    Time.time - tiempoUltimaPila <= margenTiempoPila && 
+                    !pilaReciente.YaFueronTomadas())
+                {
+                    pilaReciente.LookAtBatteries();
+                    return;
+                }
+
                 MostrarSolo(DoorPromptPanel);
 
                 if (InputManagerCustom.PressB())
@@ -414,45 +495,8 @@ public class Selected : MonoBehaviour
 
                 return;
             }
-            // ======================================================
-            // TAPA INTERACTIVA DE LA RADIO
-            // ======================================================
 
-            RadioCoverTrigger tapaRadioTrigger = hit.collider.GetComponentInParent<RadioCoverTrigger>();
-
-            if (tapaRadioTrigger != null)
-            {
-                if (ultimaTapaRadioTriggerMirada != null && ultimaTapaRadioTriggerMirada != tapaRadioTrigger)
-                {
-                    ultimaTapaRadioTriggerMirada.DejarMirarTapa();
-                }
-
-                ultimaTapaRadioTriggerMirada = tapaRadioTrigger;
-                tapaRadioTrigger.MirarTapa();
-
-                return;
-            }
-            else
-            {
-                ApagarTapaRadioTriggerMirada();
-            }
-
-            RadioFinalUse radioFinal = hit.collider.GetComponentInParent<RadioFinalUse>();
-
-            if (radioFinal != null)
-            {
-                if (ultimaRadioFinalMirada != null && ultimaRadioFinalMirada != radioFinal)
-                    ultimaRadioFinalMirada.DejarMirarRadioFinal();
-
-                ultimaRadioFinalMirada = radioFinal;
-                radioFinal.MirarRadioFinal();
-
-                return;
-            }
-            else
-            {
-                ApagarRadioFinalMirada();
-            }
+            
 
             
 
@@ -478,19 +522,12 @@ public class Selected : MonoBehaviour
             // 13. PILAS INTERACTIVAS RADIO
             // ======================================================
 
-            RadioBatteryTrigger pilaRadio = hit.collider.GetComponentInParent<RadioBatteryTrigger>();
+            RadioBatteryInsertTrigger pilaInsertar =
+                hit.collider.GetComponentInParent<RadioBatteryInsertTrigger>();
 
-            if (pilaRadio != null)
+            if (pilaInsertar != null)
             {
-                if (ultimaPilaRadioMirada != null && ultimaPilaRadioMirada != pilaRadio)
-                {
-                    ultimaPilaRadioMirada.DejarMirarPila();
-                }
-
-                ultimaPilaRadioMirada = pilaRadio;
-
-                pilaRadio.MirarPila();
-
+                pilaInsertar.MirarPila();
                 return;
             }
             else

@@ -36,7 +36,6 @@ public class PhoneMissionController : MonoBehaviour
 
     private bool jugadorMirando = false;
     private bool ocupado = false;
-
     private PhoneState estado = PhoneState.Locked;
 
     void Start()
@@ -108,7 +107,6 @@ public class PhoneMissionController : MonoBehaviour
         if (promptPanel != null)
             promptPanel.SetActive(false);
 
-        // NO bloqueamos movimiento aquí para que puedas acercarte y ver la animación.
         if (telefonoCerrado != null)
             telefonoCerrado.SetActive(false);
 

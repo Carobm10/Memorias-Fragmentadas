@@ -4,6 +4,31 @@ using System.Collections;
 
 public class RadioAnimacionesSimple : MonoBehaviour
 {
+    [Header("Velocidad animaciones pilas")]
+    public float velocidadAnimacionPilas = 0.35f;
+    [Header("Control pilas")]
+    private bool animandoPila = false;
+    private bool pila1Puesta = false;
+    private bool pila2Puesta = false;
+    private bool pila3Puesta = false;
+    [Header("Animators pilas")]
+    public Animator animatorPrimeraPila;
+    public Animator animatorSegundaPila;
+    public Animator animatorTerceraPila;
+
+    
+    [Header("Estados después de poner pilas")]
+    public GameObject radioAbiertoConTresPilas;
+    public GameObject radioAbiertoConDosPilas;
+    public GameObject radioAbiertoConUnaPila;
+    public GameObject radioAbiertoSinPilas;
+
+    
+
+    [Header("Final")]
+    public GameObject tapaCerrarMusica;
+    public GameObject radioNormalFinal;
+    public GameObject primeraPilaAnimacion;
     [Header("Control de misión")]
     public bool radioDesbloqueada = false;
 
@@ -15,6 +40,12 @@ public class RadioAnimacionesSimple : MonoBehaviour
     public GameObject radioVolteadoVisual;
     public GameObject abrirTapa;
     public GameObject radioSinPilasVisual;
+    public GameObject radioAbiertoConPilas;
+
+    public GameObject primeraPila;
+    public GameObject segundaPila;
+    public GameObject terceraPila;
+    public GameObject cerrarTapa;
 
     [Header("Tapita")]
     public Renderer tapaRenderer;
@@ -41,7 +72,10 @@ public class RadioAnimacionesSimple : MonoBehaviour
     private bool mirandoRadio = false;
     private bool secuenciaIniciada = false;
     private bool esperandoSalir = false;
+    private bool modoInsertarPilas = false;
+    private int pilaActual = 0;
     private Color colorOriginalTapa;
+    
 
     void Start()
     {
@@ -66,6 +100,11 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(
+            "Radio DEBUG | mirandoRadio: " + mirandoRadio +
+            " | radioDesbloqueada: " + radioDesbloqueada +
+            " | modoInsertarPilas: " + modoInsertarPilas
+        );
         if (esperandoSalir)
         {
             if (InputManagerCustom.PressX())
@@ -78,10 +117,108 @@ public class RadioAnimacionesSimple : MonoBehaviour
         if (secuenciaIniciada) return;
         if (!radioDesbloqueada) return;
 
-        MostrarPrompt("Presiona B para revisar el radio");
+        // ==========================================
+        // RADIO NORMAL
+        // ==========================================
 
-        if (InputManagerCustom.PressB())
-            StartCoroutine(SecuenciaRadio());
+        if (!modoInsertarPilas && !secuenciaIniciada)
+        {
+            MostrarPrompt("Presiona B para revisar el radio");
+
+            if (InputManagerCustom.PressB())
+                StartCoroutine(SecuenciaRadio());
+
+            return;
+        }
+
+        // ==========================================
+        // VOLVER CON PILAS
+        // ==========================================
+
+        if (!modoInsertarPilas && !secuenciaIniciada)
+        {
+            MostrarPrompt("Presiona B para poner las pilas");
+
+            if (InputManagerCustom.PressB())
+            {
+                modoInsertarPilas = true;
+
+                if (radioSinPilasVisual != null)
+                    radioSinPilasVisual.SetActive(false);
+
+                if (radioAbiertoConPilas != null)
+                    radioAbiertoConPilas.SetActive(true);
+            }
+
+            return;
+        }
+
+        // ==========================================
+        // PILA 1
+        // ==========================================
+
+        if (modoInsertarPilas)
+        {
+            if (pilaActual == 0)
+            {
+                MostrarPrompt("Presiona B para poner la primera pila");
+
+                if (InputManagerCustom.PressB())
+                {
+                    if (primeraPila != null)
+                        primeraPila.SetActive(true);
+
+                    pilaActual = 1;
+                }
+
+                return;
+            }
+
+            if (pilaActual == 1)
+            {
+                MostrarPrompt("Presiona B para poner la segunda pila");
+
+                if (InputManagerCustom.PressB())
+                {
+                    if (segundaPila != null)
+                        segundaPila.SetActive(true);
+
+                    pilaActual = 2;
+                }
+
+                return;
+            }
+
+            if (pilaActual == 2)
+            {
+                MostrarPrompt("Presiona B para poner la tercera pila");
+
+                if (InputManagerCustom.PressB())
+                {
+                    if (terceraPila != null)
+                        terceraPila.SetActive(true);
+
+                    pilaActual = 3;
+                }
+
+                return;
+            }
+
+            if (pilaActual == 3)
+            {
+                MostrarPrompt("Presiona B para cerrar la tapa");
+
+                if (InputManagerCustom.PressB())
+                {
+                    if (cerrarTapa != null)
+                        cerrarTapa.SetActive(true);
+
+                    MostrarPrompt("Presiona X para salir");
+                }
+
+                return;
+            }
+        }
     }
 
     IEnumerator SecuenciaRadio()
@@ -117,7 +254,7 @@ public class RadioAnimacionesSimple : MonoBehaviour
             yield return null;
         }
 
-        MostrarPrompt("Abriendo tapita...");
+        MostrarPrompt("Abriendo tapa...");
 
         if (tapaRenderer != null)
             tapaRenderer.material.color = colorOriginalTapa;
@@ -259,5 +396,143 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
         if (botonSalirX != null)
             botonSalirX.SetActive(false);
+    }
+    
+    
+    public void ActivarModoVolverARadio()
+    {
+        radioDesbloqueada = true;
+
+        if (radioNormalVisual != null)
+        {
+            radioNormalVisual.SetActive(true);
+        }
+
+        Debug.Log("Ahora el jugador debe volver al radio.");
+    }
+    public void ActivarModoInsertarPilas()
+    {
+        if (radioSinPilasVisual != null)
+            radioSinPilasVisual.SetActive(false);
+
+        if (radioAbiertoConPilas != null)
+            radioAbiertoConPilas.SetActive(true);
+
+        modoInsertarPilas = true;
+
+        Debug.Log("Modo insertar pilas ACTIVADO");
+    }
+    public void PonerPrimeraPila()
+    {
+        if (primeraPila != null)
+            primeraPila.SetActive(true);
+
+        Debug.Log("Animación primera pila activada.");
+    }
+    public void PonerPila(int numeroPila)
+    {
+        if (animandoPila) return;
+
+        if (numeroPila == 1 && pila1Puesta) return;
+        if (numeroPila == 2 && pila2Puesta) return;
+        if (numeroPila == 3 && pila3Puesta) return;
+
+        StartCoroutine(SecuenciaPonerPila(numeroPila));
+    }
+
+    IEnumerator SecuenciaPonerPila(int numeroPila)
+    {
+        animandoPila = true;
+
+        // IMPORTANTE:
+        // NO apagamos radioAbiertoConTresPilas completo,
+        // porque ahí viven las pilas/colliders.
+        OcultarRenderers(radioAbiertoConTresPilas);
+
+        GameObject animacionActual = null;
+
+        if (numeroPila == 1)
+        {
+            pila1Puesta = true;
+            animacionActual = primeraPila;
+        }
+        else if (numeroPila == 2)
+        {
+            pila2Puesta = true;
+            animacionActual = segundaPila;
+        }
+        else if (numeroPila == 3)
+        {
+            pila3Puesta = true;
+            animacionActual = terceraPila;
+        }
+
+        if (animacionActual != null)
+        {
+            animacionActual.SetActive(true);
+
+            Animator anim = animacionActual.GetComponent<Animator>();
+
+            if (anim != null)
+            {
+                anim.enabled = true;
+                anim.speed = velocidadAnimacionPilas;
+                anim.Play(0, 0, 0f);
+            }
+
+            Debug.Log("Reproduciendo animación pila: " + numeroPila);
+        }
+
+        // Espera para no permitir doble clic mientras corre la animación
+        yield return new WaitForSeconds(5f);
+
+        // NO apagamos la animación.
+        // La dejamos en su último frame/posición final.
+        animandoPila = false;
+
+        if (numeroPila == 3)
+        {
+            if (tapaCerrarMusica != null)
+                tapaCerrarMusica.SetActive(true);
+        }
+    }
+    void OcultarRenderers(GameObject obj)
+    {
+        if (obj == null) return;
+
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer r in renderers)
+        {
+            if (r != null)
+                r.enabled = false;
+        }
+    }
+    void OcultarTodosEstadosPilas()
+    {
+        if (radioAbiertoConTresPilas != null) radioAbiertoConTresPilas.SetActive(false);
+        if (radioAbiertoConDosPilas != null) radioAbiertoConDosPilas.SetActive(false);
+        if (radioAbiertoConUnaPila != null) radioAbiertoConUnaPila.SetActive(false);
+
+        if (primeraPila != null) primeraPila.SetActive(false);
+        if (segundaPila != null) segundaPila.SetActive(false);
+        if (terceraPila != null) terceraPila.SetActive(false);
+        if (radioAbiertoSinPilas != null) radioAbiertoSinPilas.SetActive(false);
+    }
+
+    void OcultarTodosLosEstadosDelRadio()
+    {
+        if (radioNormalVisual != null) radioNormalVisual.SetActive(false);
+        if (radioVolteadoVisual != null) radioVolteadoVisual.SetActive(false);
+        if (radioSinPilasVisual != null) radioSinPilasVisual.SetActive(false);
+
+        if (radioAbiertoConTresPilas != null) radioAbiertoConTresPilas.SetActive(false);
+        if (radioAbiertoConDosPilas != null) radioAbiertoConDosPilas.SetActive(false);
+        if (radioAbiertoConUnaPila != null) radioAbiertoConUnaPila.SetActive(false);
+        if (radioAbiertoSinPilas != null) radioAbiertoSinPilas.SetActive(false);
+
+        if (primeraPila != null) primeraPila.SetActive(false);
+        if (segundaPila != null) segundaPila.SetActive(false);
+        if (terceraPila != null) terceraPila.SetActive(false);
     }
 }
