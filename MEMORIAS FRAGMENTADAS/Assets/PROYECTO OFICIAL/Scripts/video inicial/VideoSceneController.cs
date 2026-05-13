@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class VideoSceneController : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class VideoSceneController : MonoBehaviour
 
     private Camera resolvedTargetCamera;
     private RenderTexture runtimeVideoTexture;
+    private SceneTransitionManager transitionManager;
 
     void Start()
     {
@@ -60,6 +62,15 @@ public class VideoSceneController : MonoBehaviour
         }
 
         resolvedTargetCamera = ResolveTargetCamera();
+
+        // Obtener el SceneTransitionManager
+        transitionManager = FindFirstObjectByType<SceneTransitionManager>();
+        if (transitionManager == null)
+        {
+            Debug.LogWarning("No se encontró SceneTransitionManager. Se creará uno automáticamente.");
+            GameObject managerGO = new GameObject("SceneTransitionManager");
+            transitionManager = managerGO.AddComponent<SceneTransitionManager>();
+        }
 
         if (autoConfigureForVR)
         {
@@ -241,7 +252,15 @@ public class VideoSceneController : MonoBehaviour
 
         Debug.Log("Cargando escena anterior: " + previousSceneName);
         changingScene = true;
-        SceneManager.LoadScene(previousSceneName);
+        
+        if (transitionManager != null)
+        {
+            transitionManager.LoadScene(previousSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(previousSceneName);
+        }
     }
 
     IEnumerator PressPlayPause()
@@ -290,6 +309,14 @@ public class VideoSceneController : MonoBehaviour
         Debug.Log("Cargando siguiente escena: " + nextSceneName);
 
         changingScene = true;
-        SceneManager.LoadScene(nextSceneName);
+        
+        if (transitionManager != null)
+        {
+            transitionManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
     }
 }

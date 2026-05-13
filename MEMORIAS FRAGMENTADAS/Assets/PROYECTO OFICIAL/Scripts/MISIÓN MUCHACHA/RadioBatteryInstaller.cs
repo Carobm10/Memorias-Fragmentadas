@@ -85,7 +85,7 @@ public class RadioBatteryInstaller : MonoBehaviour
 
     void CheckAllBatteriesInstalled()
     {
-        RadioBatteryInstaller[] allBatteries = FindObjectsOfType<RadioBatteryInstaller>();
+        RadioBatteryInstaller[] allBatteries = FindObjectsByType<RadioBatteryInstaller>(FindObjectsSortMode.None);
 
         foreach (RadioBatteryInstaller battery in allBatteries)
         {
