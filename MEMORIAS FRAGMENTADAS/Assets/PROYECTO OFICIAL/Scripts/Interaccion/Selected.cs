@@ -41,8 +41,8 @@ public class Selected : MonoBehaviour
     // =========================
     // PUNTERO 3D
     // =========================
-    [Header("Sistema de selección")]
-    public Selected selectedRaycast;
+    //[Header("Sistema de selección")]
+    //public Selected selectedRaycast;
 
     [Header("Puntero 3D")]
     public Pointer3DController pointer3D;
@@ -190,6 +190,23 @@ public class Selected : MonoBehaviour
             // 2. RADIO - MISIÓN RADIO
             // ======================================================
 
+            RadioAnimacionesSimple radioAnimSimple = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
+
+            if (radioAnimSimple != null)
+            {
+                if (ultimaRadioAnimacionSimpleMirada != null && ultimaRadioAnimacionSimpleMirada != radioAnimSimple)
+                    ultimaRadioAnimacionSimpleMirada.DejarMirarRadio();
+
+                ultimaRadioAnimacionSimpleMirada = radioAnimSimple;
+                radioAnimSimple.MirarRadio();
+
+                return;
+            }
+            else
+            {
+                ApagarRadioAnimacionSimpleMirada();
+            }
+
             RadioMissionInteractable radio = hit.collider.GetComponentInParent<RadioMissionInteractable>();
 
             if (radio != null)
@@ -205,6 +222,8 @@ public class Selected : MonoBehaviour
             {
                 ApagarRadioMirada();
             }
+
+            
 
             // ======================================================
             // 3. TAPA TRASERA DE LA RADIO
@@ -435,22 +454,7 @@ public class Selected : MonoBehaviour
                 ApagarRadioFinalMirada();
             }
 
-            RadioAnimacionesSimple radioAnimSimple = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
-
-            if (radioAnimSimple != null)
-            {
-                if (ultimaRadioAnimacionSimpleMirada != null && ultimaRadioAnimacionSimpleMirada != radioAnimSimple)
-                    ultimaRadioAnimacionSimpleMirada.DejarMirarRadio();
-
-                ultimaRadioAnimacionSimpleMirada = radioAnimSimple;
-                radioAnimSimple.MirarRadio();
-
-                return;
-            }
-            else
-            {
-                ApagarRadioAnimacionSimpleMirada();
-            }
+            
 
             // ======================================================
             // 12. OBJETOS INSPECCIONABLES 360

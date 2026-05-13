@@ -9,16 +9,43 @@ public class ServicioNPCMission : MonoBehaviour
     public Transform player;
     public float interactionDistance = 3f;
 
+    [Header("Debug")]
+    public bool mostrarDebug = true;
+
     private bool playerLookingAtMe = false;
 
     void Update()
     {
-        if (playerLookingAtMe && IsPlayerNear())
+        float distanciaActual = player != null
+            ? Vector3.Distance(transform.position, player.position)
+            : -1f;
+
+        bool cerca = player != null && distanciaActual <= interactionDistance;
+
+        if (mostrarDebug)
         {
+            Debug.Log(
+                "ROSA DEBUG | Mirando: " + playerLookingAtMe +
+                " | Cerca: " + cerca +
+                " | Distancia: " + distanciaActual +
+                " | MissionManager: " + (missionManager != null)
+            );
+        }
+
+        if (missionManager == null)
+        {
+            Debug.LogError("ROSA ERROR: No está asignado KitchenRadioMissionManager.");
+            return;
+        }
+
+        if (playerLookingAtMe && cerca)
+        {
+            Debug.Log("ROSA OK: Se cumple condición para mostrar prompt.");
             missionManager.ShowMissionPrompt();
 
             if (InputManagerCustom.PressA())
             {
+                Debug.Log("ROSA OK: Presionaste A.");
                 missionManager.TryStartMission();
             }
         }
@@ -31,13 +58,6 @@ public class ServicioNPCMission : MonoBehaviour
     public void SetLookingAtMe(bool value)
     {
         playerLookingAtMe = value;
-    }
-
-    bool IsPlayerNear()
-    {
-        if (player == null) return false;
-
-        float distance = Vector3.Distance(transform.position, player.position);
-        return distance <= interactionDistance;
+        Debug.Log("ROSA RAYCAST: SetLookingAtMe = " + value);
     }
 }

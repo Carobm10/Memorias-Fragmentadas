@@ -4,6 +4,8 @@ using System.Collections;
 
 public class KitchenRadioMissionManager : MonoBehaviour
 {
+    [Header("Radio animaciones simple")]
+    public RadioAnimacionesSimple radioAnimacionesSimple;
     [Header("UI diálogo NPC")]
     public GameObject dialoguePanel;
     public TMPro.TMP_Text npcNameText;
@@ -93,6 +95,15 @@ public class KitchenRadioMissionManager : MonoBehaviour
         currentState = MissionState.NeedCheckRadio;
 
         ShowNotification("Busca la radio en la cocina.");
+
+        if (radioAnimacionesSimple != null)
+        {
+            radioAnimacionesSimple.DesbloquearRadio();
+        }
+        else
+        {
+            Debug.LogError("No asignaste RadioAnimacionesSimple en el KitchenRadioMissionManager.");
+        }
     }
 
     public void OnRadioBackCoverOpened()
