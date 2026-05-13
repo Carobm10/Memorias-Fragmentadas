@@ -2222,7 +2222,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xA1Has escogido la prenda incorrecta, escoge otra!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 8125025808374932309, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2826,7 +2826,7 @@ MonoBehaviour:
   m_text: "S\xED, \xBFa qu\xE9 est\xE1s jugando?  "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2989,7 +2989,7 @@ MonoBehaviour:
   m_text: Y
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4302,7 +4302,7 @@ MonoBehaviour:
   m_text: "\xBFQu\xE9 est\xE1s haciendo? "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4721,7 +4721,7 @@ MonoBehaviour:
     una pieza.\n\xBFMe ayudas o est\xE1s ocupado?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10271,7 +10271,7 @@ MonoBehaviour:
   m_text: B
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11216,7 +11216,7 @@ MonoBehaviour:
   m_text: No puedo ahora, tengo que alistarme.  A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -18618,7 +18618,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\xA1Has escogido la prenda incorrecta, escoge otra!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 8125025808374932309, guid: 1c132fb52be1f1f48adedd27399e8c0b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -20473,8 +20473,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Aurora [Hermana]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -28348,7 +28348,7 @@ MonoBehaviour:
   m_text: A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
-  m_sharedMaterial: {fileID: -5157637449122885291, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
+  m_sharedMaterial: {fileID: -7867586454622626888, guid: 038a3d21bc343ba48bee3b5c2ad65be9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29647,11 +29647,9 @@ SceneRoots:
   - {fileID: 1908767585}
   - {fileID: 781901405}
   - {fileID: 1932838651}
-  - {fileID: 896565274}
   - {fileID: 594267071}
   - {fileID: 1864060958}
   - {fileID: 494521754}
-  - {fileID: 584577181}
   - {fileID: 49249124}
   - {fileID: 1441375510}
   - {fileID: 1204024023}
@@ -29661,3 +29659,5 @@ SceneRoots:
   - {fileID: 2104201116}
   - {fileID: 1012204224}
   - {fileID: 427832070}
+  - {fileID: 896565274}
+  - {fileID: 584577181}
