@@ -36,10 +36,13 @@ public class Selected : MonoBehaviour
     private RadioBatteryInstaller ultimaPilaInstallerMirada;
     private RadioBatteryTrigger ultimaPilaRadioMirada;
     private RadioCoverTrigger ultimaTapaRadioTriggerMirada;
+    private RadioAnimacionesSimple ultimaRadioAnimacionSimpleMirada;
 
     // =========================
     // PUNTERO 3D
     // =========================
+    [Header("Sistema de selección")]
+    public Selected selectedRaycast;
 
     [Header("Puntero 3D")]
     public Pointer3DController pointer3D;
@@ -148,7 +151,6 @@ public class Selected : MonoBehaviour
             {
                 LimpiarMiradas();
                 Deselect();
-                ApagarTodosLosPrompts();
 
                 if (pointer3D != null)
                     pointer3D.SetDetected(false);
@@ -433,6 +435,23 @@ public class Selected : MonoBehaviour
                 ApagarRadioFinalMirada();
             }
 
+            RadioAnimacionesSimple radioAnimSimple = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
+
+            if (radioAnimSimple != null)
+            {
+                if (ultimaRadioAnimacionSimpleMirada != null && ultimaRadioAnimacionSimpleMirada != radioAnimSimple)
+                    ultimaRadioAnimacionSimpleMirada.DejarMirarRadio();
+
+                ultimaRadioAnimacionSimpleMirada = radioAnimSimple;
+                radioAnimSimple.MirarRadio();
+
+                return;
+            }
+            else
+            {
+                ApagarRadioAnimacionSimpleMirada();
+            }
+
             // ======================================================
             // 12. OBJETOS INSPECCIONABLES 360
             // ======================================================
@@ -609,6 +628,7 @@ public class Selected : MonoBehaviour
         ApagarPilaRadioMirada();
         ApagarTapaRadioTriggerMirada();
         ApagarRadioFinalMirada();
+        ApagarRadioAnimacionSimpleMirada();
     }
 
     void ApagarNPCMirado()
@@ -798,6 +818,15 @@ public class Selected : MonoBehaviour
         {
             ultimaRadioFinalMirada.DejarMirarRadioFinal();
             ultimaRadioFinalMirada = null;
+        }
+    }
+
+    void ApagarRadioAnimacionSimpleMirada()
+    {
+        if (ultimaRadioAnimacionSimpleMirada != null)
+        {
+            ultimaRadioAnimacionSimpleMirada.DejarMirarRadio();
+            ultimaRadioAnimacionSimpleMirada = null;
         }
     }
 }

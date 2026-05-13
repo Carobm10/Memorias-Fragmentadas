@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class InspectableObject360 : MonoBehaviour
 {
@@ -58,52 +59,134 @@ public class InspectableObject360 : MonoBehaviour
 
         inspecting = true;
 
+        // ======================================================
+        // BLOQUEAR ROTACIÓN CÁMARA
+        // ======================================================
+
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
 
         if (cameraTransform != null)
             lockedCameraRotation = cameraTransform.rotation;
 
-        // Creamos un contenedor limpio en el punto de inspección.
+        // ======================================================
+        // CREAR CONTENEDOR VISUAL
+        // ======================================================
+
         visualWrapper = new GameObject("INSPECCION_360_" + visualPrefab.name);
+
         visualWrapper.transform.SetParent(inspectPoint);
+
         visualWrapper.transform.localPosition = Vector3.zero;
         visualWrapper.transform.localRotation = Quaternion.identity;
         visualWrapper.transform.localScale = Vector3.one;
 
-        // Creamos la copia visual dentro del contenedor.
+        // ======================================================
+        // CREAR CLON
+        // ======================================================
+
         currentClone = Instantiate(visualPrefab, visualWrapper.transform);
+
+        Debug.Log("===== DEBUG COMPONENTES DEL CLON 360 =====");
+        Debug.Log("Clon creado: " + currentClone.name);
+
+        Radio360BackDetector detector = currentClone.GetComponentInChildren<Radio360BackDetector>(true);
+
+        if (detector != null)
+        {
+            Debug.Log("SÍ tiene Radio360BackDetector en: " + detector.gameObject.name);
+            Debug.Log("Detector activo: " + detector.enabled);
+            Debug.Log("GameObject detector activo: " + detector.gameObject.activeSelf);
+        }
+        else
+        {
+            Debug.LogError("NO tiene Radio360BackDetector dentro del clon.");
+        }
+
+        Animator[] animators = currentClone.GetComponentsInChildren<Animator>(true);
+
+        Debug.Log("Animators encontrados en clon: " + animators.Length);
+
+        foreach (Animator anim in animators)
+        {
+            string controllerName = anim.runtimeAnimatorController != null
+                ? anim.runtimeAnimatorController.name
+                : "SIN CONTROLLER";
+
+            Debug.Log("Animator en: " + anim.gameObject.name + " | Controller: " + controllerName);
+        }
+        
         currentClone.name = visualPrefab.name + "_CLON_360";
+
         currentClone.transform.localPosition = Vector3.zero;
         currentClone.transform.localRotation = Quaternion.identity;
         currentClone.transform.localScale = Vector3.one * inspectScale;
 
-        // Desactivamos física/colliders del clon para que no empuje nada.
+        // ======================================================
+        // DESACTIVAR COLLIDERS DEL CLON
+        // ======================================================
+
         Collider[] cloneCols = currentClone.GetComponentsInChildren<Collider>(true);
+
         foreach (Collider col in cloneCols)
             col.enabled = false;
 
+        // ======================================================
+        // DESACTIVAR RIGIDBODIES
+        // ======================================================
+
         Rigidbody[] rbs = currentClone.GetComponentsInChildren<Rigidbody>(true);
+
         foreach (Rigidbody rb in rbs)
         {
             rb.isKinematic = true;
             rb.useGravity = false;
         }
 
-        // Centramos el clon usando sus renderers.
+        // ======================================================
+        // CENTRAR CLON
+        // ======================================================
+
         CenterCloneByRenderers();
 
-        // Ocultamos el objeto original.
+        // ======================================================
+        // OCULTAR ORIGINAL
+        // ======================================================
+
         SetOriginalVisible(false);
+
+        // ======================================================
+        // BLOQUEAR MOVIMIENTO
+        // ======================================================
 
         if (playerMovement != null)
             playerMovement.puedeMoverse = false;
 
+        // ======================================================
+        // OCULTAR PUNTERO Y VOLVERLO A MOSTRAR
+        // ======================================================
+
+        //if (pointer3D != null)
+        //{
+        //    pointer3D.SetActive(false);
+        //    StartCoroutine(ShowPointerAfterSeconds());
+        //}
+
         if (pointer3D != null)
+        {
             pointer3D.SetActive(false);
+        }
+
+        // ======================================================
+        // MOSTRAR CANVAS SALIR
+        // ======================================================
 
         if (exitCanvas != null)
             exitCanvas.SetActive(true);
+
+        // ======================================================
+        // DEBUG
+        // ======================================================
 
         if (showDebug)
         {
@@ -118,6 +201,19 @@ public class InspectableObject360 : MonoBehaviour
             Debug.Log("Clon escala: " + currentClone.transform.localScale);
         }
     }
+
+    /*
+    IEnumerator ShowPointerAfterSeconds()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (inspecting && pointer3D != null)
+        {
+            pointer3D.SetActive(true);
+            Debug.Log("Puntero 3D volvió a aparecer en modo inspección 360");
+        }
+    }
+    */
 
     void CenterCloneByRenderers()
     {
@@ -139,7 +235,9 @@ public class InspectableObject360 : MonoBehaviour
         }
 
         Vector3 worldCenter = bounds.center;
-        Vector3 localCenter = currentClone.transform.InverseTransformPoint(worldCenter);
+
+        Vector3 localCenter =
+            currentClone.transform.InverseTransformPoint(worldCenter);
 
         currentClone.transform.localPosition -= localCenter;
 
@@ -152,10 +250,17 @@ public class InspectableObject360 : MonoBehaviour
 
     void SetOriginalVisible(bool visible)
     {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
+        Renderer[] renderers =
+            GetComponentsInChildren<Renderer>(true);
 
         foreach (Renderer r in renderers)
             r.enabled = visible;
+
+        Collider[] colliders =
+            GetComponentsInChildren<Collider>(true);
+
+        foreach (Collider c in colliders)
+            c.enabled = visible;
     }
 
     public void StopInspect()
@@ -164,18 +269,38 @@ public class InspectableObject360 : MonoBehaviour
 
         inspecting = false;
 
+        // ======================================================
+        // ELIMINAR CLON
+        // ======================================================
+
         if (visualWrapper != null)
             Destroy(visualWrapper);
         else if (currentClone != null)
             Destroy(currentClone);
 
+        // ======================================================
+        // VOLVER A MOSTRAR ORIGINAL
+        // ======================================================
+
         SetOriginalVisible(true);
+
+        // ======================================================
+        // DEVOLVER MOVIMIENTO
+        // ======================================================
 
         if (playerMovement != null)
             playerMovement.puedeMoverse = true;
 
+        // ======================================================
+        // MOSTRAR PUNTERO
+        // ======================================================
+
         if (pointer3D != null)
             pointer3D.SetActive(true);
+
+        // ======================================================
+        // OCULTAR CANVAS SALIR
+        // ======================================================
 
         if (exitCanvas != null)
             exitCanvas.SetActive(false);
@@ -185,6 +310,10 @@ public class InspectableObject360 : MonoBehaviour
     {
         if (!inspecting) return;
 
+        // ======================================================
+        // SALIR
+        // ======================================================
+
         if (InputManagerCustom.PressX())
         {
             StopInspect();
@@ -192,6 +321,10 @@ public class InspectableObject360 : MonoBehaviour
         }
 
         if (visualWrapper == null) return;
+
+        // ======================================================
+        // INPUT JOYSTICK
+        // ======================================================
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -207,6 +340,10 @@ public class InspectableObject360 : MonoBehaviour
             vertical * rotationSpeed * Time.deltaTime,
             Space.World
         );
+
+        // ======================================================
+        // INPUT MOUSE
+        // ======================================================
 
         if (Input.GetMouseButton(0))
         {

@@ -54,6 +54,8 @@ public class RadioMissionInteractable : MonoBehaviour
 
     public void EnterInspection()
     {
+        HidePrompt();
+
         if (inspectable360 != null)
         {
             inspectable360.StartInspection();
