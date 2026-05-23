@@ -29,6 +29,10 @@ public class RadioBatteryInsertTrigger : MonoBehaviour
     public void MirarPila()
     {
         if (yaUsada) return;
+        if (radioAnimaciones == null) return;
+
+        if (!radioAnimaciones.PuedePonerPila(numeroPila))
+            return;
 
         if (pilaRenderer != null)
             pilaRenderer.material.color = colorSeleccion;
@@ -46,8 +50,7 @@ public class RadioBatteryInsertTrigger : MonoBehaviour
             if (promptPanel != null)
                 promptPanel.SetActive(false);
 
-            if (radioAnimaciones != null)
-                radioAnimaciones.PonerPila(numeroPila);
+            radioAnimaciones.PonerPila(numeroPila);
         }
     }
 
