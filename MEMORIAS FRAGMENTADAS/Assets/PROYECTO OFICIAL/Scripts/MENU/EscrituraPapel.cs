@@ -12,12 +12,15 @@ public class EscrituraPapel : MonoBehaviour
     private string textoActual = "";
 
     private Vector3 posicionInicial;
+    private Vector3 escalaInicial;
+
     private Quaternion rotacionInicial;
 
     void Start()
     {
         posicionInicial = hojaActual.transform.localPosition;
         rotacionInicial = hojaActual.transform.localRotation;
+        escalaInicial = hojaActual.transform.localScale;
     }
 
     // ✍️ Escribir en la hoja
@@ -90,6 +93,7 @@ public class EscrituraPapel : MonoBehaviour
 
         nuevaHoja.transform.localPosition = posicionInicial;
         nuevaHoja.transform.localRotation = rotacionInicial;
+        nuevaHoja.transform.localScale = escalaInicial;
 
         hojaActual = nuevaHoja;
 

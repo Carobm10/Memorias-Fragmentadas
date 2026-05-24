@@ -14,7 +14,12 @@ public class TecladoRaycastInteractor : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, distanciaRaycast, layerTeclas))
         {
-            Tecla teclaDetectada = hit.collider.GetComponentInParent<Tecla>();
+            // ========================================
+            // DETECTAR TECLAS NORMALES
+            // ========================================
+
+            Tecla teclaDetectada =
+                hit.collider.GetComponentInParent<Tecla>();
 
             if (teclaDetectada != null)
             {
@@ -30,6 +35,23 @@ public class TecladoRaycastInteractor : MonoBehaviour
                 if (InputManagerCustom.PressB())
                 {
                     teclaActual.Presionar();
+                }
+
+                return;
+            }
+
+            // ========================================
+            // DETECTAR BOTONES OPCIONES
+            // ========================================
+
+            BotonPanelOpciones opcion =
+                hit.collider.GetComponent<BotonPanelOpciones>();
+
+            if (opcion != null)
+            {
+                if (InputManagerCustom.PressB())
+                {
+                    opcion.Presionar();
                 }
 
                 return;

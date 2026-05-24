@@ -625,8 +625,13 @@ public class Selected : MonoBehaviour
         {
             if (renderersActuales[i] != null && renderersActuales[i].material != null)
             {
-                coloresOriginales[i] = renderersActuales[i].material.color;
-                renderersActuales[i].material.color = colorSeleccion;
+                Material mat = renderersActuales[i].material;
+
+                if (mat.HasProperty("_Color"))
+                {
+                    coloresOriginales[i] = mat.color;
+                    mat.color = colorSeleccion;
+                }
             }
         }
     }
@@ -639,7 +644,12 @@ public class Selected : MonoBehaviour
             {
                 if (renderersActuales[i] != null && renderersActuales[i].material != null)
                 {
-                    renderersActuales[i].material.color = coloresOriginales[i];
+                    Material mat = renderersActuales[i].material;
+
+                    if (mat.HasProperty("_Color"))
+                    {
+                        mat.color = coloresOriginales[i];
+                    }
                 }
             }
         }

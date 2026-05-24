@@ -3,11 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class Tecla : MonoBehaviour
 {
+    [Header("Configuración")]
     [SerializeField] private string letra;
+
+    [Header("Opciones 3D")]
+    [SerializeField] private GameObject opcionJugar;
+    [SerializeField] private GameObject opcionAjustes;
 
     private Renderer rend;
     private Color colorOriginal;
-    private SceneTransitionManager transitionManager;
 
     void Start()
     {
@@ -18,15 +22,89 @@ public class Tecla : MonoBehaviour
             colorOriginal = rend.material.color;
         }
 
-        // Obtener el SceneTransitionManager
-        transitionManager = FindFirstObjectByType<SceneTransitionManager>();
-        if (transitionManager == null)
-        {
-            Debug.LogWarning("No se encontró SceneTransitionManager. Se creará uno automáticamente.");
-            GameObject managerGO = new GameObject("SceneTransitionManager");
-            transitionManager = managerGO.AddComponent<SceneTransitionManager>();
-        }
+        // Ocultar opciones al iniciar
+        if (opcionJugar != null)
+            opcionJugar.SetActive(false);
+
+        if (opcionAjustes != null)
+            opcionAjustes.SetActive(false);
     }
+
+    public void Presionar()
+    {
+        Debug.Log("Tecla presionada: " + letra);
+
+        EscrituraPapel manager = FindObjectOfType<EscrituraPapel>();
+
+        if (manager == null)
+        {
+            Debug.LogWarning("No se encontró EscrituraPapel");
+            return;
+        }
+
+        // ========================================
+        // BORRAR
+        // ========================================
+
+        if (letra == "BORRAR")
+        {
+            manager.NuevaHoja();
+
+            if (rend != null)
+                rend.material.color = Color.red;
+
+            return;
+        }
+
+        // ========================================
+        // ENVIAR
+        // ========================================
+
+        if (letra == "ENVIAR")
+        {
+            string texto = manager.ObtenerTexto().ToUpper();
+
+            if (texto == "JUGAR")
+            {
+                SceneManager.LoadScene("EscenaJuego");
+            }
+            else if (texto == "AJUSTES")
+            {
+                Debug.Log("Abrir ajustes");
+            }
+            else
+            {
+                Debug.Log("Palabra no válida");
+            }
+
+            return;
+        }
+
+        // ========================================
+        // OPCIONES
+        // ========================================
+
+        if (letra == "OPCIONES")
+        {
+            if (opcionJugar != null)
+                opcionJugar.SetActive(true);
+
+            if (opcionAjustes != null)
+                opcionAjustes.SetActive(true);
+
+            return;
+        }
+
+        // ========================================
+        // TECLAS NORMALES
+        // ========================================
+
+        manager.Escribir(letra);
+    }
+
+    // ========================================
+    // HOVER
+    // ========================================
 
     public void Seleccionar()
     {
@@ -42,54 +120,5 @@ public class Tecla : MonoBehaviour
         {
             rend.material.color = colorOriginal;
         }
-    }
-
-    public void Presionar()
-    {
-        Debug.Log("Tecla presionada: " + letra);
-
-        EscrituraPapel manager = Object.FindFirstObjectByType<EscrituraPapel>();
-
-        if (manager == null)
-        {
-            Debug.LogWarning("No se encontró EscrituraPapel en la escena");
-            return;
-        }
-
-        if (letra == "BORRAR")
-        {
-            manager.NuevaHoja();
-            return;
-        }
-
-        if (letra == "ENVIAR")
-        {
-            string texto = manager.ObtenerTexto().ToUpper();
-
-            if (texto == "JUGAR")
-            {
-                // Usar el SceneTransitionManager para cargar la siguiente escena
-                if (transitionManager != null)
-                {
-                    transitionManager.LoadNextScene();
-                }
-                else
-                {
-                    SceneManager.LoadScene("Escena_VideoIntro");
-                }
-            }
-            else if (texto == "AJUSTES")
-            {
-                Debug.Log("Abrir ajustes");
-            }
-            else
-            {
-                Debug.Log("Palabra no válida");
-            }
-
-            return;
-        }
-
-        manager.Escribir(letra);
     }
 }
