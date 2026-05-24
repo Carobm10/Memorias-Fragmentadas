@@ -5,7 +5,11 @@ public class RadioCoverTrigger : MonoBehaviour
 {
     [Header("Modo pilas")]
     public RadioAnimacionesSimple radioAnimaciones;
+
     public bool usarModoPilas = false;
+
+    [Header("Cerrar tapa")]
+    public bool usarCerrarTapa = false;
 
     [Header("Prompt")]
     public GameObject promptPanel;
@@ -30,8 +34,28 @@ public class RadioCoverTrigger : MonoBehaviour
     {
         if (tapaAbierta) return;
 
+        // ======================================================
+        // SOLO permite cerrar tapa cuando ya puede cerrarse
+        // ======================================================
+
+        if (usarCerrarTapa)
+        {
+            if (radioAnimaciones == null) return;
+
+            if (!radioAnimaciones.PuedeCerrarTapa())
+                return;
+        }
+
+        // ======================================================
+        // HIGHLIGHT VERDE
+        // ======================================================
+
         if (tapaRenderer != null)
             tapaRenderer.material.color = colorSeleccion;
+
+        // ======================================================
+        // PROMPT
+        // ======================================================
 
         if (promptPanel != null)
             promptPanel.SetActive(true);
@@ -39,13 +63,29 @@ public class RadioCoverTrigger : MonoBehaviour
         if (promptText != null)
         {
             if (usarModoPilas)
+            {
                 promptText.text = "Presiona B para poner las pilas";
+            }
+            else if (usarCerrarTapa)
+            {
+                promptText.text = "Presiona B para cerrar la tapa";
+            }
             else
+            {
                 promptText.text = "Presiona B para abrir la tapita";
+            }
         }
+
+        // ======================================================
+        // INPUT
+        // ======================================================
 
         if (InputManagerCustom.PressB())
         {
+            // ==========================================
+            // ABRIR TAPA PARA PILAS
+            // ==========================================
+
             if (usarModoPilas)
             {
                 if (radioAnimaciones != null)
@@ -54,6 +94,23 @@ public class RadioCoverTrigger : MonoBehaviour
                 tapaAbierta = true;
                 return;
             }
+
+            // ==========================================
+            // CERRAR TAPA
+            // ==========================================
+
+            if (usarCerrarTapa)
+            {
+                if (radioAnimaciones != null)
+                    radioAnimaciones.CerrarTapaDesdeTrigger();
+
+                tapaAbierta = true;
+                return;
+            }
+
+            // ==========================================
+            // TAPA NORMAL
+            // ==========================================
 
             tapaAbierta = true;
         }

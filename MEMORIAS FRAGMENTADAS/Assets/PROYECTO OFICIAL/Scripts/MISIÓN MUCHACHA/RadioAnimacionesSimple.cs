@@ -72,7 +72,8 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
     [Header("Animación tapa")]
     public string nombreAnimacionAbrir = "AbrirTapa";
-
+    private bool puedeCerrarTapa = false;
+    private bool tapaCerrada = false;
     private bool mirandoRadio = false;
     private bool secuenciaIniciada = false;
     private bool esperandoSalir = false;
@@ -170,6 +171,24 @@ public class RadioAnimacionesSimple : MonoBehaviour
         if (modoInsertarPilas && pila2Puesta)
         {
             MostrarPrompt("Segunda pila puesta");
+            return;
+        }
+
+        // ======================================================
+        // 5. Después de poner la tercera pila: cerrar tapa
+        // ======================================================
+        if (modoInsertarPilas && pila3Puesta && puedeCerrarTapa && !tapaCerrada && !animandoPila)
+        {
+            MostrarPrompt("Presiona B para cerrar la tapa");
+
+            if (tapaRenderer != null)
+                tapaRenderer.material.color = colorTapaSeleccionada;
+
+            if (InputManagerCustom.PressB())
+            {
+                StartCoroutine(AnimarCerrarTapa());
+            }
+
             return;
         }
     }
@@ -293,9 +312,9 @@ public class RadioAnimacionesSimple : MonoBehaviour
         pilaActual = 2;
         animandoPila = false;
 
-        MostrarPrompt("Segunda pila puesta");
+        MostrarPrompt("Presiona B para poner la tercera pila");
 
-        Debug.Log("RADIO PILAS: Segunda pila quedó puesta.");
+        Debug.Log("RADIO PILAS: Segunda pila quedó puesta. Ya puede ponerse la tercera.");
     }
 
     IEnumerator AnimarTerceraPila()
@@ -339,10 +358,65 @@ public class RadioAnimacionesSimple : MonoBehaviour
         pila3Puesta = true;
         pilaActual = 3;
         animandoPila = false;
+        puedeCerrarTapa = true;
 
-        MostrarPrompt("Tercera pila puesta");
+        MostrarPrompt("Presiona B para cerrar la tapa");
 
-        Debug.Log("RADIO PILAS: Tercera pila quedó puesta.");
+        Debug.Log("RADIO PILAS: Tercera pila puesta. Ya puede cerrar la tapa."); 
+    }
+
+    IEnumerator AnimarCerrarTapa()
+    {
+        animandoPila = true;
+        puedeCerrarTapa = false;
+        OcultarPrompt();
+
+        Debug.Log("RADIO PILAS: Cerrando tapa.");
+
+        if (tapaRenderer != null)
+            tapaRenderer.material.color = colorOriginalTapa;
+
+        // Apagamos el estado anterior.
+        if (terceraPila != null)
+            terceraPila.SetActive(false);
+
+        // Activamos la animación de cerrar tapa.
+        if (cerrarTapa != null)
+            cerrarTapa.SetActive(true);
+
+        Animator animCerrar = null;
+
+        if (cerrarTapa != null)
+            animCerrar = cerrarTapa.GetComponent<Animator>();
+
+        if (animCerrar != null)
+        {
+            animCerrar.enabled = true;
+            animCerrar.applyRootMotion = false;
+            animCerrar.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            animCerrar.speed = velocidadAnimacionPilas;
+
+            animCerrar.Rebind();
+            animCerrar.Update(0f);
+
+            // IMPORTANTE: cambia este nombre si tu estado naranja se llama diferente.
+            animCerrar.Play("CerrarTapa", 0, 0f);
+
+            Debug.Log("RADIO PILAS: Animación CerrarTapa reproducida.");
+        }
+        else
+        {
+            Debug.LogError("RADIO PILAS ERROR: cerrarTapa no tiene Animator o no está asignado.");
+        }
+
+        yield return new WaitForSeconds(tiempoAnimacionPila);
+
+        tapaCerrada = true;
+        animandoPila = false;
+
+        MostrarPrompt("Tapa cerrada");
+
+        Debug.Log("RADIO PILAS: Tapa cerrada correctamente.");
     }
 
     IEnumerator SecuenciaRadio()
@@ -582,5 +656,18 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
         if (numeroPila == 3 && PuedePonerPila(3))
             StartCoroutine(AnimarTerceraPila());
+    }
+
+    public bool PuedeCerrarTapa()
+    {
+        return modoInsertarPilas && pila3Puesta && puedeCerrarTapa && !tapaCerrada && !animandoPila;
+    }
+
+    public void CerrarTapaDesdeTrigger()
+    {
+        if (PuedeCerrarTapa())
+        {
+            StartCoroutine(AnimarCerrarTapa());
+        }
     }
 }

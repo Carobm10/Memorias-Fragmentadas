@@ -4907,6 +4907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RadioCoverTrigger
   radioAnimaciones: {fileID: 0}
   usarModoPilas: 0
+  usarCerrarTapa: 0
   promptPanel: {fileID: 1396128308}
   promptText: {fileID: 616668808}
   tapaRenderer: {fileID: 0}
@@ -5127,6 +5128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RadioCoverTrigger
   radioAnimaciones: {fileID: 1121768713}
   usarModoPilas: 1
+  usarCerrarTapa: 0
   promptPanel: {fileID: 1396128308}
   promptText: {fileID: 616668808}
   tapaRenderer: {fileID: 349918036}
@@ -14118,7 +14120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1071046920744608908, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
       propertyPath: m_Name
@@ -14127,6 +14129,10 @@ PrefabInstance:
     - target: {fileID: 1616966523525065001, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -2.9098501
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973684867353484271, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2623654399569045751, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
       propertyPath: m_Name
@@ -14171,6 +14177,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1647789318}
+    - targetCorrespondingSourceObject: {fileID: 1973684867353484271, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2107590665}
+    - targetCorrespondingSourceObject: {fileID: 1973684867353484271, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2107590666}
   m_SourcePrefab: {fileID: 100100000, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
 --- !u!4 &876253160 stripped
 Transform:
@@ -17548,7 +17560,7 @@ MonoBehaviour:
   radioAbiertoConDosPilas: {fileID: 0}
   radioAbiertoConUnaPila: {fileID: 0}
   radioAbiertoSinPilas: {fileID: 183834232}
-  tapaCerrarMusica: {fileID: 1143180144}
+  tapaCerrarMusica: {fileID: 0}
   radioNormalFinal: {fileID: 1121768705}
   primeraPilaAnimacion: {fileID: 1456612326}
   radioDesbloqueada: 0
@@ -17778,7 +17790,7 @@ Animator:
   m_GameObject: {fileID: 1143180144}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 48c63559f9d7c4a45b8231b30024549c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 52ed13dc09472374caf1d5938cfed0bf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -28661,6 +28673,52 @@ MonoBehaviour:
   mouseRotationSpeed: 5
   inspectScale: 1
   showDebug: 1
+--- !u!1 &2107590661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1973684867353484271, guid: 1efc1f24716c9ad45b943e33b9499040, type: 3}
+  m_PrefabInstance: {fileID: 876253159}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2107590665
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107590661}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.009999424, y: 0.012494451, z: 0.018839614}
+  m_Center: {x: 0.0049964925, y: -0.0000000010464173, z: 0.009419687}
+--- !u!114 &2107590666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107590661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e044aa397881b64384e9972509dbe57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RadioCoverTrigger
+  radioAnimaciones: {fileID: 0}
+  usarModoPilas: 0
+  usarCerrarTapa: 0
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 0}
+  tapaRenderer: {fileID: 0}
+  colorSeleccion: {r: 0.1, g: 1, b: 0.25, a: 1}
+  tapaAbierta: 0
 --- !u!114 &2107967976
 MonoBehaviour:
   m_ObjectHideFlags: 0
