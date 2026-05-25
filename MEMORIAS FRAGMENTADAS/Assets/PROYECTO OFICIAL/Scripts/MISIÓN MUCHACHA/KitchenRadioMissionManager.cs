@@ -2,24 +2,27 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
+/// <summary>
+/// KITCHEN RADIO MISSION MANAGER
+/// Controla el inicio narrativo de la misión de la cocina:
+/// 1. Rosa muestra el prompt de misión.
+/// 2. El jugador presiona A.
+/// 3. Rosa pide poner música.
+/// 4. Se desbloquea la radio.
+/// 
+/// IMPORTANTE:
+/// Este script NO maneja animaciones de radio.
+/// Eso lo maneja RadioAnimacionesSimple.
+/// </summary>
 public class KitchenRadioMissionManager : MonoBehaviour
 {
-    [Header("Radio animaciones simple")]
-    public RadioAnimacionesSimple radioAnimacionesSimple;
-    [Header("UI diálogo NPC")]
-    public GameObject dialoguePanel;
-    public TMPro.TMP_Text npcNameText;
-    [Header("Datos NPC")]
-    public string npcDisplayName = "Rosa [Servicio]";
     public enum MissionState
     {
         NotStarted,
         Started,
         NeedCheckRadio,
-        RadioOpenedNoBatteries,
         NeedFindBatteries,
         HasBatteries,
-        InstallingBatteries,
         BatteriesInstalled,
         Completed
     }
@@ -27,35 +30,28 @@ public class KitchenRadioMissionManager : MonoBehaviour
     [Header("Estado")]
     public MissionState currentState = MissionState.NotStarted;
 
-    [Header("UI existente")]
+    [Header("Radio principal")]
+    public RadioAnimacionesSimple radioAnimacionesSimple;
+
+    [Header("UI misión")]
     public GameObject missionPromptPanel;
     public TMP_Text missionPromptText;
-    public TMP_Text dialogueText;
 
+    [Header("UI diálogo")]
+    public GameObject dialoguePanel;
+    public TMP_Text npcNameText;
+    public TMP_Text dialogueText;
+    public string npcDisplayName = "Rosa";
+
+    [Header("UI notificación opcional")]
     public GameObject notificationPanel;
     public TMP_Text notificationText;
-
-    [Header("Radio")]
-    public RadioMissionInteractable radio;
-
-    [Header("Pilas")]
-    public GameObject batteriesInDrawer;
-    public GameObject batteriesVisualNearRadio;
-
-    [Header("Audio opcional")]
-    public AudioSource radioAudioSource;
-    public AudioClip[] radioChannels;
-
-    private int currentChannelIndex = 0;
 
     void Start()
     {
         HideMissionPrompt();
         HideDialogue();
         HideNotification();
-
-        if (batteriesVisualNearRadio != null)
-            batteriesVisualNearRadio.SetActive(false);
     }
 
     public void ShowMissionPrompt()
@@ -66,7 +62,7 @@ public class KitchenRadioMissionManager : MonoBehaviour
             missionPromptPanel.SetActive(true);
 
         if (missionPromptText != null)
-            missionPromptText.text = "Presiona A para misión";
+            missionPromptText.text = "Presiona A para hablar con Rosa";
     }
 
     public void HideMissionPrompt()
@@ -93,7 +89,6 @@ public class KitchenRadioMissionManager : MonoBehaviour
         HideDialogue();
 
         currentState = MissionState.NeedCheckRadio;
-
         ShowNotification("Busca la radio en la cocina.");
 
         if (radioAnimacionesSimple != null)
@@ -102,131 +97,71 @@ public class KitchenRadioMissionManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No asignaste RadioAnimacionesSimple en el KitchenRadioMissionManager.");
+            Debug.LogError("KITCHEN RADIO: Falta asignar RadioAnimacionesSimple en el Inspector.");
         }
-    }
-
-    public void OnRadioBackCoverOpened()
-    {
-        if (currentState != MissionState.NeedCheckRadio) return;
-
-        currentState = MissionState.RadioOpenedNoBatteries;
-
-        StartCoroutine(NoBatteriesDialogue());
-    }
-
-    IEnumerator NoBatteriesDialogue()
-    {
-        ShowDialogue("La radio no tiene pilas... creo que las pilas están en el cajón.");
-        yield return new WaitForSeconds(4f);
-
-        HideDialogue();
-
-        currentState = MissionState.NeedFindBatteries;
-
-        ShowNotification("Busca las pilas en el cajón.");
     }
 
     public void PickBatteries()
     {
-        if (currentState != MissionState.NeedFindBatteries) return;
-
         currentState = MissionState.HasBatteries;
-
-        if (batteriesInDrawer != null)
-            batteriesInDrawer.SetActive(false);
-
-        if (batteriesVisualNearRadio != null)
-            batteriesVisualNearRadio.SetActive(true);
-
         ShowNotification("Has cogido las pilas. Vuelve a la radio.");
     }
 
     public bool PlayerHasBatteries()
     {
-        return currentState == MissionState.HasBatteries || 
-               currentState == MissionState.InstallingBatteries ||
+        return currentState == MissionState.HasBatteries ||
                currentState == MissionState.BatteriesInstalled ||
                currentState == MissionState.Completed;
-    }
-
-    public void StartInstallingBatteries()
-    {
-        if (currentState == MissionState.HasBatteries)
-            currentState = MissionState.InstallingBatteries;
     }
 
     public void BatteriesInstalled()
     {
         currentState = MissionState.BatteriesInstalled;
-        ShowNotification("Las pilas están puestas. Ahora puedes prender la radio.");
+        ShowNotification("Las pilas están puestas.");
     }
 
     public bool CanUseRadio()
     {
-        return currentState == MissionState.BatteriesInstalled || currentState == MissionState.Completed;
+        return currentState == MissionState.BatteriesInstalled ||
+               currentState == MissionState.Completed;
     }
 
-    public void ChangeRadioChannel()
+    public void CompleteMission()
     {
-        if (!CanUseRadio()) return;
-
         currentState = MissionState.Completed;
-
-        if (radioAudioSource == null || radioChannels == null || radioChannels.Length == 0)
-        {
-            ShowNotification("La radio está encendida.");
-            return;
-        }
-
-        currentChannelIndex++;
-
-        if (currentChannelIndex >= radioChannels.Length)
-            currentChannelIndex = 0;
-
-        radioAudioSource.clip = radioChannels[currentChannelIndex];
-        radioAudioSource.Play();
-
-        ShowNotification("Cambiando canal...");
+        ShowNotification("La radio ya está funcionando.");
     }
 
-   public void ShowDialogue(string message)
+    void ShowDialogue(string text)
     {
         if (dialoguePanel != null)
             dialoguePanel.SetActive(true);
 
         if (npcNameText != null)
-        npcNameText.text = npcDisplayName;
+            npcNameText.text = npcDisplayName;
 
         if (dialogueText != null)
-            dialogueText.text = message;
+            dialogueText.text = text;
     }
 
-    public void HideDialogue()
+    void HideDialogue()
     {
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
     }
 
-    public void ShowNotification(string message)
-    {
-        StartCoroutine(NotificationRoutine(message));
-    }
-
-    IEnumerator NotificationRoutine(string message)
+    void ShowNotification(string text)
     {
         if (notificationPanel != null)
             notificationPanel.SetActive(true);
 
         if (notificationText != null)
-            notificationText.text = message;
+            notificationText.text = text;
 
-        yield return new WaitForSeconds(5f);
-
-        HideNotification();
+        Debug.Log("KITCHEN RADIO: " + text);
     }
 
-    public void HideNotification()
+    void HideNotification()
     {
         if (notificationPanel != null)
             notificationPanel.SetActive(false);

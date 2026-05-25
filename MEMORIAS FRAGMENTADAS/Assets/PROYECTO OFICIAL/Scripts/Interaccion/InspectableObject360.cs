@@ -90,18 +90,6 @@ public class InspectableObject360 : MonoBehaviour
         Debug.Log("===== DEBUG COMPONENTES DEL CLON 360 =====");
         Debug.Log("Clon creado: " + currentClone.name);
 
-        Radio360BackDetector detector = currentClone.GetComponentInChildren<Radio360BackDetector>(true);
-
-        if (detector != null)
-        {
-            Debug.Log("SÍ tiene Radio360BackDetector en: " + detector.gameObject.name);
-            Debug.Log("Detector activo: " + detector.enabled);
-            Debug.Log("GameObject detector activo: " + detector.gameObject.activeSelf);
-        }
-        else
-        {
-            Debug.LogError("NO tiene Radio360BackDetector dentro del clon.");
-        }
 
         Animator[] animators = currentClone.GetComponentsInChildren<Animator>(true);
 

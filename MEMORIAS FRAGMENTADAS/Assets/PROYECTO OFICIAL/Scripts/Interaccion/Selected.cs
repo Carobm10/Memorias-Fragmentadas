@@ -1,101 +1,68 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// SELECTED.CS
-/// Script principal de selección por mirada/raycast.
+/// SELECTED.CS LIMPIO
 /// Va en la Main Camera.
 /// 
-/// Este script detecta objetos en la capa "Raycast Detect" y decide qué interacción ejecutar:
-/// - NPC normal
-/// - NPC de misión de la muchacha del servicio
-/// - Teléfono
-/// - Radio
+/// Este script lanza un raycast desde la cámara y detecta objetos en:
+/// - Layer "Raycast Detect"
+/// - Layer "PickupItem"
+///
+/// Mantiene:
+/// - Muchacha/Rosa
+/// - Radio actual de la misión
 /// - Tapa de radio
 /// - Pilas del cajón
-/// - Pilas para insertar en radio
-/// - Prendas del clóset
-/// - Misión del clóset
-/// - Puertas
-/// - Cajones
-/// - Objetos 360
-/// - Objetos simples
+/// - Pilas de inserción
+/// - Fotos/video
+/// - Teléfono
+/// - Puertas/cajones/objetos mediante SendMessage seguro
+///
+/// Elimina sistemas viejos de radio:
+/// - RadioBackCover
+/// - RadioBatteryInstaller
+/// - RadioBatteryTrigger
+/// - RadioMissionInteractable
+/// - RadioFinalUse
 /// </summary>
 public class Selected : MonoBehaviour
 {
-    // =========================
-    // ÚLTIMOS OBJETOS MIRADOS
-    // =========================
-
-    private LogicaNPC ultimoNPCMirado;
-    private RadioFinalUse ultimaRadioFinalMirada;
-    private PhoneMissionController ultimoTelefonoMirado;
-    private ServicioNPCMission ultimaMuchachaMirada;
-    private PhotoVideoInteractable ultimaFotoVideoMirada;
-    private RadioMissionInteractable ultimaRadioMirada;
-    private RadioBackCover ultimaTapaRadioMirada;
-    private BatteryPickup ultimasPilasPickupMiradas;
-    private RadioBatteryInstaller ultimaPilaInstallerMirada;
-    private RadioBatteryTrigger ultimaPilaRadioMirada;
-    private RadioCoverTrigger ultimaTapaRadioTriggerMirada;
-    private RadioAnimacionesSimple ultimaRadioAnimacionSimpleMirada;
-    private BatteryPickup pilaReciente;
-    private float tiempoUltimaPila = -10f;
-    
-    public float margenTiempoPila = 1f;
-
-    // =========================
-    // PUNTERO 3D
-    // =========================
-    //[Header("Sistema de selección")]
-    //public Selected selectedRaycast;
-
-    [Header("Puntero 3D")]
-    public Pointer3DController pointer3D;
-
-    // =========================
-    // RAYCAST
-    // =========================
-
     [Header("Raycast")]
     public float distancia = 3f;
     private LayerMask mask;
 
-    // =========================
-    // PROMPTS / CANVASES
-    // =========================
+    [Header("Puntero 3D")]
+    public Pointer3DController pointer3D;
 
-    [Header("Prompts")]
+    [Header("Prompts generales")]
     public GameObject TextDetect;
     public GameObject DoorPromptPanel;
     public GameObject MissionPromptPanel;
     public GameObject ClothingPromptPanel;
-    public static bool bloquearPromptCajones = false;
 
-    // =========================
-    // MANAGER MISIÓN ARMARIO
-    // =========================
-
-    [Header("Manager de canvases")]
+    [Header("Manager de UI armario")]
     public ClosetCanvasManager closetCanvasManager;
 
-    // =========================
-    // HIGHLIGHT
-    // =========================
+    [Header("Color selección")]
+    public Color colorSeleccion = new Color(0.1f, 1f, 0.25f, 1f);
 
     private GameObject ultimoReconocido;
     private Renderer[] renderersActuales;
     private Color[] coloresOriginales;
 
-    [Header("Color de selección")]
-    public Color colorSeleccion = new Color(0.1f, 1f, 0.25f, 1f);
-
-    // =========================
-    // INICIO
-    // =========================
+    // Últimos objetos mirados
+    private ServicioNPCMission ultimaMuchachaMirada;
+    private RadioKnobInteractable ultimaPerillaMirada;
+    private PhotoVideoInteractable ultimaFotoVideoMirada;
+    private RadioAnimacionesSimple ultimaRadioMirada;
+    private RadioCoverTrigger ultimaTapaMirada;
+    private BatteryPickup ultimasPilasMiradas;
+    private RadioBatteryInsertTrigger ultimaPilaInsertMirada;
+    private GameObject ultimoObjetoConSendMessage;
 
     void Awake()
     {
-        ApagarPrompts();
+        ApagarTodosLosPrompts();
     }
 
     void Start()
@@ -104,17 +71,11 @@ public class Selected : MonoBehaviour
         ApagarTodosLosPrompts();
     }
 
-    // =========================
-    // UPDATE PRINCIPAL
-    // =========================
-
     void Update()
     {
-        // Si hay UI del armario abierta, no dejamos seleccionar nada del mundo.
         if (closetCanvasManager != null && closetCanvasManager.uiAbierta)
         {
             LimpiarMiradas();
-            ApagarTodosLosPrompts();
             Deselect();
 
             if (pointer3D != null)
@@ -125,496 +86,175 @@ public class Selected : MonoBehaviour
 
         RaycastHit hit;
 
-        // Lanzamos raycast desde la cámara hacia adelante.
         if (Physics.Raycast(transform.position, transform.forward, out hit, distancia, mask))
         {
             if (pointer3D != null)
                 pointer3D.SetDetected(true);
 
             GameObject objetoDetectado = hit.collider.gameObject;
-            RadioCoverTrigger debugTapa = hit.collider.GetComponentInParent<RadioCoverTrigger>();
-            RadioAnimacionesSimple debugRadio = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
 
-            Debug.Log(
-                "RAYCAST EXACTO => " +
-                "Collider: " + hit.collider.name +
-                " | Objeto: " + hit.collider.gameObject.name +
-                " | Padre: " + hit.collider.transform.parent?.name +
-                " | Layer: " + LayerMask.LayerToName(hit.collider.gameObject.layer) +
-                " | Tiene RadioCoverTrigger: " + (debugTapa != null) +
-                " | Tiene RadioAnimacionesSimple: " + (debugRadio != null)
-            );
-
-            // Detectamos componentes generales.
-            LogicaNPC npc = hit.collider.GetComponentInParent<LogicaNPC>();
-            InspectableObject360 inspectable = hit.collider.GetComponentInParent<InspectableObject360>();
-
-            // Si el NPC existe pero no puede seleccionarse, limpiamos todo.
-            bool npcBloqueado = npc != null && !npc.PuedeSerSeleccionado();
-
-            if (npcBloqueado)
-            {
-                LimpiarMiradas();
-                Deselect();
-                ApagarTodosLosPrompts();
-
-                if (pointer3D != null)
-                    pointer3D.SetDetected(false);
-
-                return;
-            }
-
-            // Si un objeto 360 ya está en inspección, no seleccionamos nada más.
-            if (inspectable != null && inspectable.IsInspecting())
-            {
-                LimpiarMiradas();
-                Deselect();
-
-                if (pointer3D != null)
-                    pointer3D.SetDetected(false);
-
-                return;
-            }
-
-            // Aplicamos highlight si cambió el objeto mirado.
             if (ultimoReconocido != objetoDetectado)
             {
                 Deselect();
                 SelectedObject(hit.collider);
             }
-            // ======================================================
-            // FOTO / CUADRO INTERACTIVO CON VIDEO
-            // ======================================================
 
+            // 1. Muchacha / Rosa
+            ServicioNPCMission muchacha = hit.collider.GetComponentInParent<ServicioNPCMission>();
+            if (muchacha != null)
+            {
+                LimpiarTodoMenos(muchacha.gameObject);
+
+                if (ultimaMuchachaMirada != null && ultimaMuchachaMirada != muchacha)
+                    ultimaMuchachaMirada.SetLookingAtMe(false);
+
+                ultimaMuchachaMirada = muchacha;
+                muchacha.SetLookingAtMe(true);
+                return;
+            }
+
+            ApagarMuchacha();
+
+            // 2. Foto / video
             PhotoVideoInteractable fotoVideo = hit.collider.GetComponentInParent<PhotoVideoInteractable>();
-
             if (fotoVideo != null)
             {
-                LimpiarMiradas();
+                LimpiarTodoMenos(fotoVideo.gameObject);
 
                 if (ultimaFotoVideoMirada != null && ultimaFotoVideoMirada != fotoVideo)
                     ultimaFotoVideoMirada.DejarMirarFoto();
 
                 ultimaFotoVideoMirada = fotoVideo;
                 fotoVideo.MirarFoto();
-
                 return;
             }
-            else
+
+            ApagarFotoVideo();
+
+            // 3. Tapa de radio actual
+            RadioCoverTrigger tapa = hit.collider.GetComponentInParent<RadioCoverTrigger>();
+            if (tapa != null)
             {
-                if (ultimaFotoVideoMirada != null)
-                {
-                    ultimaFotoVideoMirada.DejarMirarFoto();
-                    ultimaFotoVideoMirada = null;
-                }
-            }
+                LimpiarTodoMenos(tapa.gameObject);
 
-            // ======================================================
-            // 1. MUCHACHA DEL SERVICIO - MISIÓN RADIO
-            // ======================================================
+                if (ultimaTapaMirada != null && ultimaTapaMirada != tapa)
+                    ultimaTapaMirada.DejarMirarTapa();
 
-            ServicioNPCMission muchacha = hit.collider.GetComponentInParent<ServicioNPCMission>();
-
-            if (muchacha != null)
-            {
-                LimpiarTodoMenosMuchacha(muchacha);
-
-                ultimaMuchachaMirada = muchacha;
-                ultimaMuchachaMirada.SetLookingAtMe(true);
-
-                //ApagarTodosLosPrompts();
+                ultimaTapaMirada = tapa;
+                tapa.MirarTapa();
                 return;
             }
-            else
+
+            ApagarTapa();
+
+            // 4. Pilas para insertar
+            RadioBatteryInsertTrigger pilaInsert = hit.collider.GetComponentInParent<RadioBatteryInsertTrigger>();
+            if (pilaInsert != null)
             {
-                ApagarMuchachaMirada();
-            }
+                LimpiarTodoMenos(pilaInsert.gameObject);
 
-            // ======================================================
-            // TAPA INTERACTIVA DE LA RADIO
-            // ======================================================
+                if (ultimaPilaInsertMirada != null && ultimaPilaInsertMirada != pilaInsert)
+                    ultimaPilaInsertMirada.DejarMirarPila();
 
-            RadioCoverTrigger tapaRadioTrigger = hit.collider.GetComponentInParent<RadioCoverTrigger>();
-
-            if (tapaRadioTrigger != null)
-            {
-                if (ultimaTapaRadioTriggerMirada != null && ultimaTapaRadioTriggerMirada != tapaRadioTrigger)
-                {
-                    ultimaTapaRadioTriggerMirada.DejarMirarTapa();
-                }
-
-                ultimaTapaRadioTriggerMirada = tapaRadioTrigger;
-                tapaRadioTrigger.MirarTapa();
-
+                ultimaPilaInsertMirada = pilaInsert;
+                pilaInsert.MirarPila();
                 return;
             }
-            else
+
+            ApagarPilaInsert();
+
+            // 5. Pilas del cajón
+            BatteryPickup pilas = hit.collider.GetComponentInParent<BatteryPickup>();
+            if (pilas != null)
             {
-                ApagarTapaRadioTriggerMirada();
-            }
+                LimpiarTodoMenos(pilas.gameObject);
 
-            RadioFinalUse radioFinal = hit.collider.GetComponentInParent<RadioFinalUse>();
+                if (ultimasPilasMiradas != null && ultimasPilasMiradas != pilas)
+                    ultimasPilasMiradas.StopLookingAtBatteries();
 
-            if (radioFinal != null)
-            {
-                if (ultimaRadioFinalMirada != null && ultimaRadioFinalMirada != radioFinal)
-                    ultimaRadioFinalMirada.DejarMirarRadioFinal();
-
-                ultimaRadioFinalMirada = radioFinal;
-                radioFinal.MirarRadioFinal();
-
+                ultimasPilasMiradas = pilas;
+                pilas.LookAtBatteries();
                 return;
             }
-            else
-            {
-                ApagarRadioFinalMirada();
-            }
 
-            // ======================================================
-            // 2. RADIO - MISIÓN RADIO
-            // ======================================================
+            ApagarPilasPickup();
 
-            RadioAnimacionesSimple radioAnimSimple = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
-
-            if (radioAnimSimple != null)
-            {
-                if (ultimaRadioAnimacionSimpleMirada != null && ultimaRadioAnimacionSimpleMirada != radioAnimSimple)
-                    ultimaRadioAnimacionSimpleMirada.DejarMirarRadio();
-
-                ultimaRadioAnimacionSimpleMirada = radioAnimSimple;
-                radioAnimSimple.MirarRadio();
-
-                return;
-            }
-            else
-            {
-                ApagarRadioAnimacionSimpleMirada();
-            }
-
-            RadioMissionInteractable radio = hit.collider.GetComponentInParent<RadioMissionInteractable>();
-
+            // 6. Radio principal de la misión
+            RadioAnimacionesSimple radio = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
             if (radio != null)
             {
-                LimpiarTodoMenosRadio(radio);
+                LimpiarTodoMenos(radio.gameObject);
+
+                if (ultimaRadioMirada != null && ultimaRadioMirada != radio)
+                    ultimaRadioMirada.DejarMirarRadio();
 
                 ultimaRadioMirada = radio;
-                ultimaRadioMirada.LookAtRadio();
-
-                return;
-            }
-            else
-            {
-                ApagarRadioMirada();
-            }
-
-            
-
-            // ======================================================
-            // 3. TAPA TRASERA DE LA RADIO
-            // ======================================================
-
-            RadioBackCover tapaRadio = hit.collider.GetComponentInParent<RadioBackCover>();
-
-            if (tapaRadio != null)
-            {
-                LimpiarTodoMenosTapaRadio(tapaRadio);
-
-                ultimaTapaRadioMirada = tapaRadio;
-                ultimaTapaRadioMirada.LookAtCover();
-
-                return;
-            }
-            else
-            {
-                ApagarTapaRadioMirada();
-            }
-
-            // ======================================================
-            // 4. PILAS DENTRO DEL CAJÓN
-            // ======================================================
-
-             BatteryPickup pilasPickup = hit.collider.GetComponentInParent<BatteryPickup>();
-
-            if (pilasPickup != null)
-            {
-                pilaReciente = pilasPickup;
-                tiempoUltimaPila = Time.time;
-
-                if (ultimasPilasPickupMiradas != null && ultimasPilasPickupMiradas != pilasPickup)
-                    ultimasPilasPickupMiradas.StopLookingAtBatteries();
-
-                ultimasPilasPickupMiradas = pilasPickup;
-                ultimasPilasPickupMiradas.LookAtBatteries();
-
-                return;
-            }
-            else
-            {
-                ApagarPilasPickupMiradas();
-            }
-
-            // ======================================================
-            // 5. PILAS PARA INSERTAR EN RADIO
-            // ======================================================
-
-            RadioBatteryInstaller pilaInstaller = hit.collider.GetComponentInParent<RadioBatteryInstaller>();
-
-            if (pilaInstaller != null)
-            {
-                LimpiarTodoMenosPilaInstaller(pilaInstaller);
-
-                ultimaPilaInstallerMirada = pilaInstaller;
-                ultimaPilaInstallerMirada.LookAtBattery();
-
-                return;
-            }
-            else
-            {
-                ApagarPilaInstallerMirada();
-            }
-
-            // ======================================================
-            // 6. NPC NORMAL
-            // ======================================================
-
-            if (npc != null)
-            {
-                LimpiarTodoMenosNPC(npc);
-
-                ultimoNPCMirado = npc;
-                ultimoNPCMirado.SetMirandoNPC(true);
-
-                ApagarTodosLosPrompts();
-                return;
-            }
-            else
-            {
-                ApagarNPCMirado();
-            }
-
-            // ======================================================
-            // 7. TELÉFONO
-            // ======================================================
-
-            PhoneMissionController phone = hit.collider.GetComponentInParent<PhoneMissionController>();
-
-            if (phone != null)
-            {
-                LimpiarTodoMenosTelefono(phone);
-
-                ultimoTelefonoMirado = phone;
-                ultimoTelefonoMirado.SetMirandoTelefono(true);
-
-                return;
-            }
-            else
-            {
-                ApagarTelefonoMirado();
-            }
-
-            // ======================================================
-            // 8. PRENDAS DEL CLÓSET
-            // ======================================================
-
-            ClosetClothingItem clothing = hit.collider.GetComponentInParent<ClosetClothingItem>();
-
-            if (clothing != null)
-            {
-                MostrarSolo(ClothingPromptPanel);
-
-                ClosetMissionTrigger closetForClothing = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
-
-                if (InputManagerCustom.PressB())
-                {
-                    Debug.Log("Seleccionaste prenda con B: " + clothing.clothingName);
-
-                    if (closetCanvasManager != null)
-                    {
-                        closetCanvasManager.AbrirCanvas(
-                            clothing.clothingCanvas,
-                            clothing.isCorrect,
-                            closetForClothing
-                        );
-                    }
-
-                    return;
-                }
-
+                radio.MirarRadio();
                 return;
             }
 
-            // ======================================================
-            // 9. CLÓSET / MISIÓN ARMARIO
-            // ======================================================
+            ApagarRadio();
 
-            ClosetMissionTrigger closet = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
+            // 7. Perillas de radio
+            RadioKnobInteractable perilla = hit.collider.GetComponentInParent<RadioKnobInteractable>();
 
-            if (closet != null && !closet.missionStarted && !closet.missionCompleted)
+            if (perilla != null)
             {
-                MostrarSolo(MissionPromptPanel);
+                LimpiarTodoMenos(perilla.gameObject);
 
-                if (InputManagerCustom.PressA())
-                {
-                    Debug.Log("Iniciando misión del clóset con A");
-                    closet.StartClosetMission();
-                    return;
-                }
+                if (ultimaPerillaMirada != null && ultimaPerillaMirada != perilla)
+                    ultimaPerillaMirada.DejarMirarPerilla();
 
+                ultimaPerillaMirada = perilla;
+                perilla.MirarPerilla();
                 return;
             }
 
-            // ======================================================
-            // 10. PUERTAS
-            // ======================================================
+            ApagarPerilla();
 
-            DoorInteractable door = hit.collider.GetComponentInParent<DoorInteractable>();
+            // 7. Interacciones generales conservadas por SendMessage seguro
+            // Esto permite que puertas, cajones, objetos 360, ropa, teléfono, etc.
+            // sigan funcionando si tienen sus métodos propios.
+            GameObject root = hit.collider.transform.root.gameObject;
+            GameObject parent = hit.collider.GetComponentInParent<Transform>().gameObject;
 
-            if (door != null)
+            if (ultimoObjetoConSendMessage != null && ultimoObjetoConSendMessage != hit.collider.gameObject)
             {
-                MostrarSolo(DoorPromptPanel);
-
-                if (InputManagerCustom.PressB())
-                {
-                    Debug.Log("Abriendo/cerrando puerta con B: " + door.gameObject.name);
-                    door.ToggleDoor();
-                    return;
-                }
-
-                return;
-            }
-            // ========================================
-            // PILAS RADIO
-            // ========================================
-
-            RadioBatteryInsertTrigger pilaRadio =
-                hit.collider.GetComponentInParent<RadioBatteryInsertTrigger>();
-
-            if (pilaRadio != null)
-            {
-                pilaRadio.MirarPila();
-
-                return;
+                EnviarSalidaSegura(ultimoObjetoConSendMessage);
             }
 
-            // ======================================================
-            // 11. CAJONES
-            // ======================================================
+            ultimoObjetoConSendMessage = hit.collider.gameObject;
 
-             DrawerInteractable drawer = hit.collider.GetComponentInParent<DrawerInteractable>();
+            hit.collider.SendMessageUpwards("MirarPuerta", SendMessageOptions.DontRequireReceiver);
+            hit.collider.SendMessageUpwards("LookAtDoor", SendMessageOptions.DontRequireReceiver);
 
-            if (drawer != null)
-            {
-                if (pilaReciente != null && 
-                    Time.time - tiempoUltimaPila <= margenTiempoPila && 
-                    !pilaReciente.YaFueronTomadas())
-                {
-                    pilaReciente.LookAtBatteries();
-                    return;
-                }
+            hit.collider.SendMessageUpwards("MirarCajon", SendMessageOptions.DontRequireReceiver);
+            hit.collider.SendMessageUpwards("LookAtDrawer", SendMessageOptions.DontRequireReceiver);
 
-                MostrarSolo(DoorPromptPanel);
+            hit.collider.SendMessageUpwards("MirarObjeto", SendMessageOptions.DontRequireReceiver);
+            hit.collider.SendMessageUpwards("LookAtObject", SendMessageOptions.DontRequireReceiver);
 
-                if (InputManagerCustom.PressB())
-                {
-                    Debug.Log("Abriendo/cerrando cajón con B: " + drawer.gameObject.name);
-                    drawer.ToggleDrawer();
-                    return;
-                }
+            hit.collider.SendMessageUpwards("MirarTelefono", SendMessageOptions.DontRequireReceiver);
+            hit.collider.SendMessageUpwards("LookAtPhone", SendMessageOptions.DontRequireReceiver);
 
-                return;
-            }
-
-            
-
-            
-
-            // ======================================================
-            // 12. OBJETOS INSPECCIONABLES 360
-            // ======================================================
-
-            if (inspectable != null)
-            {
-                MostrarSolo(TextDetect);
-
-                if (InputManagerCustom.PressB())
-                {
-                    ApagarTodosLosPrompts();
-                    inspectable.StartInspection();
-                    Deselect();
-                    return;
-                }
-
-                return;
-            }
-            // ======================================================
-            // 13. PILAS INTERACTIVAS RADIO
-            // ======================================================
-
-            RadioBatteryInsertTrigger pilaInsertar =
-                hit.collider.GetComponentInParent<RadioBatteryInsertTrigger>();
-
-            if (pilaInsertar != null)
-            {
-                pilaInsertar.MirarPila();
-                return;
-            }
-            else
-            {
-                ApagarPilaRadioMirada();
-            }
-
-            // ======================================================
-            // 13. OBJETO INTERACTIVO SIMPLE
-            // ======================================================
-
-            ObjetoInteractivo objeto = hit.collider.GetComponentInParent<ObjetoInteractivo>();
-
-            if (objeto != null)
-            {
-                MostrarSolo(TextDetect);
-
-                if (InputManagerCustom.PressB())
-                {
-                    objeto.ActivarObjeto();
-                    return;
-                }
-
-                return;
-            }
-
-            // Si no es ningún objeto válido, limpiamos.
-            ApagarTodosLosPrompts();
+            hit.collider.SendMessageUpwards("MirarPrenda", SendMessageOptions.DontRequireReceiver);
+            hit.collider.SendMessageUpwards("LookAtClothing", SendMessageOptions.DontRequireReceiver);
         }
         else
         {
-            // Si el raycast no toca nada:
             LimpiarMiradas();
             Deselect();
-            ApagarTodosLosPrompts();
 
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
         }
     }
 
-    // ======================================================
-    // HIGHLIGHT DEL OBJETO MIRADO
-    // ======================================================
-
-    void SelectedObject(Collider col)
+    void SelectedObject(Collider collider)
     {
-        ultimoReconocido = col.gameObject;
+        ultimoReconocido = collider.gameObject;
 
-        HighlightGroup group = col.GetComponentInParent<HighlightGroup>();
-
-        if (group != null)
-        {
-            renderersActuales = group.GetComponentsInChildren<Renderer>();
-        }
-        else
-        {
-            renderersActuales = col.GetComponentsInChildren<Renderer>();
-        }
+        renderersActuales = collider.GetComponentsInChildren<Renderer>();
 
         if (renderersActuales == null || renderersActuales.Length == 0)
             return;
@@ -623,16 +263,10 @@ public class Selected : MonoBehaviour
 
         for (int i = 0; i < renderersActuales.Length; i++)
         {
-            if (renderersActuales[i] != null && renderersActuales[i].material != null)
-            {
-                Material mat = renderersActuales[i].material;
+            if (renderersActuales[i] == null) continue;
 
-                if (mat.HasProperty("_Color"))
-                {
-                    coloresOriginales[i] = mat.color;
-                    mat.color = colorSeleccion;
-                }
-            }
+            coloresOriginales[i] = renderersActuales[i].material.color;
+            renderersActuales[i].material.color = colorSeleccion;
         }
     }
 
@@ -642,15 +276,10 @@ public class Selected : MonoBehaviour
         {
             for (int i = 0; i < renderersActuales.Length; i++)
             {
-                if (renderersActuales[i] != null && renderersActuales[i].material != null)
-                {
-                    Material mat = renderersActuales[i].material;
+                if (renderersActuales[i] == null) continue;
+                if (i >= coloresOriginales.Length) continue;
 
-                    if (mat.HasProperty("_Color"))
-                    {
-                        mat.color = coloresOriginales[i];
-                    }
-                }
+                renderersActuales[i].material.color = coloresOriginales[i];
             }
         }
 
@@ -659,21 +288,129 @@ public class Selected : MonoBehaviour
         ultimoReconocido = null;
     }
 
-    // ======================================================
-    // PROMPTS
-    // ======================================================
-
-    void MostrarSolo(GameObject panel)
+    void LimpiarMiradas()
     {
-        ApagarTodosLosPrompts();
+        ApagarMuchacha();
+        ApagarFotoVideo();
+        ApagarTapa();
+        ApagarPilaInsert();
+        ApagarPilasPickup();
+        ApagarRadio();
+        ApagarPerilla();
 
-        if (panel != null)
-            panel.SetActive(true);
+        if (ultimoObjetoConSendMessage != null)
+        {
+            EnviarSalidaSegura(ultimoObjetoConSendMessage);
+            ultimoObjetoConSendMessage = null;
+        }
+
+        ApagarTodosLosPrompts();
     }
 
-    void ApagarPrompts()
+    void LimpiarTodoMenos(GameObject objetoActivo)
     {
-        ApagarTodosLosPrompts();
+        if (ultimaMuchachaMirada != null && ultimaMuchachaMirada.gameObject != objetoActivo)
+            ApagarMuchacha();
+
+        if (ultimaFotoVideoMirada != null && ultimaFotoVideoMirada.gameObject != objetoActivo)
+            ApagarFotoVideo();
+
+        if (ultimaTapaMirada != null && ultimaTapaMirada.gameObject != objetoActivo)
+            ApagarTapa();
+
+        if (ultimaPilaInsertMirada != null && ultimaPilaInsertMirada.gameObject != objetoActivo)
+            ApagarPilaInsert();
+
+        if (ultimasPilasMiradas != null && ultimasPilasMiradas.gameObject != objetoActivo)
+            ApagarPilasPickup();
+
+        if (ultimaRadioMirada != null && ultimaRadioMirada.gameObject != objetoActivo)
+            ApagarRadio();
+        
+        if (ultimaPerillaMirada != null && ultimaPerillaMirada.gameObject != objetoActivo)
+            ApagarPerilla();
+    }
+
+    void ApagarMuchacha()
+    {
+        if (ultimaMuchachaMirada != null)
+        {
+            ultimaMuchachaMirada.SetLookingAtMe(false);
+            ultimaMuchachaMirada = null;
+        }
+    }
+
+    void ApagarFotoVideo()
+    {
+        if (ultimaFotoVideoMirada != null)
+        {
+            ultimaFotoVideoMirada.DejarMirarFoto();
+            ultimaFotoVideoMirada = null;
+        }
+    }
+
+    void ApagarTapa()
+    {
+        if (ultimaTapaMirada != null)
+        {
+            ultimaTapaMirada.DejarMirarTapa();
+            ultimaTapaMirada = null;
+        }
+    }
+
+    void ApagarPilaInsert()
+    {
+        if (ultimaPilaInsertMirada != null)
+        {
+            ultimaPilaInsertMirada.DejarMirarPila();
+            ultimaPilaInsertMirada = null;
+        }
+    }
+
+    void ApagarPilasPickup()
+    {
+        if (ultimasPilasMiradas != null)
+        {
+            ultimasPilasMiradas.StopLookingAtBatteries();
+            ultimasPilasMiradas = null;
+        }
+    }
+
+    void ApagarRadio()
+    {
+        if (ultimaRadioMirada != null)
+        {
+            ultimaRadioMirada.DejarMirarRadio();
+            ultimaRadioMirada = null;
+        }
+    }
+    void ApagarPerilla()
+    {
+        if (ultimaPerillaMirada != null)
+        {
+            ultimaPerillaMirada.DejarMirarPerilla();
+            ultimaPerillaMirada = null;
+        }
+    }
+
+    void EnviarSalidaSegura(GameObject obj)
+    {
+        if (obj == null) return;
+
+        obj.SendMessageUpwards("DejarMirarPuerta", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtDoor", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarCajon", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtDrawer", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarObjeto", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtObject", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarTelefono", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtPhone", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarPrenda", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtClothing", SendMessageOptions.DontRequireReceiver);
     }
 
     void ApagarTodosLosPrompts()
@@ -689,228 +426,5 @@ public class Selected : MonoBehaviour
 
         if (ClothingPromptPanel != null)
             ClothingPromptPanel.SetActive(false);
-    }
-
-    // ======================================================
-    // LIMPIEZA GENERAL DE MIRADAS
-    // ======================================================
-
-    void LimpiarMiradas()
-    {
-        ApagarNPCMirado();
-        ApagarTelefonoMirado();
-        ApagarMuchachaMirada();
-        ApagarRadioMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarPilaInstallerMirada();
-        ApagarPilaRadioMirada();
-        ApagarTapaRadioTriggerMirada();
-        ApagarRadioFinalMirada();
-        ApagarRadioAnimacionSimpleMirada();
-        if (ultimaFotoVideoMirada != null)
-        {
-            ultimaFotoVideoMirada.DejarMirarFoto();
-            ultimaFotoVideoMirada = null;
-        }
-    }
-
-    void ApagarNPCMirado()
-    {
-        if (ultimoNPCMirado != null)
-        {
-            ultimoNPCMirado.SetMirandoNPC(false);
-            ultimoNPCMirado = null;
-        }
-    }
-
-    void ApagarTelefonoMirado()
-    {
-        if (ultimoTelefonoMirado != null)
-        {
-            ultimoTelefonoMirado.SetMirandoTelefono(false);
-            ultimoTelefonoMirado = null;
-        }
-    }
-
-    void ApagarMuchachaMirada()
-    {
-        if (ultimaMuchachaMirada != null)
-        {
-            ultimaMuchachaMirada.SetLookingAtMe(false);
-            ultimaMuchachaMirada = null;
-        }
-    }
-
-    void ApagarRadioMirada()
-    {
-        if (ultimaRadioMirada != null)
-        {
-            ultimaRadioMirada.StopLookingAtRadio();
-            ultimaRadioMirada = null;
-        }
-    }
-
-    void ApagarTapaRadioMirada()
-    {
-        if (ultimaTapaRadioMirada != null)
-        {
-            ultimaTapaRadioMirada.StopLookingAtCover();
-            ultimaTapaRadioMirada = null;
-        }
-    }
-
-    void ApagarPilasPickupMiradas()
-    {
-        if (ultimasPilasPickupMiradas != null)
-        {
-            ultimasPilasPickupMiradas.StopLookingAtBatteries();
-            ultimasPilasPickupMiradas = null;
-        }
-    }
-
-    void ApagarPilaInstallerMirada()
-    {
-        if (ultimaPilaInstallerMirada != null)
-        {
-            ultimaPilaInstallerMirada.StopLookingAtBattery();
-            ultimaPilaInstallerMirada = null;
-        }
-    }
-
-    void ApagarPilaRadioMirada()
-    {
-        if (ultimaPilaRadioMirada != null)
-        {
-            ultimaPilaRadioMirada.DejarMirarPila();
-            ultimaPilaRadioMirada = null;
-        }
-    }
-
-    // ======================================================
-    // LIMPIEZAS ESPECÍFICAS
-    // Estas evitan que dos objetos crean que los estás mirando al mismo tiempo.
-    // ======================================================
-
-    void LimpiarTodoMenosMuchacha(ServicioNPCMission actual)
-    {
-        ApagarNPCMirado();
-        ApagarTelefonoMirado();
-        ApagarRadioMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarPilaInstallerMirada();
-        ApagarTapaRadioTriggerMirada();
-
-        if (ultimaMuchachaMirada != null && ultimaMuchachaMirada != actual)
-            ultimaMuchachaMirada.SetLookingAtMe(false);
-    }
-
-    void LimpiarTodoMenosRadio(RadioMissionInteractable actual)
-    {
-        ApagarNPCMirado();
-        ApagarTelefonoMirado();
-        ApagarMuchachaMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarPilaInstallerMirada();
-
-        if (ultimaRadioMirada != null && ultimaRadioMirada != actual)
-            ultimaRadioMirada.StopLookingAtRadio();
-    }
-
-    void LimpiarTodoMenosTapaRadio(RadioBackCover actual)
-    {
-        ApagarNPCMirado();
-        ApagarTelefonoMirado();
-        ApagarMuchachaMirada();
-        ApagarRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarPilaInstallerMirada();
-        ApagarTapaRadioTriggerMirada();
-
-        if (ultimaTapaRadioMirada != null && ultimaTapaRadioMirada != actual)
-            ultimaTapaRadioMirada.StopLookingAtCover();
-    }
-
-    void LimpiarTodoMenosPilasPickup(BatteryPickup actual)
-    {
-        ApagarNPCMirado();
-        ApagarTelefonoMirado();
-        ApagarMuchachaMirada();
-        ApagarRadioMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilaInstallerMirada();
-        ApagarTapaRadioTriggerMirada();
-
-        if (ultimasPilasPickupMiradas != null && ultimasPilasPickupMiradas != actual)
-            ultimasPilasPickupMiradas.StopLookingAtBatteries();
-    }
-
-    void LimpiarTodoMenosPilaInstaller(RadioBatteryInstaller actual)
-    {
-        ApagarNPCMirado();
-        ApagarTelefonoMirado();
-        ApagarMuchachaMirada();
-        ApagarRadioMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarTapaRadioTriggerMirada();
-
-        if (ultimaPilaInstallerMirada != null && ultimaPilaInstallerMirada != actual)
-            ultimaPilaInstallerMirada.StopLookingAtBattery();
-    }
-
-    void LimpiarTodoMenosNPC(LogicaNPC actual)
-    {
-        ApagarTelefonoMirado();
-        ApagarMuchachaMirada();
-        ApagarRadioMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarPilaInstallerMirada();
-        ApagarTapaRadioTriggerMirada();
-
-        if (ultimoNPCMirado != null && ultimoNPCMirado != actual)
-            ultimoNPCMirado.SetMirandoNPC(false);
-    }
-
-    void LimpiarTodoMenosTelefono(PhoneMissionController actual)
-    {
-        ApagarNPCMirado();
-        ApagarMuchachaMirada();
-        ApagarRadioMirada();
-        ApagarTapaRadioMirada();
-        ApagarPilasPickupMiradas();
-        ApagarPilaInstallerMirada();
-        ApagarTapaRadioTriggerMirada();
-
-        if (ultimoTelefonoMirado != null && ultimoTelefonoMirado != actual)
-            ultimoTelefonoMirado.SetMirandoTelefono(false);
-    }
-    void ApagarTapaRadioTriggerMirada()
-    {
-        if (ultimaTapaRadioTriggerMirada != null)
-        {
-            ultimaTapaRadioTriggerMirada.DejarMirarTapa();
-            ultimaTapaRadioTriggerMirada = null;
-        }
-    }
-    void ApagarRadioFinalMirada()
-    {
-        if (ultimaRadioFinalMirada != null)
-        {
-            ultimaRadioFinalMirada.DejarMirarRadioFinal();
-            ultimaRadioFinalMirada = null;
-        }
-    }
-
-    void ApagarRadioAnimacionSimpleMirada()
-    {
-        if (ultimaRadioAnimacionSimpleMirada != null)
-        {
-            ultimaRadioAnimacionSimpleMirada.DejarMirarRadio();
-            ultimaRadioAnimacionSimpleMirada = null;
-        }
     }
 }
