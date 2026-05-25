@@ -83,6 +83,63 @@ public class Selected : MonoBehaviour
                 Deselect();
                 SelectedObject(hit.collider);
             }
+            // ======================================================
+            // MISIÓN MAMÁ / MONEDERO
+            // ======================================================
+            WalletPickup wallet = hit.collider.GetComponentInParent<WalletPickup>();
+
+            if (wallet != null)
+            {
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                ApagarRosaFinal();
+                ApagarTelefono();
+                ApagarClosetMission();
+
+                MostrarPromptMision("Presiona B para tomar monedero");
+
+                if (InputManagerCustom.PressB())
+                {
+                    wallet.RecogerMonedero();
+                }
+
+                return;
+            }
+
+            // ======================================================
+            // MISIÓN MAMÁ / PUERTA PERIÓDICO
+            // ======================================================
+            NewspaperDoorTrigger puertaPeriodico = hit.collider.GetComponentInParent<NewspaperDoorTrigger>();
+
+            if (puertaPeriodico != null)
+            {
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                ApagarRosaFinal();
+                ApagarTelefono();
+                ApagarClosetMission();
+
+                MostrarPromptMision("Presiona B para salir por el periódico");
+
+                if (InputManagerCustom.PressB())
+                {
+                    puertaPeriodico.InteractuarPuertaPeriodico();
+                }
+
+                return;
+            }
 
             // ======================================================
             // PUERTAS
@@ -115,6 +172,35 @@ public class Selected : MonoBehaviour
                 {
                     cajon.ToggleDrawer();
                     Debug.Log("SELECTED: Cajón activado -> " + cajon.gameObject.name);
+                }
+
+                return;
+            }
+
+            // ======================================================
+            // MISIÓN MAMÁ / NPC MAMÁ
+            // ======================================================
+            MomMissionNPC momNPC = hit.collider.GetComponentInParent<MomMissionNPC>();
+
+            if (momNPC != null)
+            {
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                ApagarRosaFinal();
+                ApagarTelefono();
+                ApagarClosetMission();
+
+                MostrarPromptMision("Presiona A para hablar con mamá");
+
+                if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.JoystickButton10))
+                {
+                    momNPC.Interactuar();
                 }
 
                 return;
@@ -540,6 +626,7 @@ public class Selected : MonoBehaviour
         if (col.GetComponentInParent<BatteryPickup>() != null) return false;
         if (col.GetComponentInParent<RadioKnobInteractable>() != null) return false;
         if (col.GetComponentInParent<RadioAnimacionesSimple>() != null) return false;
+        if (col.GetComponentInParent<WalletPickup>() != null) return false;
 
         return true;
     }
