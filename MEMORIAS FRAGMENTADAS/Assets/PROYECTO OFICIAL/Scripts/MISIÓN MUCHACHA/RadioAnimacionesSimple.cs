@@ -45,6 +45,7 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
     [Header("Radio final para música")]
     public GameObject radioParaMusica;
+    public RadioCoverTrigger radioCoverTrigger;
 
     [Header("Tapita / highlight")]
     public Renderer tapaRenderer;
@@ -393,6 +394,13 @@ public class RadioAnimacionesSimple : MonoBehaviour
         if (radioParaMusica != null)
             radioParaMusica.SetActive(true);
 
+        if (radioCoverTrigger != null)
+        {
+            radioCoverTrigger.DejarMirarTapa();
+            radioCoverTrigger.enabled = false;
+            radioCoverTrigger.gameObject.SetActive(false);
+        }
+
         modoInsertarPilas = false;
         mirandoRadio = false;
         secuenciaIniciada = true;
@@ -467,6 +475,11 @@ public class RadioAnimacionesSimple : MonoBehaviour
             return;
 
         mirandoRadio = true;
+    }
+
+    public bool RadioFinalActivo
+    {
+        get { return tapaCerrada || (radioParaMusica != null && radioParaMusica.activeSelf); }
     }
 
     public void DejarMirarRadio()

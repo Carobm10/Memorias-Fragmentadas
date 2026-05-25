@@ -71,11 +71,13 @@ public class DrawerInteractable : MonoBehaviour
     private void Awake()
     {
         PrepararAudio();
+        CargarSonidosPredeterminados();
     }
 
     void Start()
     {
         PrepararAudio();
+        CargarSonidosPredeterminados();
         closedLocalPosition = transform.localPosition;
         openLocalPosition = closedLocalPosition + localOpenDirection.normalized * openDistance;
 

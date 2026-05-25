@@ -15,6 +15,11 @@ public class RadioMusicController : MonoBehaviour
     [Range(0f, 1f)]
     public float volumenActual = 0.6f;
 
+    [Header("Audio 3D")]
+    public AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
+    public float minDistance = 1f;
+    public float maxDistance = 8f;
+
     private int emisoraActual = -1;
 
     void Start()
@@ -23,6 +28,11 @@ public class RadioMusicController : MonoBehaviour
         {
             audioSource.volume = volumenActual;
             audioSource.loop = true;
+            audioSource.spatialBlend = 1f;
+            audioSource.dopplerLevel = 0f;
+            audioSource.rolloffMode = rolloffMode;
+            audioSource.minDistance = minDistance;
+            audioSource.maxDistance = maxDistance;
         }
     }
 

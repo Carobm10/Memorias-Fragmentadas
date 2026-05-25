@@ -34,6 +34,12 @@ public class RadioCoverTrigger : MonoBehaviour
     {
         if (tapaAbierta) return;
 
+        if (radioAnimaciones != null && radioAnimaciones.RadioFinalActivo)
+        {
+            DejarMirarTapa();
+            return;
+        }
+
         // ======================================================
         // SOLO permite cerrar tapa cuando ya puede cerrarse
         // ======================================================

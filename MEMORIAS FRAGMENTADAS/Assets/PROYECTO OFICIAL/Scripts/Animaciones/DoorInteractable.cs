@@ -25,8 +25,8 @@ using UnityEditor;
 /// </summary>
 public class DoorInteractable : MonoBehaviour
 {
-    private const string OpenDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaCerrandose.mp3";
-    private const string CloseDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaAbriendose.mp3";
+    private const string OpenDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaAbriendose.mp3";
+    private const string CloseDoorClipPath = "Assets/PROYECTO OFICIAL/Scripts/Audio/PuertaCerrandose.mp3";
 
     [Header("Configuración de apertura")]
     public bool startsOpen = false;
@@ -70,11 +70,13 @@ public class DoorInteractable : MonoBehaviour
     private void Awake()
     {
         PrepararAudio();
+        CargarSonidosPredeterminados();
     }
 
     void Start()
     {
         PrepararAudio();
+        CargarSonidosPredeterminados();
         closedRotation = transform.localRotation;
         openRotation = closedRotation * Quaternion.AngleAxis(openAngle, rotationAxis);
 

@@ -1,29 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
+using TMPro;
 
 /// <summary>
-/// SELECTED.CS LIMPIO
+/// SELECTED.CS
 /// Va en la Main Camera.
-/// 
-/// Este script lanza un raycast desde la cámara y detecta objetos en:
-/// - Layer "Raycast Detect"
-/// - Layer "PickupItem"
-///
-/// Mantiene:
-/// - Muchacha/Rosa
-/// - Radio actual de la misión
-/// - Tapa de radio
-/// - Pilas del cajón
-/// - Pilas de inserción
-/// - Fotos/video
-/// - Teléfono
-/// - Puertas/cajones/objetos mediante SendMessage seguro
-///
-/// Elimina sistemas viejos de radio:
-/// - RadioBackCover
-/// - RadioBatteryInstaller
-/// - RadioBatteryTrigger
-/// - RadioMissionInteractable
-/// - RadioFinalUse
+/// Detecta objetos con Raycast y llama las interacciones correspondientes.
 /// </summary>
 public class Selected : MonoBehaviour
 {
@@ -40,7 +21,7 @@ public class Selected : MonoBehaviour
     public GameObject MissionPromptPanel;
     public GameObject ClothingPromptPanel;
 
-    [Header("Manager de UI armario")]
+    [Header("Manager armario")]
     public ClosetCanvasManager closetCanvasManager;
 
     [Header("Color selección")]
@@ -49,26 +30,30 @@ public class Selected : MonoBehaviour
     private GameObject ultimoReconocido;
     private Renderer[] renderersActuales;
     private Color[] coloresOriginales;
+    private string[] propiedadesColorOriginal;
 
-    // Últimos objetos mirados
     private ServicioNPCMission ultimaMuchachaMirada;
-    private RadioKnobInteractable ultimaPerillaMirada;
+    private RosaFinalDialogue ultimaRosaFinalMirada;
     private PhotoVideoInteractable ultimaFotoVideoMirada;
     private RadioAnimacionesSimple ultimaRadioMirada;
     private RadioCoverTrigger ultimaTapaMirada;
     private BatteryPickup ultimasPilasMiradas;
     private RadioBatteryInsertTrigger ultimaPilaInsertMirada;
-    private GameObject ultimoObjetoConSendMessage;
+    private RadioKnobInteractable ultimaPerillaMirada;
+    private PhoneMissionController ultimaTelefonoMirada;
+    private ClosetMissionTrigger ultimaClosetMirada;
+
+    private GameObject ultimoGenericoMirado;
 
     void Awake()
     {
-        ApagarTodosLosPrompts();
+        ApagarPromptsIniciales();
     }
 
     void Start()
     {
         mask = LayerMask.GetMask("Raycast Detect", "PickupItem");
-        ApagarTodosLosPrompts();
+        ApagarPromptsIniciales();
     }
 
     void Update()
@@ -99,11 +84,78 @@ public class Selected : MonoBehaviour
                 SelectedObject(hit.collider);
             }
 
-            // 1. Muchacha / Rosa
+            // ======================================================
+            // PUERTAS
+            // ======================================================
+            DoorInteractable puerta = hit.collider.GetComponentInParent<DoorInteractable>();
+
+            if (puerta != null)
+            {
+                MostrarPromptPuertaOCajon(puerta.isOpen ? "Presiona B para cerrar puerta" : "Presiona B para abrir puerta");
+
+                if (InputManagerCustom.PressB())
+                {
+                    puerta.ToggleDoor();
+                    Debug.Log("SELECTED: Puerta activada -> " + puerta.gameObject.name);
+                }
+
+                return;
+            }
+
+            // ======================================================
+            // CAJONES
+            // ======================================================
+            DrawerInteractable cajon = hit.collider.GetComponentInParent<DrawerInteractable>();
+
+            if (cajon != null)
+            {
+                MostrarPromptPuertaOCajon(cajon.isOpen ? "Presiona B para cerrar cajón" : "Presiona B para abrir cajón");
+
+                if (InputManagerCustom.PressB())
+                {
+                    cajon.ToggleDrawer();
+                    Debug.Log("SELECTED: Cajón activado -> " + cajon.gameObject.name);
+                }
+
+                return;
+            }
+
+            // 1. ROSA FINAL
+            RosaFinalDialogue rosaFinal = hit.collider.GetComponentInParent<RosaFinalDialogue>();
+
+            if (rosaFinal != null && rosaFinal.dialogoDisponible)
+            {
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+
+                if (ultimaRosaFinalMirada != null && ultimaRosaFinalMirada != rosaFinal)
+                    ultimaRosaFinalMirada.SetLookingAtMe(false);
+
+                ultimaRosaFinalMirada = rosaFinal;
+                rosaFinal.SetLookingAtMe(true);
+                return;
+            }
+
+            ApagarRosaFinal();
+
+            // 2. ROSA MISIÓN INICIAL
             ServicioNPCMission muchacha = hit.collider.GetComponentInParent<ServicioNPCMission>();
+
             if (muchacha != null)
             {
-                LimpiarTodoMenos(muchacha.gameObject);
+                LimpiarGenerico();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
 
                 if (ultimaMuchachaMirada != null && ultimaMuchachaMirada != muchacha)
                     ultimaMuchachaMirada.SetLookingAtMe(false);
@@ -115,11 +167,17 @@ public class Selected : MonoBehaviour
 
             ApagarMuchacha();
 
-            // 2. Foto / video
+            // 3. FOTO / VIDEO
             PhotoVideoInteractable fotoVideo = hit.collider.GetComponentInParent<PhotoVideoInteractable>();
+
             if (fotoVideo != null)
             {
-                LimpiarTodoMenos(fotoVideo.gameObject);
+                LimpiarGenerico();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
 
                 if (ultimaFotoVideoMirada != null && ultimaFotoVideoMirada != fotoVideo)
                     ultimaFotoVideoMirada.DejarMirarFoto();
@@ -131,11 +189,23 @@ public class Selected : MonoBehaviour
 
             ApagarFotoVideo();
 
-            // 3. Tapa de radio actual
+            // 4. TAPA RADIO
             RadioCoverTrigger tapa = hit.collider.GetComponentInParent<RadioCoverTrigger>();
+
             if (tapa != null)
             {
-                LimpiarTodoMenos(tapa.gameObject);
+                if (tapa.radioAnimaciones != null && tapa.radioAnimaciones.RadioFinalActivo)
+                {
+                    // No interactuar con la tapa cuando ya estamos en la radio final para música.
+                    ApagarTapa();
+                    return;
+                }
+
+                LimpiarGenerico();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
 
                 if (ultimaTapaMirada != null && ultimaTapaMirada != tapa)
                     ultimaTapaMirada.DejarMirarTapa();
@@ -147,11 +217,15 @@ public class Selected : MonoBehaviour
 
             ApagarTapa();
 
-            // 4. Pilas para insertar
+            // 5. PILAS PARA INSERTAR
             RadioBatteryInsertTrigger pilaInsert = hit.collider.GetComponentInParent<RadioBatteryInsertTrigger>();
+
             if (pilaInsert != null)
             {
-                LimpiarTodoMenos(pilaInsert.gameObject);
+                LimpiarGenerico();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
 
                 if (ultimaPilaInsertMirada != null && ultimaPilaInsertMirada != pilaInsert)
                     ultimaPilaInsertMirada.DejarMirarPila();
@@ -163,11 +237,14 @@ public class Selected : MonoBehaviour
 
             ApagarPilaInsert();
 
-            // 5. Pilas del cajón
+            // 6. PILAS DEL CAJÓN
             BatteryPickup pilas = hit.collider.GetComponentInParent<BatteryPickup>();
+
             if (pilas != null)
             {
-                LimpiarTodoMenos(pilas.gameObject);
+                LimpiarGenerico();
+                ApagarPerilla();
+                ApagarRadio();
 
                 if (ultimasPilasMiradas != null && ultimasPilasMiradas != pilas)
                     ultimasPilasMiradas.StopLookingAtBatteries();
@@ -179,28 +256,13 @@ public class Selected : MonoBehaviour
 
             ApagarPilasPickup();
 
-            // 6. Radio principal de la misión
-            RadioAnimacionesSimple radio = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
-            if (radio != null)
-            {
-                LimpiarTodoMenos(radio.gameObject);
-
-                if (ultimaRadioMirada != null && ultimaRadioMirada != radio)
-                    ultimaRadioMirada.DejarMirarRadio();
-
-                ultimaRadioMirada = radio;
-                radio.MirarRadio();
-                return;
-            }
-
-            ApagarRadio();
-
-            // 7. Perillas de radio
+            // 7. PERILLAS RADIO MÚSICA
             RadioKnobInteractable perilla = hit.collider.GetComponentInParent<RadioKnobInteractable>();
 
             if (perilla != null)
             {
-                LimpiarTodoMenos(perilla.gameObject);
+                LimpiarGenerico();
+                ApagarRadio();
 
                 if (ultimaPerillaMirada != null && ultimaPerillaMirada != perilla)
                     ultimaPerillaMirada.DejarMirarPerilla();
@@ -212,62 +274,272 @@ public class Selected : MonoBehaviour
 
             ApagarPerilla();
 
-            // 7. Interacciones generales conservadas por SendMessage seguro
-            // Esto permite que puertas, cajones, objetos 360, ropa, teléfono, etc.
-            // sigan funcionando si tienen sus métodos propios.
-            GameObject root = hit.collider.transform.root.gameObject;
-            GameObject parent = hit.collider.GetComponentInParent<Transform>().gameObject;
+            // 8. MISIÓN DEL CLOSET
+            ClosetMissionTrigger closetMission = hit.collider.GetComponentInParent<ClosetMissionTrigger>();
 
-            if (ultimoObjetoConSendMessage != null && ultimoObjetoConSendMessage != hit.collider.gameObject)
+            if (closetMission != null)
             {
-                EnviarSalidaSegura(ultimoObjetoConSendMessage);
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                ApagarRosaFinal();
+                ApagarTelefono();
+
+                if (ultimaClosetMirada != null && ultimaClosetMirada != closetMission)
+                    ultimaClosetMirada = null;
+
+                ultimaClosetMirada = closetMission;
+
+                if (InputManagerCustom.PressA())
+                {
+                    closetMission.StartClosetMission();
+                }
+                else
+                {
+                    MostrarPromptMision("Presiona A para iniciar la misión del clóset");
+                }
+
+                return;
             }
 
-            ultimoObjetoConSendMessage = hit.collider.gameObject;
+            ApagarMissionPrompt();
 
-            hit.collider.SendMessageUpwards("MirarPuerta", SendMessageOptions.DontRequireReceiver);
-            hit.collider.SendMessageUpwards("LookAtDoor", SendMessageOptions.DontRequireReceiver);
+            // 9. TELÉFONO
+            PhoneMissionController telefono = hit.collider.GetComponentInParent<PhoneMissionController>();
 
-            hit.collider.SendMessageUpwards("MirarCajon", SendMessageOptions.DontRequireReceiver);
-            hit.collider.SendMessageUpwards("LookAtDrawer", SendMessageOptions.DontRequireReceiver);
+            if (telefono != null)
+            {
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                ApagarRosaFinal();
+                ApagarClosetMission();
 
-            hit.collider.SendMessageUpwards("MirarObjeto", SendMessageOptions.DontRequireReceiver);
-            hit.collider.SendMessageUpwards("LookAtObject", SendMessageOptions.DontRequireReceiver);
+                if (ultimaTelefonoMirada != null && ultimaTelefonoMirada != telefono)
+                    ultimaTelefonoMirada.SetMirandoTelefono(false);
 
-            hit.collider.SendMessageUpwards("MirarTelefono", SendMessageOptions.DontRequireReceiver);
-            hit.collider.SendMessageUpwards("LookAtPhone", SendMessageOptions.DontRequireReceiver);
+                ultimaTelefonoMirada = telefono;
+                telefono.SetMirandoTelefono(true);
+                return;
+            }
 
-            hit.collider.SendMessageUpwards("MirarPrenda", SendMessageOptions.DontRequireReceiver);
-            hit.collider.SendMessageUpwards("LookAtClothing", SendMessageOptions.DontRequireReceiver);
+            ApagarTelefono();
+
+            // 9. RADIO PRINCIPAL
+            RadioAnimacionesSimple radio = hit.collider.GetComponentInParent<RadioAnimacionesSimple>();
+
+            if (radio != null)
+            {
+                OcultarPromptPuertaOCajon();
+                LimpiarGenerico();
+
+                if (ultimaRadioMirada != null && ultimaRadioMirada != radio)
+                    ultimaRadioMirada.DejarMirarRadio();
+
+                ultimaRadioMirada = radio;
+                radio.MirarRadio();
+                return;
+            }
+
+            ApagarRadio();
+
+            // 9. OBJETOS GENERALES: puertas, cajones, teléfono, ropa, objetos 360.
+            ManejarGenerico(hit.collider);
         }
         else
         {
             LimpiarMiradas();
             Deselect();
 
+            OcultarPromptPuertaOCajon();
+
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
         }
     }
 
-    void SelectedObject(Collider collider)
+    void ManejarGenerico(Collider col)
     {
-        ultimoReconocido = collider.gameObject;
+        if (ultimoGenericoMirado != null && ultimoGenericoMirado != col.gameObject)
+            EnviarSalidaGenerica(ultimoGenericoMirado);
 
-        renderersActuales = collider.GetComponentsInChildren<Renderer>();
+        ultimoGenericoMirado = col.gameObject;
 
-        if (renderersActuales == null || renderersActuales.Length == 0)
-            return;
+        col.SendMessageUpwards("MirarPuerta", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtDoor", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtPuerta", SendMessageOptions.DontRequireReceiver);
 
-        coloresOriginales = new Color[renderersActuales.Length];
+        col.SendMessageUpwards("MirarCajon", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtDrawer", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtCajon", SendMessageOptions.DontRequireReceiver);
 
-        for (int i = 0; i < renderersActuales.Length; i++)
+        col.SendMessageUpwards("MirarObjeto", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtObject", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtInspectable", SendMessageOptions.DontRequireReceiver);
+
+        col.SendMessageUpwards("MirarTelefono", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtPhone", SendMessageOptions.DontRequireReceiver);
+
+        col.SendMessageUpwards("MirarPrenda", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("LookAtClothing", SendMessageOptions.DontRequireReceiver);
+        col.SendMessageUpwards("MirarRopa", SendMessageOptions.DontRequireReceiver);
+    }
+
+    void EnviarSalidaGenerica(GameObject obj)
+    {
+        if (obj == null) return;
+
+        obj.SendMessageUpwards("DejarMirarPuerta", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtDoor", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookAtDoor", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarCajon", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtDrawer", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookAtDrawer", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarObjeto", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtObject", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookAtObject", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarTelefono", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtPhone", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarPrenda", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtClothing", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("DejarMirarRopa", SendMessageOptions.DontRequireReceiver);
+
+        obj.SendMessageUpwards("DejarMirarNPC", SendMessageOptions.DontRequireReceiver);
+        obj.SendMessageUpwards("StopLookingAtNPC", SendMessageOptions.DontRequireReceiver);
+    }
+
+    void ApagarPromptsIniciales()
+    {
+        if (TextDetect != null) TextDetect.SetActive(false);
+        if (DoorPromptPanel != null) DoorPromptPanel.SetActive(false);
+        if (MissionPromptPanel != null) MissionPromptPanel.SetActive(false);
+        if (ClothingPromptPanel != null) ClothingPromptPanel.SetActive(false);
+    }
+    void MostrarPromptPuertaOCajon(string mensaje)
+    {
+        if (DoorPromptPanel != null)
         {
-            if (renderersActuales[i] == null) continue;
+            DoorPromptPanel.SetActive(true);
 
-            coloresOriginales[i] = renderersActuales[i].material.color;
-            renderersActuales[i].material.color = colorSeleccion;
+            TMP_Text texto = DoorPromptPanel.GetComponentInChildren<TMP_Text>(true);
+            if (texto != null)
+                texto.text = mensaje;
         }
+    }
+
+    void OcultarPromptPuertaOCajon()
+    {
+        if (DoorPromptPanel != null)
+            DoorPromptPanel.SetActive(false);
+    }
+
+    void MostrarPromptMision(string mensaje)
+    {
+        if (MissionPromptPanel != null)
+        {
+            MissionPromptPanel.SetActive(true);
+            TMP_Text texto = MissionPromptPanel.GetComponentInChildren<TMP_Text>(true);
+            if (texto != null)
+                texto.text = mensaje;
+        }
+    }
+
+    void ApagarMissionPrompt()
+    {
+        if (MissionPromptPanel != null)
+            MissionPromptPanel.SetActive(false);
+    }
+
+    void ApagarTelefono()
+    {
+        if (ultimaTelefonoMirada != null)
+        {
+            try { ultimaTelefonoMirada.SetMirandoTelefono(false); } catch { }
+            ultimaTelefonoMirada = null;
+        }
+    }
+
+    void ApagarClosetMission()
+    {
+        if (ultimaClosetMirada != null)
+        {
+            ultimaClosetMirada = null;
+        }
+    }
+
+    // --- Helper methods missing earlier (added to fix compilation) ---
+    void SelectedObject(Collider col)
+    {
+        if (col == null) return;
+
+        ultimoReconocido = col.gameObject;
+
+        // store renderers and original colors (only for materials that expose a color property)
+        renderersActuales = ultimoReconocido.GetComponentsInChildren<Renderer>(true);
+        if (renderersActuales != null && renderersActuales.Length > 0)
+        {
+            coloresOriginales = new Color[renderersActuales.Length];
+            propiedadesColorOriginal = new string[renderersActuales.Length];
+
+            for (int i = 0; i < renderersActuales.Length; i++)
+            {
+                var mat = renderersActuales[i].material;
+                string prop = null;
+                if (mat.HasProperty("_Color")) prop = "_Color";
+                else if (mat.HasProperty("_BaseColor")) prop = "_BaseColor";
+
+                propiedadesColorOriginal[i] = prop;
+
+                if (prop != null)
+                {
+                    try { coloresOriginales[i] = mat.GetColor(prop); }
+                    catch { coloresOriginales[i] = Color.white; }
+
+                    try { mat.SetColor(prop, colorSeleccion); } catch { }
+                }
+                else
+                {
+                    coloresOriginales[i] = Color.white;
+                }
+            }
+        }
+
+        if (TextDetect != null)
+            TextDetect.SetActive(DeberiaMostrarPromptGenerico(col));
+    }
+
+    bool DeberiaMostrarPromptGenerico(Collider col)
+    {
+        if (col == null) return false;
+
+        if (col.GetComponentInParent<DoorInteractable>() != null) return false;
+        if (col.GetComponentInParent<DrawerInteractable>() != null) return false;
+        if (col.GetComponentInParent<RosaFinalDialogue>() != null) return false;
+        if (col.GetComponentInParent<ServicioNPCMission>() != null) return false;
+        if (col.GetComponentInParent<PhotoVideoInteractable>() != null) return false;
+        if (col.GetComponentInParent<PhoneMissionController>() != null) return false;
+        if (col.GetComponentInParent<ClosetMissionTrigger>() != null) return false;
+        if (col.GetComponentInParent<RadioCoverTrigger>() != null) return false;
+        if (col.GetComponentInParent<RadioBatteryInsertTrigger>() != null) return false;
+        if (col.GetComponentInParent<BatteryPickup>() != null) return false;
+        if (col.GetComponentInParent<RadioKnobInteractable>() != null) return false;
+        if (col.GetComponentInParent<RadioAnimacionesSimple>() != null) return false;
+
+        return true;
     }
 
     void Deselect()
@@ -277,65 +549,52 @@ public class Selected : MonoBehaviour
             for (int i = 0; i < renderersActuales.Length; i++)
             {
                 if (renderersActuales[i] == null) continue;
-                if (i >= coloresOriginales.Length) continue;
-
-                renderersActuales[i].material.color = coloresOriginales[i];
+                var mat = renderersActuales[i].material;
+                string prop = (propiedadesColorOriginal != null && i < propiedadesColorOriginal.Length) ? propiedadesColorOriginal[i] : null;
+                if (!string.IsNullOrEmpty(prop))
+                {
+                    try { mat.SetColor(prop, coloresOriginales[i]); } catch { }
+                }
             }
         }
 
         renderersActuales = null;
         coloresOriginales = null;
+        propiedadesColorOriginal = null;
         ultimoReconocido = null;
+
+        if (TextDetect != null) TextDetect.SetActive(false);
     }
 
     void LimpiarMiradas()
     {
+        LimpiarGenerico();
         ApagarMuchacha();
         ApagarFotoVideo();
         ApagarTapa();
         ApagarPilaInsert();
         ApagarPilasPickup();
-        ApagarRadio();
         ApagarPerilla();
-
-        if (ultimoObjetoConSendMessage != null)
-        {
-            EnviarSalidaSegura(ultimoObjetoConSendMessage);
-            ultimoObjetoConSendMessage = null;
-        }
-
-        ApagarTodosLosPrompts();
+        ApagarRadio();
+        ApagarRosaFinal();
+        ApagarTelefono();
+        ApagarMissionPrompt();
     }
 
-    void LimpiarTodoMenos(GameObject objetoActivo)
+    void LimpiarGenerico()
     {
-        if (ultimaMuchachaMirada != null && ultimaMuchachaMirada.gameObject != objetoActivo)
-            ApagarMuchacha();
-
-        if (ultimaFotoVideoMirada != null && ultimaFotoVideoMirada.gameObject != objetoActivo)
-            ApagarFotoVideo();
-
-        if (ultimaTapaMirada != null && ultimaTapaMirada.gameObject != objetoActivo)
-            ApagarTapa();
-
-        if (ultimaPilaInsertMirada != null && ultimaPilaInsertMirada.gameObject != objetoActivo)
-            ApagarPilaInsert();
-
-        if (ultimasPilasMiradas != null && ultimasPilasMiradas.gameObject != objetoActivo)
-            ApagarPilasPickup();
-
-        if (ultimaRadioMirada != null && ultimaRadioMirada.gameObject != objetoActivo)
-            ApagarRadio();
-        
-        if (ultimaPerillaMirada != null && ultimaPerillaMirada.gameObject != objetoActivo)
-            ApagarPerilla();
+        if (ultimoGenericoMirado != null)
+        {
+            EnviarSalidaGenerica(ultimoGenericoMirado);
+            ultimoGenericoMirado = null;
+        }
     }
 
     void ApagarMuchacha()
     {
         if (ultimaMuchachaMirada != null)
         {
-            ultimaMuchachaMirada.SetLookingAtMe(false);
+            try { ultimaMuchachaMirada.SetLookingAtMe(false); } catch { }
             ultimaMuchachaMirada = null;
         }
     }
@@ -344,7 +603,7 @@ public class Selected : MonoBehaviour
     {
         if (ultimaFotoVideoMirada != null)
         {
-            ultimaFotoVideoMirada.DejarMirarFoto();
+            try { ultimaFotoVideoMirada.DejarMirarFoto(); } catch { }
             ultimaFotoVideoMirada = null;
         }
     }
@@ -353,7 +612,7 @@ public class Selected : MonoBehaviour
     {
         if (ultimaTapaMirada != null)
         {
-            ultimaTapaMirada.DejarMirarTapa();
+            try { ultimaTapaMirada.DejarMirarTapa(); } catch { }
             ultimaTapaMirada = null;
         }
     }
@@ -362,7 +621,7 @@ public class Selected : MonoBehaviour
     {
         if (ultimaPilaInsertMirada != null)
         {
-            ultimaPilaInsertMirada.DejarMirarPila();
+            try { ultimaPilaInsertMirada.DejarMirarPila(); } catch { }
             ultimaPilaInsertMirada = null;
         }
     }
@@ -371,8 +630,17 @@ public class Selected : MonoBehaviour
     {
         if (ultimasPilasMiradas != null)
         {
-            ultimasPilasMiradas.StopLookingAtBatteries();
+            try { ultimasPilasMiradas.StopLookingAtBatteries(); } catch { }
             ultimasPilasMiradas = null;
+        }
+    }
+
+    void ApagarPerilla()
+    {
+        if (ultimaPerillaMirada != null)
+        {
+            try { ultimaPerillaMirada.DejarMirarPerilla(); } catch { }
+            ultimaPerillaMirada = null;
         }
     }
 
@@ -380,51 +648,17 @@ public class Selected : MonoBehaviour
     {
         if (ultimaRadioMirada != null)
         {
-            ultimaRadioMirada.DejarMirarRadio();
+            try { ultimaRadioMirada.DejarMirarRadio(); } catch { }
             ultimaRadioMirada = null;
         }
     }
-    void ApagarPerilla()
+
+    void ApagarRosaFinal()
     {
-        if (ultimaPerillaMirada != null)
+        if (ultimaRosaFinalMirada != null)
         {
-            ultimaPerillaMirada.DejarMirarPerilla();
-            ultimaPerillaMirada = null;
+            try { ultimaRosaFinalMirada.SetLookingAtMe(false); } catch { }
+            ultimaRosaFinalMirada = null;
         }
-    }
-
-    void EnviarSalidaSegura(GameObject obj)
-    {
-        if (obj == null) return;
-
-        obj.SendMessageUpwards("DejarMirarPuerta", SendMessageOptions.DontRequireReceiver);
-        obj.SendMessageUpwards("StopLookingAtDoor", SendMessageOptions.DontRequireReceiver);
-
-        obj.SendMessageUpwards("DejarMirarCajon", SendMessageOptions.DontRequireReceiver);
-        obj.SendMessageUpwards("StopLookingAtDrawer", SendMessageOptions.DontRequireReceiver);
-
-        obj.SendMessageUpwards("DejarMirarObjeto", SendMessageOptions.DontRequireReceiver);
-        obj.SendMessageUpwards("StopLookingAtObject", SendMessageOptions.DontRequireReceiver);
-
-        obj.SendMessageUpwards("DejarMirarTelefono", SendMessageOptions.DontRequireReceiver);
-        obj.SendMessageUpwards("StopLookingAtPhone", SendMessageOptions.DontRequireReceiver);
-
-        obj.SendMessageUpwards("DejarMirarPrenda", SendMessageOptions.DontRequireReceiver);
-        obj.SendMessageUpwards("StopLookingAtClothing", SendMessageOptions.DontRequireReceiver);
-    }
-
-    void ApagarTodosLosPrompts()
-    {
-        if (TextDetect != null)
-            TextDetect.SetActive(false);
-
-        if (DoorPromptPanel != null)
-            DoorPromptPanel.SetActive(false);
-
-        if (MissionPromptPanel != null)
-            MissionPromptPanel.SetActive(false);
-
-        if (ClothingPromptPanel != null)
-            ClothingPromptPanel.SetActive(false);
     }
 }
