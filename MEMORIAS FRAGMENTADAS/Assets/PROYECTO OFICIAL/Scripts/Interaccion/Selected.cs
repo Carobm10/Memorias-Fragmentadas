@@ -147,6 +147,8 @@ public class Selected : MonoBehaviour
             // 2. ROSA MISIÓN INICIAL
             ServicioNPCMission muchacha = hit.collider.GetComponentInParent<ServicioNPCMission>();
 
+            Debug.Log("SELECTED RAYCAST hit: " + hit.collider.gameObject.name + ", ServicioNPCMission found=" + (muchacha != null));
+
             if (muchacha != null)
             {
                 LimpiarGenerico();

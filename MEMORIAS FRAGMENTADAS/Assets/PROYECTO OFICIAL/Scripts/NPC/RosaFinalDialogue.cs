@@ -53,8 +53,12 @@ public class RosaFinalDialogue : MonoBehaviour
         {
             MostrarPrompt("Presiona A para hablar con Rosa");
 
-            if (InputManagerCustom.PressA())
+            // Allow A as primary, but accept B or trigger as fallback in case input mapping differs.
+            if (InputManagerCustom.PressA() || InputManagerCustom.PressB() || InputManagerCustom.PressTrigger())
+            {
+                Debug.Log("ROSA FINAL: intento de iniciar diálogo por input detectado.");
                 IniciarDialogo();
+            }
         }
 
         if (!dialogoActivo) return;
@@ -108,8 +112,32 @@ public class RosaFinalDialogue : MonoBehaviour
 
         OcultarPrompt();
 
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        Debug.Log("ROSA FINAL: IniciarDialogo called. References -> dialoguePanel=" + (dialoguePanel != null) + ", npcNameText=" + (npcNameText != null) + ", dialogueText=" + (dialogueText != null) + ", opcionesPanel=" + (opcionesPanel != null));
+
+        if (dialoguePanel != null) {
+            dialoguePanel.SetActive(true);
+
+            Debug.Log("ROSA FINAL: dialoguePanel activeInHierarchy=" + dialoguePanel.activeInHierarchy);
+
+            Canvas canvas = dialoguePanel.GetComponentInParent<Canvas>();
+            if (canvas != null)
+                Debug.Log("ROSA FINAL: dialoguePanel Canvas found. renderMode=" + canvas.renderMode + ", enabled=" + canvas.enabled + ", worldCamera=" + (canvas.worldCamera != null) + ", sortingOrder=" + canvas.sortingOrder);
+            else
+                Debug.LogWarning("ROSA FINAL: No Canvas in parents of dialoguePanel.");
+
+            CanvasGroup cg = dialoguePanel.GetComponent<CanvasGroup>();
+            if (cg != null)
+                Debug.Log("ROSA FINAL: dialoguePanel CanvasGroup alpha=" + cg.alpha + ", interactable=" + cg.interactable + ", blocksRaycasts=" + cg.blocksRaycasts);
+
+            RectTransform rt = dialoguePanel.GetComponent<RectTransform>();
+            if (rt != null)
+                Debug.Log("ROSA FINAL: RectTransform anchoredPos=" + rt.anchoredPosition + ", localScale=" + rt.localScale + ", size=" + rt.rect.size);
+        }
+        else Debug.LogWarning("ROSA FINAL: dialoguePanel is null - cannot show dialogue UI.");
+
         if (npcNameText != null) npcNameText.text = nombreNPC;
+        else Debug.LogWarning("ROSA FINAL: npcNameText is null.");
+
         if (salirPanel != null) salirPanel.SetActive(true);
         if (salirText != null) salirText.text = "X Salir";
 
@@ -132,7 +160,10 @@ public class RosaFinalDialogue : MonoBehaviour
         fraseActual = 0;
         mostrandoOpciones = false;
 
+        Debug.Log("ROSA FINAL: MostrarBloque called. frases length=" + (frases != null ? frases.Length : 0) + ", opA='" + opA + "'");
+
         if (opcionesPanel != null) opcionesPanel.SetActive(false);
+        else Debug.LogWarning("ROSA FINAL: opcionesPanel is null.");
 
         if (opcionAText != null) opcionAText.text = opA;
         if (opcionBText != null) opcionBText.text = opB;
@@ -152,6 +183,8 @@ public class RosaFinalDialogue : MonoBehaviour
         }
 
         textoCompletoActual = frasesActuales[fraseActual];
+
+        Debug.Log("ROSA FINAL: MostrarFraseActual -> fraseActual=" + fraseActual + ", texto='" + textoCompletoActual + "'");
 
         StopAllCoroutines();
         StartCoroutine(EscribirTexto(textoCompletoActual));
@@ -189,8 +222,12 @@ public class RosaFinalDialogue : MonoBehaviour
     {
         mostrandoOpciones = true;
 
+        Debug.Log("ROSA FINAL: MostrarOpciones called. opcionesPanel=" + (opcionesPanel != null));
+
         if (opcionesPanel != null)
             opcionesPanel.SetActive(true);
+        else
+            Debug.LogWarning("ROSA FINAL: opcionesPanel is null - options will not be visible.");
     }
 
     void ElegirOpcion(int opcion)

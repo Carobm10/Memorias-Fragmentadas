@@ -46,6 +46,7 @@ public class RadioAnimacionesSimple : MonoBehaviour
     [Header("Radio final para música")]
     public GameObject radioParaMusica;
     public RadioCoverTrigger radioCoverTrigger;
+    public RosaFinalDialogue rosaFinalDialogue;
 
     [Header("Tapita / highlight")]
     public Renderer tapaRenderer;
@@ -100,6 +101,13 @@ public class RadioAnimacionesSimple : MonoBehaviour
         if (segundaPila != null) segundaPila.SetActive(false);
         if (terceraPila != null) terceraPila.SetActive(false);
         if (cerrarTapa != null) cerrarTapa.SetActive(false);
+
+        if (rosaFinalDialogue == null)
+        {
+            rosaFinalDialogue = FindObjectOfType<RosaFinalDialogue>();
+            if (rosaFinalDialogue == null)
+                Debug.LogWarning("RADIO ANIMACIONES: No se encontró RosaFinalDialogue en la escena.");
+        }
     }
 
     void Update()
@@ -405,9 +413,20 @@ public class RadioAnimacionesSimple : MonoBehaviour
         mirandoRadio = false;
         secuenciaIniciada = true;
 
+        if (selectedRaycast != null)
+            selectedRaycast.enabled = true;
+
+        if (rosaFinalDialogue == null)
+            rosaFinalDialogue = FindObjectOfType<RosaFinalDialogue>();
+
+        if (rosaFinalDialogue != null)
+            rosaFinalDialogue.ActivarDialogoFinal();
+        else
+            Debug.LogWarning("RADIO FINAL: No hay RosaFinalDialogue asignado ni encontrado en la escena.");
+
         OcultarPrompt();
 
-        Debug.Log("RADIO FINAL: Se activó radioParaMusica.");
+        Debug.Log("RADIO FINAL: Se activó radioParaMusica y el diálogo final de Rosa está disponible.");
     }
 
     void ReproducirAnimator(Animator animator, GameObject objeto, string nombreEstado)
