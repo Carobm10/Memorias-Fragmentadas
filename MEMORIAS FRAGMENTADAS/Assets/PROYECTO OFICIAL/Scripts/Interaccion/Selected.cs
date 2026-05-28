@@ -142,6 +142,44 @@ public class Selected : MonoBehaviour
             }
 
             // ======================================================
+            // PERIÓDICO / LECTURA
+            // ======================================================
+            PeriodicoLectura periodico = hit.collider.GetComponentInParent<PeriodicoLectura>();
+
+            if (periodico != null)
+            {
+                LimpiarGenerico();
+                ApagarMuchacha();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                ApagarRosaFinal();
+                ApagarTelefono();
+                ApagarClosetMission();
+
+                MostrarPromptMision(
+                    periodico.EstaEnLectura()
+                    ? "Presiona B para pasar hoja / X para salir"
+                    : "Presiona B para ver periódico"
+                );
+
+                if (InputManagerCustom.PressB())
+                {
+                    periodico.InteractuarPeriodico();
+                }
+
+                if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton3))
+                {
+                    periodico.SalirLectura();
+                }
+
+                return;
+            }
+
+            // ======================================================
             // PUERTAS
             // ======================================================
             DoorInteractable puerta = hit.collider.GetComponentInParent<DoorInteractable>();

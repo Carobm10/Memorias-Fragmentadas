@@ -51,6 +51,7 @@ public class NPCDialogueManager : MonoBehaviour
             panelDialogoNPC.SetActive(false);
 
         OcultarOpciones();
+
         if (botonSiguienteY != null)
             botonSiguienteY.SetActive(false);
     }
@@ -99,8 +100,10 @@ public class NPCDialogueManager : MonoBehaviour
             textoNombreNPC.text = nombreNPC;
 
         OcultarOpciones();
+
         if (botonSiguienteY != null)
             botonSiguienteY.SetActive(true);
+
         MostrarLineaActual();
 
         if (mostrarDebug)
@@ -172,6 +175,7 @@ public class NPCDialogueManager : MonoBehaviour
         }
 
         escribiendo = false;
+        
         if (!opcionY.activeSelf &&
             !opcionA.activeSelf &&
             !opcionB.activeSelf)
@@ -227,7 +231,7 @@ public class NPCDialogueManager : MonoBehaviour
     {
         if (botonSiguienteY != null)
             botonSiguienteY.SetActive(false);
-
+            
         if (opcionY != null) opcionY.SetActive(true);
         if (opcionA != null) opcionA.SetActive(true);
         if (opcionB != null) opcionB.SetActive(true);
