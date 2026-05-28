@@ -7555,11 +7555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11abe66813ed2314e96b3cc8bd5263be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueManager
-<<<<<<< HEAD
   botonSiguienteY: {fileID: 2055006656}
-=======
-  botonSiguienteY: {fileID: 0}
->>>>>>> e4e3e819a51975db8252c23661bf9c3f51350b88
   panelDialogoNPC: {fileID: 855760789}
   textoNombreNPC: {fileID: 1448762813}
   textoDialogo: {fileID: 322218033}
