@@ -7603,6 +7603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 452833276}
+  - component: {fileID: 452833277}
   m_Layer: 0
   m_Name: Periodico_Mesa
   m_TagString: Untagged
@@ -7627,6 +7628,28 @@ Transform:
   - {fileID: 1345430699}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452833277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452833275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1822ee0b34486934494a521bc8a27daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PeriodicoLectura
+  botonSalirX: {fileID: 0}
+  botonPasarHojaB: {fileID: 0}
+  periodicoLectura: {fileID: 0}
+  periodicoMesaVisual: {fileID: 0}
+  hojaAnimada: {fileID: 0}
+  velocidad: 2
+  rotacionAbierta: {x: 0, y: 0, z: -180}
+  movimientoJugador: {fileID: 0}
+  puntero3D: {fileID: 0}
+  mostrarDebug: 1
 --- !u!1 &453496077 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bb786821b3dc6914e9986cd887876d8e, type: 3}
@@ -24856,7 +24879,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384698686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1822ee0b34486934494a521bc8a27daf, type: 3}
   m_Name: 
@@ -24864,7 +24887,8 @@ MonoBehaviour:
   botonSalirX: {fileID: 1771458565}
   botonPasarHojaB: {fileID: 1094094031}
   periodicoLectura: {fileID: 1990186602}
-  hojaAnimada: {fileID: 1384698687}
+  periodicoMesaVisual: {fileID: 452833275}
+  hojaAnimada: {fileID: 1441760914}
   velocidad: 2
   rotacionAbierta: {x: 0, y: 0, z: -180}
   movimientoJugador: {fileID: 1201270050}
