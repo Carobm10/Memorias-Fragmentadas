@@ -87,14 +87,63 @@ public class PeriodicoLectura : MonoBehaviour
     {
         if (enLectura)
         {
-            if (InputManagerCustom.PressB())
-                PasarHoja();
+            // Este mensaje debe salir cada 1 segundo aprox.
+            if (Time.frameCount % 60 == 0)
+            {
+                Debug.Log("[PeriodicoLectura DEBUG] Sigo vivo en lectura.");
+            }
 
-            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton3))
+            if (Input.anyKeyDown)
+            {
+                Debug.Log("[PeriodicoLectura DEBUG] Alguna tecla/botón fue presionado.");
+
+                for (int i = 0; i <= 19; i++)
+                {
+                    KeyCode joy = (KeyCode)((int)KeyCode.JoystickButton0 + i);
+
+                    if (Input.GetKeyDown(joy))
+                    {
+                        Debug.Log("[PeriodicoLectura DEBUG] Botón joystick detectado: " + joy);
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.B))
+                    Debug.Log("[PeriodicoLectura DEBUG] Teclado B detectado.");
+
+                if (Input.GetKeyDown(KeyCode.X))
+                    Debug.Log("[PeriodicoLectura DEBUG] Teclado X detectado.");
+            }
+
+            bool presionoB =
+                Input.GetKeyDown(KeyCode.B) ||
+                Input.GetKeyDown(KeyCode.JoystickButton5);
+
+            bool presionoX =
+                Input.GetKeyDown(KeyCode.X) ||
+                Input.GetKeyDown(KeyCode.JoystickButton2);
+
+            if (presionoB)
+            {
+                Debug.Log("[PeriodicoLectura] B detectado en modo lectura.");
+                PasarHoja();
+            }
+
+            if (presionoX)
+            {
+                Debug.Log("[PeriodicoLectura] X detectado en modo lectura.");
                 SalirLectura();
+            }
         }
 
-        AnimarHoja();
+        if (hojaAnimada == null) return;
+
+        Quaternion objetivo = abierto ? rotacionFinal : rotacionInicial;
+
+        hojaAnimada.localRotation = Quaternion.Slerp(
+            hojaAnimada.localRotation,
+            objetivo,
+            velocidad * Time.deltaTime
+        );
     }
 
     private void AnimarHoja()
