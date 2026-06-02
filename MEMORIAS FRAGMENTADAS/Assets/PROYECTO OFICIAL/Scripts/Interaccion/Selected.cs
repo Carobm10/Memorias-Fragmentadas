@@ -8,6 +8,7 @@ using TMPro;
 /// </summary>
 public class Selected : MonoBehaviour
 {
+    private TypewriterInteractable currentTypewriter;
     [Header("Raycast")]
     public float distancia = 3f;
     private LayerMask mask;
@@ -78,11 +79,58 @@ public class Selected : MonoBehaviour
 
             GameObject objetoDetectado = hit.collider.gameObject;
 
+            // if (ultimoReconocido != objetoDetectado)
+            // {
+            //    Deselect();
+            //     SelectedObject(hit.collider);
+            // }
+            
+            // ======================================================
+            // MISIÓN PAPÁ / MÁQUINA DE ESCRIBIR
+            // ======================================================
+            TypewriterInteractable typewriter = hit.collider.GetComponentInParent<TypewriterInteractable>();
+
+            if (typewriter != null)
+            {
+                if (typewriter.isWritingMode)
+                {
+                    Deselect();
+                    LimpiarGenerico();
+                    OcultarPromptPuertaOCajon();
+                    ApagarMissionPrompt();
+
+                    return;
+                }
+
+                if (ultimoReconocido != objetoDetectado)
+                {
+                    Deselect();
+                    SelectedObject(hit.collider);
+                }
+
+                LimpiarGenerico();
+                OcultarPromptPuertaOCajon();
+
+                if (currentTypewriter != typewriter)
+                {
+                    if (currentTypewriter != null)
+                    {
+                        currentTypewriter.HidePrompt();
+                    }
+
+                    currentTypewriter = typewriter;
+                    currentTypewriter.ShowPrompt();
+                }
+
+                return;
+            }
+
             if (ultimoReconocido != objetoDetectado)
             {
                 Deselect();
                 SelectedObject(hit.collider);
             }
+
             // ======================================================
             // MISIÓN MAMÁ / MONEDERO
             // ======================================================
@@ -171,7 +219,7 @@ public class Selected : MonoBehaviour
                     periodico.InteractuarPeriodico();
                 }
 
-                if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton3))
+                if (InputManagerCustom.PressX())
                 {
                     periodico.SalirLectura();
                 }
@@ -706,6 +754,7 @@ public class Selected : MonoBehaviour
         ApagarRosaFinal();
         ApagarTelefono();
         ApagarMissionPrompt();
+        ApagarTypewriter();
     }
 
     void LimpiarGenerico()
@@ -786,6 +835,15 @@ public class Selected : MonoBehaviour
         {
             try { ultimaRosaFinalMirada.SetLookingAtMe(false); } catch { }
             ultimaRosaFinalMirada = null;
+        }
+    }
+
+    void ApagarTypewriter()
+    {
+        if (currentTypewriter != null)
+        {
+            currentTypewriter.HidePrompt();
+            currentTypewriter = null;
         }
     }
 }
