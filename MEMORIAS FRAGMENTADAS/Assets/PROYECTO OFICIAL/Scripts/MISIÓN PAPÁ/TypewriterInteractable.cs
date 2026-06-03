@@ -4,6 +4,13 @@ using TMPro;
 
 public class TypewriterInteractable : MonoBehaviour
 {
+    [Header("UI instrucción")]
+    public GameObject instructionCanvas;
+    [Header("Detección de teclas")]
+    public float keyRayDistance = 2f;
+    public Color keyHighlightColor = new Color(0.1f, 1f, 0.25f, 1f);
+
+    private TypewriterKey currentLookedKey;
     [Header("Tecla de prueba")] 
     public Transform testKey;
     public float keyPressDistance = 0.01f;
@@ -53,6 +60,11 @@ public class TypewriterInteractable : MonoBehaviour
 
     private void Start()
     {
+        if (instructionCanvas != null)
+        {
+            instructionCanvas.SetActive(false);
+        }
+
         if (promptCanvas != null)
         {
             promptCanvas.SetActive(false);
@@ -83,6 +95,8 @@ public class TypewriterInteractable : MonoBehaviour
 
         if (isWritingMode)
         {
+            DetectLookedKey();
+
             if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.JoystickButton5))
             {
                 if (ignoreNextB)
@@ -212,6 +226,10 @@ public class TypewriterInteractable : MonoBehaviour
         
         currentLetterIndex = 0;
         UpdateLetterVisual();
+        if (instructionCanvas != null)
+        {
+            instructionCanvas.SetActive(true);
+        }
 
         Debug.Log("Cámara llegó al punto de escritura: posición bloqueada, mirada libre.");
     }
@@ -250,6 +268,10 @@ public class TypewriterInteractable : MonoBehaviour
         if (exitCanvas != null)
         {
             exitCanvas.SetActive(false);
+        }
+        if (instructionCanvas != null)
+        {
+            instructionCanvas.SetActive(false);
         }
 
         Debug.Log("Jugador volvió a posición normal.");
@@ -336,6 +358,20 @@ public class TypewriterInteractable : MonoBehaviour
 
     private void WriteNextLetter()
     {
+        string expectedKey = GetExpectedKey();
+
+        if (currentLookedKey == null)
+        {
+            Debug.Log("No estás mirando ninguna tecla.");
+            return;
+        }
+
+        if (currentLookedKey.keyValue.ToUpper() != expectedKey)
+        {
+            Debug.Log("Tecla incorrecta. Esperada: " + expectedKey + " / Mirada: " + currentLookedKey.keyValue);
+            return;
+        }
+
         if (currentLetterIndex >= fullLetterText.Length)
         {
             Debug.Log("La carta ya está completa.");
@@ -347,11 +383,83 @@ public class TypewriterInteractable : MonoBehaviour
         if (audioSource != null && keyClickSound != null)
         {
             audioSource.PlayOneShot(keyClickSound);
-            StartCoroutine(AnimateKey());
+        }
+        if (currentLookedKey != null)
+        {
+            StartCoroutine(currentLookedKey.Press(keyPressDistance, keyPressSpeed));
+        }
+        else
+        {
+            Debug.Log("No hay tecla mirada, no se puede animar tecla.");
         }
 
         UpdateLetterVisual();
 
         Debug.Log("Letra escrita: " + currentLetterIndex + " / " + fullLetterText.Length);
+    }
+    private void DetectLookedKey()
+    {
+        RaycastHit[] hits = Physics.RaycastAll(
+            playerCamera.position,
+            playerCamera.forward,
+            keyRayDistance,
+            ~0,
+            QueryTriggerInteraction.Collide
+        );
+
+        TypewriterKey foundKey = null;
+
+        foreach (RaycastHit hit in hits)
+        {
+            Debug.Log("Raycast tocó: " + hit.collider.name);
+
+            TypewriterKey key = hit.collider.GetComponentInParent<TypewriterKey>();
+
+            if (key != null)
+            {
+                foundKey = key;
+                break;
+            }
+        }
+
+        if (foundKey != null)
+        {
+            if (currentLookedKey != foundKey)
+            {
+                if (currentLookedKey != null)
+                {
+                    currentLookedKey.SetHighlight(false);
+                }
+
+                currentLookedKey = foundKey;
+                currentLookedKey.SetHighlight(true);
+
+                Debug.Log("Mirando tecla correcta detectada: " + currentLookedKey.keyValue);
+            }
+
+            return;
+        }
+
+        if (currentLookedKey != null)
+        {
+            currentLookedKey.SetHighlight(false);
+            currentLookedKey = null;
+        }
+    }
+
+    private string GetExpectedKey()
+    {
+        if (currentLetterIndex >= fullLetterText.Length)
+            return "";
+
+        char expectedChar = fullLetterText[currentLetterIndex];
+
+        if (expectedChar == ' ')
+            return "SPACE";
+
+        if (expectedChar == '\n')
+            return "ENTER";
+
+        return expectedChar.ToString().ToUpper();
     }
 }
