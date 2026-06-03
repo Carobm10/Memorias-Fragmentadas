@@ -45,7 +45,5 @@ public class InputDebugger : MonoBehaviour
 
         if (debugText != null)
             debugText.text = debugInfo;
-        else
-            Debug.Log(debugInfo);
     }
 }

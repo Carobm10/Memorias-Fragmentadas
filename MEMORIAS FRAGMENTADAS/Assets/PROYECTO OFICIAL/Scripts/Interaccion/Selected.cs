@@ -45,6 +45,8 @@ public class Selected : MonoBehaviour
     private ClosetMissionTrigger ultimaClosetMirada;
 
     private GameObject ultimoGenericoMirado;
+    private Collider lastHitCollider;
+    private Component[] lastHitCache;
 
     void Awake()
     {
@@ -239,7 +241,6 @@ public class Selected : MonoBehaviour
                 if (InputManagerCustom.PressB())
                 {
                     puerta.ToggleDoor();
-                    Debug.Log("SELECTED: Puerta activada -> " + puerta.gameObject.name);
                 }
 
                 return;
@@ -257,7 +258,6 @@ public class Selected : MonoBehaviour
                 if (InputManagerCustom.PressB())
                 {
                     cajon.ToggleDrawer();
-                    Debug.Log("SELECTED: Cajón activado -> " + cajon.gameObject.name);
                 }
 
                 return;
@@ -318,8 +318,6 @@ public class Selected : MonoBehaviour
 
             // 2. ROSA MISIÓN INICIAL
             ServicioNPCMission muchacha = hit.collider.GetComponentInParent<ServicioNPCMission>();
-
-            Debug.Log("SELECTED RAYCAST hit: " + hit.collider.gameObject.name + ", ServicioNPCMission found=" + (muchacha != null));
 
             if (muchacha != null)
             {

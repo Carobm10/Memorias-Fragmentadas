@@ -10,9 +10,11 @@ public class ServicioNPCMission : MonoBehaviour
     public float interactionDistance = 3f;
 
     [Header("Debug")]
-    public bool mostrarDebug = true;
+    public bool mostrarDebug = false;
 
     private bool playerLookingAtMe = false;
+    private bool lastCerca = false;
+    private bool lastMirando = false;
 
     void Update()
     {
@@ -22,7 +24,8 @@ public class ServicioNPCMission : MonoBehaviour
 
         bool cerca = player != null && distanciaActual <= interactionDistance;
 
-        if (mostrarDebug)
+        // Solo loguear cuando cambia el estado, no cada frame
+        if (mostrarDebug && (cerca != lastCerca || playerLookingAtMe != lastMirando))
         {
             Debug.Log(
                 "ROSA DEBUG | Mirando: " + playerLookingAtMe +
@@ -30,22 +33,18 @@ public class ServicioNPCMission : MonoBehaviour
                 " | Distancia: " + distanciaActual +
                 " | MissionManager: " + (missionManager != null)
             );
+            lastCerca = cerca;
+            lastMirando = playerLookingAtMe;
         }
 
-        if (missionManager == null)
-        {
-            Debug.LogError("ROSA ERROR: No está asignado KitchenRadioMissionManager.");
-            return;
-        }
+        if (missionManager == null) return;
 
         if (playerLookingAtMe && cerca)
         {
-            Debug.Log("ROSA OK: Se cumple condición para mostrar prompt.");
             missionManager.ShowMissionPrompt();
 
             if (InputManagerCustom.PressA())
             {
-                Debug.Log("ROSA OK: Presionaste A.");
                 missionManager.TryStartMission();
             }
         }
@@ -58,6 +57,5 @@ public class ServicioNPCMission : MonoBehaviour
     public void SetLookingAtMe(bool value)
     {
         playerLookingAtMe = value;
-        Debug.Log("ROSA RAYCAST: SetLookingAtMe = " + value);
     }
 }

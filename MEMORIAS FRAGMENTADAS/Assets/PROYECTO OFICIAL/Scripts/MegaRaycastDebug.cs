@@ -16,7 +16,7 @@ public class MegaRaycastDebug : MonoBehaviour
     public GameObject tapaCerrarMusica;
 
     [Header("Control de consola")]
-    public bool mostrarCadaFrame = true;
+    public bool mostrarCadaFrame = false;
     public KeyCode teclaDebugManual = KeyCode.F9;
 
     void Update()
