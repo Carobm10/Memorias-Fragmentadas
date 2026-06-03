@@ -247,6 +247,28 @@ public class Selected : MonoBehaviour
             }
 
             // ======================================================
+            // OBJETOS DENTRO DE CAJONES
+            // ======================================================
+            DrawerItemPickup itemCajon = hit.collider.GetComponent<DrawerItemPickup>();
+            if (itemCajon == null)
+                itemCajon = hit.collider.GetComponentInParent<DrawerItemPickup>();
+
+            if (itemCajon != null && itemCajon.PuedeSacarse())
+            {
+                OcultarPromptPuertaOCajon();
+                LimpiarGenerico();
+
+                MostrarPromptPuertaOCajon("Presiona B para sacar objeto");
+
+                if (InputManagerCustom.PressB())
+                {
+                    itemCajon.SacarParaInspeccion();
+                }
+
+                return;
+            }
+
+            // ======================================================
             // CAJONES
             // ======================================================
             DrawerInteractable cajon = hit.collider.GetComponentInParent<DrawerInteractable>();
@@ -718,6 +740,7 @@ public class Selected : MonoBehaviour
 
         if (col.GetComponentInParent<DoorInteractable>() != null) return false;
         if (col.GetComponentInParent<DrawerInteractable>() != null) return false;
+        if (col.GetComponentInParent<DrawerItemPickup>() != null) return false;
         if (col.GetComponentInParent<RosaFinalDialogue>() != null) return false;
         if (col.GetComponentInParent<ServicioNPCMission>() != null) return false;
         if (col.GetComponentInParent<PhotoVideoInteractable>() != null) return false;
