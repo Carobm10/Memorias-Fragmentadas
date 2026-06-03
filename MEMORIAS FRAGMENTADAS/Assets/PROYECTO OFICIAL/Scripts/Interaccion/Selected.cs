@@ -525,7 +525,25 @@ public class Selected : MonoBehaviour
 
             ApagarRadio();
 
-            // 9. OBJETOS GENERALES: puertas, cajones, teléfono, ropa, objetos 360.
+            // 10. OBJETOS INSPECCIONABLES 360
+            InspectableObject360 inspectable360 = hit.collider.GetComponentInParent<InspectableObject360>();
+
+            if (inspectable360 != null && !inspectable360.IsInspecting())
+            {
+                OcultarPromptPuertaOCajon();
+                LimpiarGenerico();
+
+                MostrarPromptPuertaOCajon("Presiona B para inspeccionar");
+
+                if (InputManagerCustom.PressB())
+                {
+                    inspectable360.StartInspection();
+                }
+
+                return;
+            }
+
+            // OBJETOS GENERALES: puertas, cajones, teléfono, ropa.
             ManejarGenerico(hit.collider);
         }
         else

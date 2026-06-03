@@ -87,21 +87,12 @@ public class InspectableObject360 : MonoBehaviour
 
         currentClone = Instantiate(visualPrefab, visualWrapper.transform);
 
-        Debug.Log("===== DEBUG COMPONENTES DEL CLON 360 =====");
-        Debug.Log("Clon creado: " + currentClone.name);
-
-
+        // Desactivar animators del clon que no necesitamos
         Animator[] animators = currentClone.GetComponentsInChildren<Animator>(true);
-
-        Debug.Log("Animators encontrados en clon: " + animators.Length);
-
         foreach (Animator anim in animators)
         {
-            string controllerName = anim.runtimeAnimatorController != null
-                ? anim.runtimeAnimatorController.name
-                : "SIN CONTROLLER";
-
-            Debug.Log("Animator en: " + anim.gameObject.name + " | Controller: " + controllerName);
+            if (anim.runtimeAnimatorController == null)
+                anim.enabled = false;
         }
         
         currentClone.name = visualPrefab.name + "_CLON_360";
@@ -178,15 +169,7 @@ public class InspectableObject360 : MonoBehaviour
 
         if (showDebug)
         {
-            Debug.Log("===== DEBUG 360 =====");
-            Debug.Log("Original: " + gameObject.name);
-            Debug.Log("Visual Prefab: " + visualPrefab.name);
-            Debug.Log("InspectPoint: " + inspectPoint.name);
-            Debug.Log("InspectPoint mundo: " + inspectPoint.position);
-            Debug.Log("InspectPoint local: " + inspectPoint.localPosition);
-            Debug.Log("Wrapper mundo: " + visualWrapper.transform.position);
-            Debug.Log("Clon localPosition final: " + currentClone.transform.localPosition);
-            Debug.Log("Clon escala: " + currentClone.transform.localScale);
+            Debug.Log("Inspección 360 iniciada: " + gameObject.name);
         }
     }
 
@@ -231,8 +214,7 @@ public class InspectableObject360 : MonoBehaviour
 
         if (showDebug)
         {
-            Debug.Log("Centro visual mundo: " + worldCenter);
-            Debug.Log("Centro visual local: " + localCenter);
+            Debug.Log("Centro visual corregido para: " + currentClone.name);
         }
     }
 
