@@ -98,6 +98,6 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# TextMeshPro SDF font assets (se regeneran localmente)
-*SDF.asset
-*SDF.asset.meta
+# TextMeshPro SDF font assets duplicados en VIDEOS (se regeneran localmente)
+Assets/PROYECTO OFICIAL/UI/VIDEOS/Tipografia/*SDF.asset
+Assets/PROYECTO OFICIAL/UI/VIDEOS/Tipografia/*SDF.asset.meta
