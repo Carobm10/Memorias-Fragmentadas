@@ -190,32 +190,48 @@ public class InspectableObject360 : MonoBehaviour
     {
         if (currentClone == null) return;
 
-        Renderer[] renderers = currentClone.GetComponentsInChildren<Renderer>(true);
+        // Usar mesh bounds para calcular el centro geométrico real
+        MeshFilter[] meshFilters = currentClone.GetComponentsInChildren<MeshFilter>(true);
+        SkinnedMeshRenderer[] skinnedMeshes = currentClone.GetComponentsInChildren<SkinnedMeshRenderer>(true);
 
-        if (renderers == null || renderers.Length == 0)
+        if (meshFilters.Length == 0 && skinnedMeshes.Length == 0)
         {
-            Debug.LogWarning("El clon no tiene renderers para centrar: " + currentClone.name);
+            // Fallback a renderer bounds
+            Renderer[] renderers = currentClone.GetComponentsInChildren<Renderer>(true);
+            if (renderers == null || renderers.Length == 0) return;
+
+            Bounds bounds = renderers[0].bounds;
+            for (int i = 1; i < renderers.Length; i++)
+                bounds.Encapsulate(renderers[i].bounds);
+
+            currentClone.transform.position -= (bounds.center - visualWrapper.transform.position);
             return;
         }
 
-        Bounds bounds = renderers[0].bounds;
+        // Calcular centro real promediando centros de mesh locales
+        Vector3 sumCenters = Vector3.zero;
+        int count = 0;
 
-        for (int i = 1; i < renderers.Length; i++)
+        foreach (MeshFilter mf in meshFilters)
         {
-            bounds.Encapsulate(renderers[i].bounds);
+            if (mf.sharedMesh == null) continue;
+            Vector3 meshWorldCenter = mf.transform.TransformPoint(mf.sharedMesh.bounds.center);
+            sumCenters += meshWorldCenter;
+            count++;
         }
 
-        Vector3 worldCenter = bounds.center;
-
-        Vector3 localCenter =
-            currentClone.transform.InverseTransformPoint(worldCenter);
-
-        currentClone.transform.localPosition -= localCenter;
-
-        if (showDebug)
+        foreach (SkinnedMeshRenderer smr in skinnedMeshes)
         {
-            Debug.Log("Centro visual corregido para: " + currentClone.name);
+            if (smr.sharedMesh == null) continue;
+            Vector3 meshWorldCenter = smr.transform.TransformPoint(smr.sharedMesh.bounds.center);
+            sumCenters += meshWorldCenter;
+            count++;
         }
+
+        if (count == 0) return;
+
+        Vector3 realCenter = sumCenters / count;
+        currentClone.transform.position -= (realCenter - visualWrapper.transform.position);
     }
 
     void SetOriginalVisible(bool visible)
