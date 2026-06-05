@@ -80,6 +80,12 @@ public class Selected : MonoBehaviour
                 pointer3D.SetDetected(true);
 
             GameObject objetoDetectado = hit.collider.gameObject;
+            Debug.Log(
+                "[SELECTED DEBUG] Estoy mirando: " + hit.collider.name +
+                " | Padre: " + hit.collider.transform.parent?.name +
+                " | Root: " + hit.collider.transform.root.name +
+                " | Tiene TypewriterInteractable: " + (hit.collider.GetComponentInParent<TypewriterInteractable>() != null)
+            );
 
             // if (ultimoReconocido != objetoDetectado)
             // {
@@ -94,20 +100,25 @@ public class Selected : MonoBehaviour
 
             if (typewriter != null)
             {
+                if (TextDetect != null)
+                {
+                    TextDetect.SetActive(false);
+                }
                 if (typewriter.isWritingMode)
                 {
                     Deselect();
                     LimpiarGenerico();
                     OcultarPromptPuertaOCajon();
                     ApagarMissionPrompt();
-
                     return;
                 }
 
-                if (ultimoReconocido != objetoDetectado)
+                GameObject maquinaCompleta = typewriter.gameObject;
+
+                if (ultimoReconocido != maquinaCompleta)
                 {
                     Deselect();
-                    SelectedObject(hit.collider);
+                    SelectedObject(maquinaCompleta.GetComponent<Collider>());
                 }
 
                 LimpiarGenerico();

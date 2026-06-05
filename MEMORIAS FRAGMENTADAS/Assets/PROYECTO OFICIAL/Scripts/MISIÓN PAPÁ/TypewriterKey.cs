@@ -9,20 +9,22 @@ public class TypewriterKey : MonoBehaviour
     [Header("Color")]
     public Color highlightColor = new Color(0.1f, 1f, 0.25f, 1f);
 
-    private Renderer[] renderers;
-    private Color[] originalColors;
+    private Renderer keyRenderer;
+    private Color originalColor;
     private Vector3 originalLocalPosition;
 
     private void Awake()
     {
-        keyValue = gameObject.name.ToUpper();
-
-        renderers = GetComponentsInChildren<Renderer>();
-        originalColors = new Color[renderers.Length];
-
-        for (int i = 0; i < renderers.Length; i++)
+        if (string.IsNullOrEmpty(keyValue))
         {
-            originalColors[i] = renderers[i].material.color;
+            keyValue = gameObject.name.ToUpper();
+        }
+
+        keyRenderer = GetComponent<Renderer>();
+
+        if (keyRenderer != null && keyRenderer.material.HasProperty("_Color"))
+        {
+            originalColor = keyRenderer.material.color;
         }
 
         originalLocalPosition = transform.localPosition;
@@ -30,9 +32,11 @@ public class TypewriterKey : MonoBehaviour
 
     public void SetHighlight(bool active)
     {
-        for (int i = 0; i < renderers.Length; i++)
+        if (keyRenderer == null) return;
+
+        if (keyRenderer.material.HasProperty("_Color"))
         {
-            renderers[i].material.color = active ? highlightColor : originalColors[i];
+            keyRenderer.material.color = active ? highlightColor : originalColor;
         }
     }
 
