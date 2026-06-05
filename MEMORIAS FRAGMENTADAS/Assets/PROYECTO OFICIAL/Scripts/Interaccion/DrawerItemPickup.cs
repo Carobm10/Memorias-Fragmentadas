@@ -25,7 +25,7 @@ public class DrawerItemPickup : MonoBehaviour
     [Header("Cámara")]
     public Transform cameraTransform;
 
-    [Header("Movimiento jugador")]
+    [Header("Movimiento jugador (se busca automáticamente si no se asigna)")]
     public MovimientoVR2 playerMovement;
 
     [Header("UI")]
@@ -74,6 +74,20 @@ public class DrawerItemPickup : MonoBehaviour
 
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
+
+        // Buscar MovimientoVR2 automáticamente si no está asignado
+        if (playerMovement == null)
+            playerMovement = FindFirstObjectByType<MovimientoVR2>();
+
+        // Buscar inspectPoint automáticamente si no está asignado
+        if (inspectPoint == null && cameraTransform != null)
+        {
+            GameObject ip = new GameObject("InspectPoint_" + gameObject.name);
+            ip.transform.SetParent(cameraTransform);
+            ip.transform.localPosition = new Vector3(0f, 0f, 0.5f);
+            ip.transform.localRotation = Quaternion.identity;
+            inspectPoint = ip.transform;
+        }
 
         if (promptPanel != null)
             promptPanel.SetActive(false);
