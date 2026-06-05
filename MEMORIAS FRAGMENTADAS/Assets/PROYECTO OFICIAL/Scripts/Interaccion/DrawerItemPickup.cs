@@ -89,6 +89,14 @@ public class DrawerItemPickup : MonoBehaviour
             inspectPoint = ip.transform;
         }
 
+        // Buscar pointer3D automáticamente si no está asignado
+        if (pointer3D == null)
+        {
+            Pointer3DController pointerCtrl = FindFirstObjectByType<Pointer3DController>();
+            if (pointerCtrl != null)
+                pointer3D = pointerCtrl.gameObject;
+        }
+
         if (promptPanel != null)
             promptPanel.SetActive(false);
     }
@@ -164,11 +172,15 @@ public class DrawerItemPickup : MonoBehaviour
 
         transform.localScale = originalLocalScale * inspectScale;
 
+        // Desactivar collider para que el raycast no interfiera
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
         // Bloquear movimiento
         if (playerMovement != null)
             playerMovement.puedeMoverse = false;
 
-        // UI
+        // Ocultar pointer pero NO destruirlo
         if (pointer3D != null)
             pointer3D.SetActive(false);
 
@@ -236,6 +248,10 @@ public class DrawerItemPickup : MonoBehaviour
         transform.localRotation = originalLocalRotation;
         transform.localScale = originalLocalScale;
 
+        // Reactivar collider
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = true;
+
         // Desbloquear cajón
         if (parentDrawer != null)
             parentDrawer.UnlockDrawer();
@@ -244,7 +260,7 @@ public class DrawerItemPickup : MonoBehaviour
         if (playerMovement != null)
             playerMovement.puedeMoverse = true;
 
-        // UI
+        // Mostrar pointer
         if (pointer3D != null)
             pointer3D.SetActive(true);
 
