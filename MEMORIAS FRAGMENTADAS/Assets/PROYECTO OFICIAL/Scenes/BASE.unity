@@ -5545,6 +5545,29 @@ MonoBehaviour:
   opcionYText: {fileID: 258104899}
   salirPanel: {fileID: 1084767862}
   salirText: {fileID: 0}
+--- !u!114 &179252940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &182809117
 GameObject:
   m_ObjectHideFlags: 0
@@ -11269,7 +11292,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: cdf46d73ad1d25741be3f5837a8f9f78, type: 2}
     - target: {fileID: -8912283330314033916, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.496
+      value: -1.4955
       objectReference: {fileID: 0}
     - target: {fileID: -8912283330314033916, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12837,7 +12860,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0130bcb451fb6574db06edfbd97345dc, type: 2}
     - target: {fileID: 4381718483718307893, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4991
+      value: -1.498
       objectReference: {fileID: 0}
     - target: {fileID: 4381718483718307893, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13493,12 +13516,48 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1341782873875043456, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 919472703}
+    - targetCorrespondingSourceObject: {fileID: -6148232264916533530, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212957567}
+    - targetCorrespondingSourceObject: {fileID: 5687469976013516497, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212957566}
+    - targetCorrespondingSourceObject: {fileID: -6387503052674632033, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212957565}
+    - targetCorrespondingSourceObject: {fileID: 3978703970350823619, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212957564}
+    - targetCorrespondingSourceObject: {fileID: 1745171500160735184, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212957563}
+    - targetCorrespondingSourceObject: {fileID: 2411192110308681233, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 179252940}
+    - targetCorrespondingSourceObject: {fileID: -4695590560089541198, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2110058287}
     - targetCorrespondingSourceObject: {fileID: -247986073552436192, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 684364852}
     - targetCorrespondingSourceObject: {fileID: -247986073552436192, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 684364851}
+    - targetCorrespondingSourceObject: {fileID: 3957268825599338727, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 763342399}
+    - targetCorrespondingSourceObject: {fileID: -3342201407520042872, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 490037284}
+    - targetCorrespondingSourceObject: {fileID: 489139993497591526, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 927468185}
+    - targetCorrespondingSourceObject: {fileID: -8862776065128016739, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1830268816}
+    - targetCorrespondingSourceObject: {fileID: -3684520454777582691, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 658695946}
     - targetCorrespondingSourceObject: {fileID: -3213951906922774496, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 395015518}
@@ -14252,6 +14311,29 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 49cda4bf28edc9242b10c0e7cedef201, type: 3}
   m_PrefabInstance: {fileID: 1783812386}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &490037284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &490372990
 GameObject:
   m_ObjectHideFlags: 0
@@ -18627,6 +18709,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658558499}
   m_CullTransparentMesh: 1
+--- !u!114 &658695946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &663046867
 GameObject:
   m_ObjectHideFlags: 0
@@ -21459,6 +21564,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00892066, y: 0.019669568, z: 0.00892066}
   m_Center: {x: -0.0000019073486, y: 0.000000059138983, z: 0.000000059604645}
+--- !u!114 &763342399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &766897158
 GameObject:
   m_ObjectHideFlags: 0
@@ -25328,6 +25456,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926337335}
   m_CullTransparentMesh: 1
+--- !u!114 &927468185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &931678031
 GameObject:
   m_ObjectHideFlags: 0
@@ -32025,6 +32176,181 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212056574}
   m_Mesh: {fileID: 8677132618893613910, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+--- !u!1 &1212957551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3684520454777582691, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8862776065128016739, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 489139993497591526, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3342201407520042872, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3957268825599338727, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4695590560089541198, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2411192110308681233, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1745171500160735184, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957559 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3978703970350823619, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6387503052674632033, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5687469976013516497, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212957562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6148232264916533530, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1212957563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
+--- !u!114 &1212957564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
+--- !u!114 &1212957565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
+--- !u!114 &1212957566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
+--- !u!114 &1212957567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &1213368664
 GameObject:
   m_ObjectHideFlags: 0
@@ -45963,6 +46289,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01, y: 0.01, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1830268816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &1830575689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2671351831233256874, guid: 4eb7f30735fbfae4181bf3c2a1bbfa2e, type: 3}
@@ -52593,6 +52942,29 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2110058287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212957556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &2117240542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3014658301941756604, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
