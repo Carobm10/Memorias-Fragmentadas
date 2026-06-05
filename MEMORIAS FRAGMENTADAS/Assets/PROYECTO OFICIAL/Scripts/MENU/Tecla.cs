@@ -59,7 +59,7 @@ public class Tecla : MonoBehaviour
 
             if (texto == "JUGAR")
             {
-                SceneManager.LoadScene("BASE");
+                SceneManager.LoadScene("TutorialJoystick");
             }
             else if (texto == "AJUSTES")
             {

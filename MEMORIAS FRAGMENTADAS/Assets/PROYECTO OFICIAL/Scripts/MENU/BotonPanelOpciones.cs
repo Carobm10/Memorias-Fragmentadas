@@ -55,7 +55,7 @@ public class BotonPanelOpciones : MonoBehaviour
         // Acción
         if (accion == "JUGAR")
         {
-            SceneManager.LoadScene("BASE");
+            SceneManager.LoadScene("TutorialJoystick");
         }
         else if (accion == "AJUSTES")
         {
