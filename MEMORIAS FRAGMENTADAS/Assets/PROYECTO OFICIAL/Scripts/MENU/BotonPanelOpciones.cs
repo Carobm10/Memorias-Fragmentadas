@@ -55,7 +55,7 @@ public class BotonPanelOpciones : MonoBehaviour
         // Acción
         if (accion == "JUGAR")
         {
-            SceneManager.LoadScene("EscenaJuego");
+            SceneManager.LoadScene("BASE");
         }
         else if (accion == "AJUSTES")
         {

@@ -87,8 +87,20 @@ public static class InputManagerCustom
     /// </summary>
     public static bool PressB()
     {
-        return Input.GetKeyDown(KeyCode.B) ||
+        bool pressed = Input.GetKeyDown(KeyCode.B) ||
                Input.GetKeyDown(KeyCode.JoystickButton5);
+
+#if UNITY_ANDROID
+        // Cardboard VR trigger
+        try
+        {
+            if (Google.XR.Cardboard.Api.IsTriggerPressed)
+                pressed = true;
+        }
+        catch { }
+#endif
+
+        return pressed;
     }
 
     /// <summary>
