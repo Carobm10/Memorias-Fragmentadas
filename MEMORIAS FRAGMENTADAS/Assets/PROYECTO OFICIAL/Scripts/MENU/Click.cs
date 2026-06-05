@@ -11,11 +11,25 @@ public class Click : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+                // Detectar teclas de la máquina de escribir
                 Tecla tecla = hit.collider.GetComponent<Tecla>();
+                if (tecla == null)
+                    tecla = hit.collider.GetComponentInParent<Tecla>();
 
                 if (tecla != null)
                 {
                     tecla.Presionar();
+                    return;
+                }
+
+                // Detectar botones del panel de opciones
+                BotonPanelOpciones opcion = hit.collider.GetComponent<BotonPanelOpciones>();
+                if (opcion == null)
+                    opcion = hit.collider.GetComponentInParent<BotonPanelOpciones>();
+
+                if (opcion != null)
+                {
+                    opcion.Presionar();
                 }
             }
         }
