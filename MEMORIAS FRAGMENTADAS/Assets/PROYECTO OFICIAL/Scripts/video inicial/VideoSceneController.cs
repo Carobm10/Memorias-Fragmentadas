@@ -237,17 +237,12 @@ public class VideoSceneController : MonoBehaviour
     {
         if (changingScene || inputLocked) return;
 
-        if (InputManagerCustom.PressA())
+        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
-            Debug.Log("Input: A → Atrás");
+            Debug.Log("Input: X → Atrás");
             StartCoroutine(PressAtrasAndGoBack());
         }
-        else if (InputManagerCustom.PressX())
-        {
-            Debug.Log("Input: X → Play/Pause");
-            StartCoroutine(PressPlayPause());
-        }
-        else if (InputManagerCustom.PressY())
+        else if (Input.GetKeyDown(KeyCode.Y) || Input.GetKeyDown(KeyCode.JoystickButton3))
         {
             Debug.Log("Input: Y → Continuar");
             StartCoroutine(PressContinuar());
@@ -269,6 +264,10 @@ public class VideoSceneController : MonoBehaviour
         if (imgAtras != null && atrasNormal != null) imgAtras.sprite = atrasNormal;
 
         changingScene = true;
+
+        PlayerPrefs.SetInt("VolvioDelVideo", 1);
+        PlayerPrefs.Save();
+
         Debug.Log("← Escena anterior: " + previousSceneName);
 
         if (transitionManager != null)

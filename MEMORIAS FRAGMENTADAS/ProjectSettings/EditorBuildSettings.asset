@@ -7,7 +7,10 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/PROYECTO OFICIAL/Scenes/Menu.unity
-    guid: 82611d2b1580cee4faa4079e2cc0208e
+    guid: 8969473caf930ae4db6ca141e64339af
+  - enabled: 1
+    path: Assets/PROYECTO OFICIAL/Scenes/TutorialJoystick.unity
+    guid: af907f3bd4637e143a131e04d6fa7530
   - enabled: 1
     path: Assets/PROYECTO OFICIAL/Scenes/Escena_VideoIntro.unity
     guid: 9e4d4ad1f7c3a004fb06fd846d65b71d
