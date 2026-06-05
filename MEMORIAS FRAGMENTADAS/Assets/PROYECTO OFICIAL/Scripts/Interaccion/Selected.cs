@@ -47,6 +47,7 @@ public class Selected : MonoBehaviour
     private GameObject ultimoGenericoMirado;
     private Collider lastHitCollider;
     private Component[] lastHitCache;
+    private DrawerItemPickup drawerItemActivo;
 
     void Awake()
     {
@@ -65,6 +66,20 @@ public class Selected : MonoBehaviour
         {
             LimpiarMiradas();
             Deselect();
+
+            if (pointer3D != null)
+                pointer3D.SetDetected(false);
+
+            return;
+        }
+
+        // Si hay un DrawerItemPickup en modo inspección, no procesar raycast
+        if (drawerItemActivo != null && drawerItemActivo.EstaInspeccionando())
+        {
+            LimpiarMiradas();
+            Deselect();
+            OcultarPromptPuertaOCajon();
+            ApagarMissionPrompt();
 
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
@@ -262,6 +277,7 @@ public class Selected : MonoBehaviour
 
                 if (InputManagerCustom.PressB())
                 {
+                    drawerItemActivo = itemCajon;
                     itemCajon.SacarParaInspeccion();
                 }
 
@@ -884,5 +900,10 @@ public class Selected : MonoBehaviour
             currentTypewriter.HidePrompt();
             currentTypewriter = null;
         }
+    }
+
+    public void ClearDrawerItemActivo()
+    {
+        drawerItemActivo = null;
     }
 }

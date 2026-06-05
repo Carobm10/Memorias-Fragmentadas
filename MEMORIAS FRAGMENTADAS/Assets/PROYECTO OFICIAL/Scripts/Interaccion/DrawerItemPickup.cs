@@ -184,8 +184,21 @@ public class DrawerItemPickup : MonoBehaviour
         if (pointer3D != null)
             pointer3D.SetActive(false);
 
+        // Mostrar canvas de salida
         if (exitCanvas != null)
             exitCanvas.SetActive(true);
+
+        // Si no hay exitCanvas dedicado, buscar uno en la escena
+        if (exitCanvas == null)
+        {
+            // Buscar el exitCanvas de InspectableObject360 si existe
+            InspectableObject360 inspector = FindFirstObjectByType<InspectableObject360>();
+            if (inspector != null && inspector.exitCanvas != null)
+            {
+                exitCanvas = inspector.exitCanvas;
+                exitCanvas.SetActive(true);
+            }
+        }
 
         if (promptPanel != null)
             promptPanel.SetActive(false);
@@ -266,6 +279,11 @@ public class DrawerItemPickup : MonoBehaviour
 
         if (exitCanvas != null)
             exitCanvas.SetActive(false);
+
+        // Limpiar referencia en Selected
+        Selected selected = FindFirstObjectByType<Selected>();
+        if (selected != null)
+            selected.ClearDrawerItemActivo();
     }
 
     /// <summary>
