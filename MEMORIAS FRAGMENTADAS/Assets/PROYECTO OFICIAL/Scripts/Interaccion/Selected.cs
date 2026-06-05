@@ -267,6 +267,9 @@ public class Selected : MonoBehaviour
             DrawerItemPickup itemCajon = hit.collider.GetComponent<DrawerItemPickup>();
             if (itemCajon == null)
                 itemCajon = hit.collider.GetComponentInParent<DrawerItemPickup>();
+            // También buscar en hijos (por si el collider es del mesh hijo)
+            if (itemCajon == null)
+                itemCajon = hit.collider.GetComponentInChildren<DrawerItemPickup>();
 
             if (itemCajon != null && itemCajon.PuedeSacarse())
             {
@@ -291,6 +294,35 @@ public class Selected : MonoBehaviour
 
             if (cajon != null)
             {
+                // Si el cajón tiene items con DrawerItemPickup y está abierto, 
+                // verificar que no estemos tocando un item (priorizar item sobre cajón)
+                if (cajon.isOpen)
+                {
+                    DrawerItemPickup[] items = cajon.GetComponentsInChildren<DrawerItemPickup>();
+                    foreach (DrawerItemPickup item in items)
+                    {
+                        if (item.PuedeSacarse())
+                        {
+                            // Verificar si el raycast está cerca de algún item
+                            Collider itemCol = item.GetComponent<Collider>();
+                            if (itemCol != null && itemCol.bounds.Contains(hit.point))
+                            {
+                                OcultarPromptPuertaOCajon();
+                                LimpiarGenerico();
+                                MostrarPromptPuertaOCajon("Presiona B para sacar objeto");
+
+                                if (InputManagerCustom.PressB())
+                                {
+                                    drawerItemActivo = item;
+                                    item.SacarParaInspeccion();
+                                }
+
+                                return;
+                            }
+                        }
+                    }
+                }
+
                 MostrarPromptPuertaOCajon(cajon.isOpen ? "Presiona B para cerrar cajón" : "Presiona B para abrir cajón");
 
                 if (InputManagerCustom.PressB())

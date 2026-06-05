@@ -99,6 +99,37 @@ public class DrawerItemPickup : MonoBehaviour
 
         if (promptPanel != null)
             promptPanel.SetActive(false);
+
+        // Asegurar que tiene un collider que cubra todo el objeto
+        AsegurarCollider();
+    }
+
+    void AsegurarCollider()
+    {
+        Collider col = GetComponent<Collider>();
+        if (col != null) return; // Ya tiene collider propio
+
+        // Calcular bounds del objeto completo incluyendo hijos
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return;
+
+        Bounds bounds = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++)
+            bounds.Encapsulate(renderers[i].bounds);
+
+        // Crear un BoxCollider que cubra todo el mesh
+        BoxCollider box = gameObject.AddComponent<BoxCollider>();
+        box.center = transform.InverseTransformPoint(bounds.center);
+        box.size = new Vector3(
+            Mathf.Abs(transform.InverseTransformVector(bounds.size).x),
+            Mathf.Abs(transform.InverseTransformVector(bounds.size).y),
+            Mathf.Abs(transform.InverseTransformVector(bounds.size).z)
+        );
+
+        // Asegurar que está en el layer correcto para el raycast
+        int raycastLayer = LayerMask.NameToLayer("Raycast Detect");
+        if (raycastLayer >= 0 && gameObject.layer == 0)
+            gameObject.layer = raycastLayer;
     }
 
     void Update()
