@@ -60,6 +60,7 @@ public class DrawerItemPickup : MonoBehaviour
     private Vector3 originalLocalScale;
     private Quaternion lockedCameraRotation;
     private bool jugadorMirando = false;
+    private GameObject inspectWrapper; // Contenedor para centrar rotación
 
     void Start()
     {
@@ -106,10 +107,36 @@ public class DrawerItemPickup : MonoBehaviour
 
     void AsegurarCollider()
     {
-        Collider col = GetComponent<Collider>();
-        if (col != null) return; // Ya tiene collider propio
+        int raycastLayer = LayerMask.NameToLayer("Raycast Detect");
 
-        // Calcular bounds del objeto completo incluyendo hijos
+        // Asegurar que ESTE gameObject está en el layer correcto
+        if (raycastLayer >= 0 && gameObject.layer == 0)
+            gameObject.layer = raycastLayer;
+
+        // Si ya tiene collider propio, solo asegurar layer
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            // Asegurar que también los hijos que tienen renderer estén en el layer
+            foreach (Transform child in GetComponentsInChildren<Transform>())
+                if (child.gameObject.layer == 0 && child.GetComponent<Renderer>() != null)
+                    child.gameObject.layer = raycastLayer >= 0 ? raycastLayer : gameObject.layer;
+            return;
+        }
+
+        // No tiene collider - buscar en hijos
+        Collider childCol = GetComponentInChildren<Collider>();
+        if (childCol != null)
+        {
+            // Tiene collider en un hijo - asegurar layer del hijo
+            if (raycastLayer >= 0 && childCol.gameObject.layer == 0)
+                childCol.gameObject.layer = raycastLayer;
+            // Agregar el DrawerItemPickup referencia no necesita collider propio
+            // pero necesitamos que el hijo esté en el layer correcto
+            return;
+        }
+
+        // No tiene collider en ningún lado - crear uno
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         if (renderers.Length == 0) return;
 
@@ -125,11 +152,6 @@ public class DrawerItemPickup : MonoBehaviour
             Mathf.Abs(transform.InverseTransformVector(bounds.size).y),
             Mathf.Abs(transform.InverseTransformVector(bounds.size).z)
         );
-
-        // Asegurar que está en el layer correcto para el raycast
-        int raycastLayer = LayerMask.NameToLayer("Raycast Detect");
-        if (raycastLayer >= 0 && gameObject.layer == 0)
-            gameObject.layer = raycastLayer;
     }
 
     void Update()
@@ -195,17 +217,28 @@ public class DrawerItemPickup : MonoBehaviour
         // Desparentar del cajón y mover al punto de inspección
         transform.SetParent(null);
 
+        // Crear wrapper para centrar la rotación en el centro visual del objeto
+        inspectWrapper = new GameObject("InspectWrapper_" + gameObject.name);
         if (inspectPoint != null)
         {
-            transform.position = inspectPoint.position;
-            transform.rotation = Quaternion.identity;
+            inspectWrapper.transform.position = inspectPoint.position;
+            inspectWrapper.transform.rotation = Quaternion.identity;
         }
 
+        // Hacer el objeto hijo del wrapper
+        transform.SetParent(inspectWrapper.transform);
+        transform.localRotation = Quaternion.identity;
         transform.localScale = originalLocalScale * inspectScale;
+
+        // Centrar el objeto dentro del wrapper por su centro visual (bounds)
+        CentrarEnWrapper();
 
         // Desactivar collider para que el raycast no interfiera
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
+        // También desactivar colliders hijos
+        foreach (Collider c in GetComponentsInChildren<Collider>())
+            c.enabled = false;
 
         // Bloquear movimiento
         if (playerMovement != null)
@@ -239,11 +272,25 @@ public class DrawerItemPickup : MonoBehaviour
     // ESTADO: Inspeccionando (fuera del cajón, rotando 360)
     // =============================================
 
+    void CentrarEnWrapper()
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
+        if (renderers.Length == 0) return;
+
+        Bounds bounds = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++)
+            bounds.Encapsulate(renderers[i].bounds);
+
+        // Mover el objeto para que su centro visual coincida con el centro del wrapper
+        Vector3 offset = transform.InverseTransformPoint(bounds.center);
+        transform.localPosition = -offset;
+    }
+
     void UpdateInspeccionando()
     {
-        // Mantener en el punto de inspección (por si la cámara se movió)
-        if (inspectPoint != null)
-            transform.position = inspectPoint.position;
+        // Mantener wrapper en el punto de inspección
+        if (inspectPoint != null && inspectWrapper != null)
+            inspectWrapper.transform.position = inspectPoint.position;
 
         // Salir con X
         if (InputManagerCustom.PressX())
@@ -252,12 +299,14 @@ public class DrawerItemPickup : MonoBehaviour
             return;
         }
 
-        // Rotación con joystick
+        if (inspectWrapper == null) return;
+
+        // Rotación con joystick - rotar el WRAPPER (así gira desde el centro)
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        transform.Rotate(Vector3.up, -horizontal * rotationSpeed * Time.deltaTime, Space.World);
-        transform.Rotate(Vector3.right, vertical * rotationSpeed * Time.deltaTime, Space.World);
+        inspectWrapper.transform.Rotate(Vector3.up, -horizontal * rotationSpeed * Time.deltaTime, Space.World);
+        inspectWrapper.transform.Rotate(Vector3.right, vertical * rotationSpeed * Time.deltaTime, Space.World);
 
         // Rotación con mouse
         if (Input.GetMouseButton(0))
@@ -265,8 +314,8 @@ public class DrawerItemPickup : MonoBehaviour
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
 
-            transform.Rotate(Vector3.up, -mouseX * mouseRotationSpeed, Space.World);
-            transform.Rotate(Vector3.right, mouseY * mouseRotationSpeed, Space.World);
+            inspectWrapper.transform.Rotate(Vector3.up, -mouseX * mouseRotationSpeed, Space.World);
+            inspectWrapper.transform.Rotate(Vector3.right, mouseY * mouseRotationSpeed, Space.World);
         }
     }
 
@@ -286,15 +335,22 @@ public class DrawerItemPickup : MonoBehaviour
 
         estado = ItemState.InDrawer;
 
-        // Reparentar al cajón
+        // Sacar del wrapper y reparentar al cajón
         transform.SetParent(originalParent);
         transform.localPosition = originalLocalPosition;
         transform.localRotation = originalLocalRotation;
         transform.localScale = originalLocalScale;
 
-        // Reactivar collider
+        // Destruir el wrapper
+        if (inspectWrapper != null)
+            Destroy(inspectWrapper);
+        inspectWrapper = null;
+
+        // Reactivar colliders
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = true;
+        foreach (Collider c in GetComponentsInChildren<Collider>())
+            c.enabled = true;
 
         // Desbloquear cajón
         if (parentDrawer != null)
