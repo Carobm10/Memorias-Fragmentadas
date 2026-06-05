@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TypewriterInteractable : MonoBehaviour
 {
-    [Header("Salto de línea")]
+    [Header("Salto automático de línea")]
     public float paperLineUpY = 0.015f;
     public float lineReturnSpeed = 0.3f;
-    [Header("Tiempo de instrucción")]
-    public float instructionTime = 4f;
+
     [Header("Movimiento del carro / papel")]
     public Transform paperSupport;
     public float paperStepX = -0.003f;
@@ -16,13 +16,17 @@ public class TypewriterInteractable : MonoBehaviour
 
     [Header("UI instrucción")]
     public GameObject instructionCanvas;
+    public float instructionTime = 4f;
+
+    [Header("UI enviar")]
+    public GameObject sendCanvas;
+    public string finalSceneName = "Escena_Final";
 
     [Header("Detección de teclas")]
     public float keyRayDistance = 2f;
     public Color keyHighlightColor = new Color(0.1f, 1f, 0.25f, 1f);
 
-    [Header("Tecla de prueba")]
-    public Transform testKey;
+    [Header("Animación de teclas")]
     public float keyPressDistance = 0.01f;
     public float keyPressSpeed = 0.05f;
 
@@ -33,29 +37,22 @@ public class TypewriterInteractable : MonoBehaviour
     [Header("UI salir")]
     public GameObject exitCanvas;
 
-    [Header("UI propia de la máquina")]
+    [Header("UI inicial máquina")]
     public GameObject promptCanvas;
-
-    [Header("UI genérica que debe apagarse")]
     public GameObject genericInteractPrompt;
 
-    [Header("Punto de vista de escritura")]
+    [Header("Cámara y jugador")]
     public Transform typewriterViewPoint;
-
-    [Header("Cámara del jugador")]
     public Transform playerCamera;
-
-    [Header("Movimiento del jugador")]
     public MovimientoVR2 playerMovement;
-
-    [Header("Configuración de cámara")]
     public float moveDuration = 1.2f;
 
     [Header("Carta")]
     public TextMeshProUGUI letterText;
 
     [TextArea(4, 8)]
-    public string fullLetterText = "Querida tía María:\n\nTe invitamos a almorzar el jueves.\n\nCon cariño,\nJoselito";
+    public string fullLetterText =
+        "Querida tía María:\n\nTe invitamos a almorzar el jueves.\n\nCon cariño,\nJoselito";
 
     [Header("Estado")]
     public bool playerLookingAtMe = false;
@@ -65,6 +62,7 @@ public class TypewriterInteractable : MonoBehaviour
     private bool ignoreNextB = false;
     private bool keepCameraLocked = false;
     private bool paperMoving = false;
+    private bool letterFinished = false;
 
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
@@ -74,14 +72,10 @@ public class TypewriterInteractable : MonoBehaviour
 
     private void Start()
     {
-        if (promptCanvas != null)
-            promptCanvas.SetActive(false);
-
-        if (instructionCanvas != null)
-            instructionCanvas.SetActive(false);
-
-        if (exitCanvas != null)
-            exitCanvas.SetActive(false);
+        if (promptCanvas != null) promptCanvas.SetActive(false);
+        if (instructionCanvas != null) instructionCanvas.SetActive(false);
+        if (exitCanvas != null) exitCanvas.SetActive(false);
+        if (sendCanvas != null) sendCanvas.SetActive(false);
 
         if (paperSupport != null)
             originalPaperPosition = paperSupport.localPosition;
@@ -94,55 +88,49 @@ public class TypewriterInteractable : MonoBehaviour
         if (playerLookingAtMe && !isWritingMode)
         {
             if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.JoystickButton5))
-            {
                 StartWritingMode();
-            }
         }
 
-        if (isWritingMode)
-        {
-            DetectLookedKey();
+        if (!isWritingMode) return;
 
+        DetectLookedKey();
+
+        if (letterFinished)
+        {
             if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.JoystickButton5))
-            {
-                if (ignoreNextB)
-                {
-                    ignoreNextB = false;
-                    Debug.Log("Se ignoró la primera B usada para entrar a la máquina.");
-                }
-                else
-                {
-                    WriteNextLetter();
-                }
-            }
+                SendLetter();
 
             if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton2))
-            {
                 ExitWritingMode();
-            }
-             if (Input.GetKeyDown(KeyCode.P))
+
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.JoystickButton5))
+        {
+            if (ignoreNextB)
             {
-                StartCoroutine(ReturnCarriageAndMovePaperUp());
+                ignoreNextB = false;
+                Debug.Log("Se ignoró la primera B usada para entrar a la máquina.");
+            }
+            else
+            {
+                WriteNextLetter();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton2))
+            ExitWritingMode();
     }
 
     private void LateUpdate()
     {
         if (keepCameraLocked && isWritingMode && playerCamera != null && typewriterViewPoint != null)
-        {
             playerCamera.position = typewriterViewPoint.position;
-        }
     }
 
     public void ShowPrompt()
     {
-        Debug.Log(
-            "[TYPEWRITER DEBUG] ShowPrompt llamado. " +
-            "isWritingMode=" + isWritingMode +
-            " | promptCanvas=" + (promptCanvas != null ? promptCanvas.name : "NULL") +
-            " | genericInteractPrompt=" + (genericInteractPrompt != null ? genericInteractPrompt.name : "NULL")
-        );
         if (isWritingMode)
         {
             HideAllEntryPrompts();
@@ -156,8 +144,6 @@ public class TypewriterInteractable : MonoBehaviour
 
         if (promptCanvas != null)
             promptCanvas.SetActive(true);
-
-        Debug.Log("Mirando máquina: mostrar prompt de escribir carta.");
     }
 
     public void HidePrompt()
@@ -168,8 +154,6 @@ public class TypewriterInteractable : MonoBehaviour
 
         if (promptCanvas != null)
             promptCanvas.SetActive(false);
-
-        Debug.Log("Dejó de mirar máquina: ocultar prompt.");
     }
 
     public void StartWritingMode()
@@ -188,14 +172,14 @@ public class TypewriterInteractable : MonoBehaviour
 
         isWritingMode = true;
         ignoreNextB = true;
+        letterFinished = false;
+        currentLetterIndex = 0;
 
         HideAllEntryPrompts();
 
-        if (instructionCanvas != null)
-            instructionCanvas.SetActive(false);
-
-        if (exitCanvas != null)
-            exitCanvas.SetActive(true);
+        if (instructionCanvas != null) instructionCanvas.SetActive(false);
+        if (sendCanvas != null) sendCanvas.SetActive(false);
+        if (exitCanvas != null) exitCanvas.SetActive(true);
 
         if (playerMovement != null)
             playerMovement.puedeMoverse = false;
@@ -203,20 +187,19 @@ public class TypewriterInteractable : MonoBehaviour
         Selected selectedSystem = FindFirstObjectByType<Selected>();
 
         if (selectedSystem != null)
-        {
             selectedSystem.SendMessage("Deselect", SendMessageOptions.DontRequireReceiver);
-            Debug.Log("Se apagó highlight general al entrar en modo escritura.");
-        }
 
         originalCameraPosition = playerCamera.position;
         originalCameraRotation = playerCamera.rotation;
+
+        if (paperSupport != null)
+            paperSupport.localPosition = originalPaperPosition;
 
         StartCoroutine(MoveCameraToTypewriter());
     }
 
     public void ExitWritingMode()
     {
-        Debug.Log("Saliendo de la máquina de escribir.");
         StartCoroutine(ReturnToPlayer());
     }
 
@@ -243,7 +226,6 @@ public class TypewriterInteractable : MonoBehaviour
 
         keepCameraLocked = true;
 
-        currentLetterIndex = 0;
         UpdateLetterVisual();
 
         if (instructionCanvas != null)
@@ -268,11 +250,9 @@ public class TypewriterInteractable : MonoBehaviour
             currentLookedKey = null;
         }
 
-        if (instructionCanvas != null)
-            instructionCanvas.SetActive(false);
-
-        if (exitCanvas != null)
-            exitCanvas.SetActive(false);
+        if (instructionCanvas != null) instructionCanvas.SetActive(false);
+        if (exitCanvas != null) exitCanvas.SetActive(false);
+        if (sendCanvas != null) sendCanvas.SetActive(false);
 
         float elapsedTime = 0f;
 
@@ -316,7 +296,6 @@ public class TypewriterInteractable : MonoBehaviour
 
         foreach (RaycastHit hit in hits)
         {
-            Debug.Log("Raycast tocó: " + hit.collider.name);
             TypewriterKey key = hit.collider.GetComponentInParent<TypewriterKey>();
 
             if (key != null)
@@ -335,8 +314,6 @@ public class TypewriterInteractable : MonoBehaviour
 
                 currentLookedKey = foundKey;
                 currentLookedKey.SetHighlight(true);
-
-                Debug.Log("Mirando tecla: " + currentLookedKey.keyValue);
             }
 
             return;
@@ -353,44 +330,29 @@ public class TypewriterInteractable : MonoBehaviour
     {
         if (currentLetterIndex >= fullLetterText.Length)
         {
-            Debug.Log("La carta ya está completa.");
+            FinishLetter();
             return;
         }
-        // ESPACIOS AUTOMÁTICOS
-        while (currentLetterIndex < fullLetterText.Length)
+
+        char currentChar = fullLetterText[currentLetterIndex];
+
+        if (currentChar == ' ')
         {
-            char c = fullLetterText[currentLetterIndex];
+            currentLetterIndex++;
+            PlayKeySound();
+            StartCoroutine(MovePaperOneStep());
+            UpdateLetterVisual();
+            CheckLetterFinished();
+            return;
+        }
 
-            if (c == ' ')
-            {
-                currentLetterIndex++;
-
-                if (audioSource != null && keyClickSound != null)
-                {
-                    audioSource.PlayOneShot(keyClickSound);
-                }
-
-                StartCoroutine(MovePaperOneStep());
-
-                UpdateLetterVisual();
-
-                Debug.Log("Espacio automático.");
-                return;
-            }
-
-            if (c == '\n')
-            {
-                currentLetterIndex++;
-
-                UpdateLetterVisual();
-
-                StartCoroutine(MovePaperOneStep());
-
-                Debug.Log("Salto de línea automático.");
-                return;
-            }
-
-            break;
+        if (currentChar == '\n')
+        {
+            currentLetterIndex++;
+            UpdateLetterVisual();
+            StartCoroutine(ReturnCarriageAndMovePaperUp());
+            CheckLetterFinished();
+            return;
         }
 
         if (currentLookedKey == null)
@@ -400,7 +362,6 @@ public class TypewriterInteractable : MonoBehaviour
         }
 
         string expectedKey = GetExpectedKey();
-        Debug.Log("Esperada: " + expectedKey + " | Mirada: " + currentLookedKey.keyValue);
 
         if (currentLookedKey.keyValue.ToUpper() != expectedKey)
         {
@@ -410,23 +371,24 @@ public class TypewriterInteractable : MonoBehaviour
 
         currentLetterIndex++;
 
-        if (audioSource != null && keyClickSound != null)
-            audioSource.PlayOneShot(keyClickSound);
+        PlayKeySound();
 
         StartCoroutine(currentLookedKey.Press(keyPressDistance, keyPressSpeed));
         StartCoroutine(MovePaperOneStep());
 
         UpdateLetterVisual();
+        CheckLetterFinished();
+    }
 
-        Debug.Log("Letra escrita: " + currentLetterIndex + " / " + fullLetterText.Length);
+    private void PlayKeySound()
+    {
+        if (audioSource != null && keyClickSound != null)
+            audioSource.PlayOneShot(keyClickSound);
     }
 
     private IEnumerator MovePaperOneStep()
     {
-        if (paperSupport == null)
-            yield break;
-
-        if (paperMoving)
+        if (paperSupport == null || paperMoving)
             yield break;
 
         paperMoving = true;
@@ -447,6 +409,36 @@ public class TypewriterInteractable : MonoBehaviour
         paperMoving = false;
     }
 
+    private IEnumerator ReturnCarriageAndMovePaperUp()
+    {
+        if (paperSupport == null)
+            yield break;
+
+        paperMoving = true;
+
+        Vector3 startPos = paperSupport.localPosition;
+
+        Vector3 endPos = new Vector3(
+            originalPaperPosition.x,
+            startPos.y + paperLineUpY,
+            startPos.z
+        );
+
+        float t = 0f;
+
+        while (t < lineReturnSpeed)
+        {
+            t += Time.deltaTime;
+            paperSupport.localPosition = Vector3.Lerp(startPos, endPos, t / lineReturnSpeed);
+            yield return null;
+        }
+
+        paperSupport.localPosition = endPos;
+        paperMoving = false;
+
+        Debug.Log("Salto automático de línea: carro vuelve y hoja sube.");
+    }
+
     private void UpdateLetterVisual()
     {
         if (letterText == null)
@@ -461,6 +453,71 @@ public class TypewriterInteractable : MonoBehaviour
         letterText.text =
             "<color=#000000>" + writtenPart + "</color>" +
             "<color=#9B9B9B>" + pendingPart + "</color>";
+    }
+
+    private void CheckLetterFinished()
+    {
+        if (currentLetterIndex >= fullLetterText.Length)
+            FinishLetter();
+    }
+
+    private void FinishLetter()
+    {
+        if (letterFinished) return;
+
+        letterFinished = true;
+
+        if (currentLookedKey != null)
+        {
+            currentLookedKey.SetHighlight(false);
+            currentLookedKey = null;
+        }
+
+        if (instructionCanvas != null)
+            instructionCanvas.SetActive(false);
+
+        if (sendCanvas != null)
+            sendCanvas.SetActive(true);
+
+        Debug.Log("Carta terminada. Mostrar botón enviar.");
+    }
+
+    private void SendLetter()
+    {
+        Debug.Log("Enviando carta. Cargando escena final: " + finalSceneName);
+
+        if (sendCanvas != null)
+            sendCanvas.SetActive(false);
+
+        SceneManager.LoadScene(finalSceneName);
+    }
+
+    private IEnumerator HideInstructionAfterSeconds()
+    {
+        yield return new WaitForSeconds(instructionTime);
+
+        if (instructionCanvas != null && isWritingMode && !letterFinished)
+            instructionCanvas.SetActive(false);
+    }
+
+    private string GetExpectedKey()
+    {
+        if (currentLetterIndex >= fullLetterText.Length)
+            return "";
+
+        char expectedChar = fullLetterText[currentLetterIndex];
+
+        string letra = expectedChar.ToString().ToUpper();
+
+        letra = letra
+            .Replace("Á", "A")
+            .Replace("É", "E")
+            .Replace("Í", "I")
+            .Replace("Ó", "O")
+            .Replace("Ú", "U")
+            .Replace("Ñ", "N");
+
+        return letra;
     }
 
     private void HideAllEntryPrompts()
@@ -482,77 +539,5 @@ public class TypewriterInteractable : MonoBehaviour
                 obj.SetActive(false);
             }
         }
-    }
-
-    private IEnumerator HideInstructionAfterSeconds()
-    {
-        yield return new WaitForSeconds(instructionTime);
-
-        if (instructionCanvas != null && isWritingMode)
-        {
-            instructionCanvas.SetActive(false);
-        }
-    }
-
-    private string GetExpectedKey()
-    {
-        if (currentLetterIndex >= fullLetterText.Length)
-            return "";
-
-        char expectedChar = fullLetterText[currentLetterIndex];
-
-        if (expectedChar == ' ')
-            return "SPACE";
-
-        if (expectedChar == '\n')
-            return "ENTER";
-
-        string letra = expectedChar.ToString().ToUpper();
-
-        letra = letra
-            .Replace("Á", "A")
-            .Replace("É", "E")
-            .Replace("Í", "I")
-            .Replace("Ó", "O")
-            .Replace("Ú", "U")
-            .Replace("Ñ", "N");
-
-        return letra;
-    }
-    private IEnumerator ReturnCarriageAndMovePaperUp()
-    {
-        if (paperSupport == null)
-            yield break;
-
-        paperMoving = true;
-
-        Vector3 startPos = paperSupport.localPosition;
-
-        Vector3 endPos = new Vector3(
-            originalPaperPosition.x,
-            startPos.y + paperLineUpY,
-            startPos.z
-        );
-
-        float t = 0f;
-
-        while (t < lineReturnSpeed)
-        {
-            t += Time.deltaTime;
-
-            paperSupport.localPosition = Vector3.Lerp(
-                startPos,
-                endPos,
-                t / lineReturnSpeed
-            );
-
-            yield return null;
-        }
-
-        paperSupport.localPosition = endPos;
-
-        paperMoving = false;
-
-        Debug.Log("SALTO DE LINEA EJECUTADO");
     }
 }

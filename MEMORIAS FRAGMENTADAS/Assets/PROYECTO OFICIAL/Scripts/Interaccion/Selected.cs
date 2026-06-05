@@ -34,6 +34,7 @@ public class Selected : MonoBehaviour
     private string[] propiedadesColorOriginal;
 
     private ServicioNPCMission ultimaMuchachaMirada;
+    private LogicaNPC ultimaHermanaMirada;
     private RosaFinalDialogue ultimaRosaFinalMirada;
     private PhotoVideoInteractable ultimaFotoVideoMirada;
     private RadioAnimacionesSimple ultimaRadioMirada;
@@ -380,7 +381,39 @@ public class Selected : MonoBehaviour
 
             ApagarRosaFinal();
 
-            // 2. ROSA MISIÓN INICIAL
+            // 2. NPC HERMANA (LogicaNPC)
+            LogicaNPC npcHermana = hit.collider.GetComponentInParent<LogicaNPC>();
+
+            if (npcHermana != null)
+            {
+                LimpiarGenerico();
+                ApagarFotoVideo();
+                ApagarTapa();
+                ApagarPilaInsert();
+                ApagarPilasPickup();
+                ApagarPerilla();
+                ApagarRadio();
+                OcultarPromptPuertaOCajon();
+
+                if (ultimaHermanaMirada != null && ultimaHermanaMirada != npcHermana)
+                    ultimaHermanaMirada.SetMirandoNPC(false);
+
+                ultimaHermanaMirada = npcHermana;
+                npcHermana.SetMirandoNPC(true);
+
+                // Mostrar prompt correcto: A para hablar
+                MostrarPromptPuertaOCajon("Presiona A para hablar");
+
+                return;
+            }
+
+            if (ultimaHermanaMirada != null)
+            {
+                ultimaHermanaMirada.SetMirandoNPC(false);
+                ultimaHermanaMirada = null;
+            }
+
+            // 3. ROSA MISIÓN INICIAL
             ServicioNPCMission muchacha = hit.collider.GetComponentInParent<ServicioNPCMission>();
 
             if (muchacha != null)
@@ -847,6 +880,7 @@ public class Selected : MonoBehaviour
     {
         LimpiarGenerico();
         ApagarMuchacha();
+        ApagarHermana();
         ApagarFotoVideo();
         ApagarTapa();
         ApagarPilaInsert();
@@ -874,6 +908,15 @@ public class Selected : MonoBehaviour
         {
             try { ultimaMuchachaMirada.SetLookingAtMe(false); } catch { }
             ultimaMuchachaMirada = null;
+        }
+    }
+
+    void ApagarHermana()
+    {
+        if (ultimaHermanaMirada != null)
+        {
+            try { ultimaHermanaMirada.SetMirandoNPC(false); } catch { }
+            ultimaHermanaMirada = null;
         }
     }
 
