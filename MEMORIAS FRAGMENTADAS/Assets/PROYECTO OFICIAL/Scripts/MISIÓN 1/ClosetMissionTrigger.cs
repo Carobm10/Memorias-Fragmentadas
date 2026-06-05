@@ -1,22 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// ClosetMissionTrigger controla la misión del clóset.
-/// 
-/// Este script NO lee botones directamente.
-/// La activación de la misión se hace desde Selected.cs con el botón A.
-/// 
-/// Flujo:
-/// 1. El jugador mira el clóset.
-/// 2. Selected.cs detecta ClosetMissionTrigger.
-/// 3. El jugador presiona A.
-/// 4. Se llama StartClosetMission().
-/// 5. Se abren las puertas del clóset.
-/// 6. El jugador se mueve hacia el punto cameraFocusPoint.
-/// 7. Se bloquea el movimiento para elegir ropa.
-/// 8. Al elegir la prenda correcta, ClosetCanvasManager llama ReturnPlayerToOriginalPosition().
-/// </summary>
 public class ClosetMissionTrigger : MonoBehaviour
 {
     private MovimientoVR2 mov;
@@ -41,10 +25,14 @@ public class ClosetMissionTrigger : MonoBehaviour
     [Header("Bloqueo de movimiento")]
     public MonoBehaviour movementScript;
 
-    /// <summary>
-    /// Inicia la misión del clóset.
-    /// Se llama desde Selected.cs cuando el jugador presiona A mirando el clóset.
-    /// </summary>
+    [Header("Raycast / Interacción")]
+    [Tooltip("Colliders grandes del clóset que bloquean la detección de la ropa.")]
+    public Collider[] collidersClosetParaDesactivar;
+
+    private Vector3 originalPlayerPosition;
+    private Quaternion originalPlayerRotation;
+    private bool originalPoseSaved = false;
+
     public void StartClosetMission()
     {
         if (missionStarted || missionCompleted)
@@ -57,10 +45,6 @@ public class ClosetMissionTrigger : MonoBehaviour
         StartCoroutine(StartClosetMissionRoutine());
     }
 
-    /// <summary>
-    /// Rutina principal de la misión.
-    /// Abre puertas, espera, mueve jugador y bloquea movimiento.
-    /// </summary>
     private IEnumerator StartClosetMissionRoutine()
     {
         GuardarPoseOriginal();
@@ -71,15 +55,15 @@ public class ClosetMissionTrigger : MonoBehaviour
 
         yield return StartCoroutine(MovePlayerToClosetView());
 
-        BloquearMovimientoJugador();
-    }
+        // IMPORTANTE:
+        // Después de mover al jugador, apagamos los colliders grandes del clóset
+        // para que el raycast pueda detectar la ropa dentro.
+        DesactivarCollidersCloset();
 
-    /// <summary>
-    /// Guarda la posición original del jugador antes de moverlo al clóset.
-    /// </summary>
-    private Vector3 originalPlayerPosition;
-    private Quaternion originalPlayerRotation;
-    private bool originalPoseSaved = false;
+        BloquearMovimientoJugador();
+
+        Debug.Log("Misión clóset: jugador en vista de selección. Ropa lista para interactuar.");
+    }
 
     private void GuardarPoseOriginal()
     {
@@ -90,34 +74,28 @@ public class ClosetMissionTrigger : MonoBehaviour
         originalPoseSaved = true;
     }
 
-    /// <summary>
-    /// Abre todas las puertas configuradas del clóset.
-    /// </summary>
     private void AbrirPuertasCloset()
     {
         for (int i = 0; i < closetDoors.Length; i++)
         {
             if (closetDoors[i] != null)
+            {
                 closetDoors[i].OpenDoor();
+            }
         }
     }
 
-    /// <summary>
-    /// Cierra todas las puertas configuradas del clóset.
-    /// </summary>
     private void CerrarPuertasCloset()
     {
         for (int i = 0; i < closetDoors.Length; i++)
         {
             if (closetDoors[i] != null)
+            {
                 closetDoors[i].CloseDoor();
+            }
         }
     }
 
-    /// <summary>
-    /// Mueve el Player hasta la vista del clóset.
-    /// Usa el offset entre Player y Camera para no romper la altura de VR.
-    /// </summary>
     private IEnumerator MovePlayerToClosetView()
     {
         if (playerRoot == null || cameraFocusPoint == null || cameraTransform == null)
@@ -151,9 +129,6 @@ public class ClosetMissionTrigger : MonoBehaviour
         playerRoot.rotation = targetRot;
     }
 
-    /// <summary>
-    /// Bloquea movimiento y head bob mientras el jugador elige ropa.
-    /// </summary>
     private void BloquearMovimientoJugador()
     {
         mov = movementScript as MovimientoVR2;
@@ -165,18 +140,33 @@ public class ClosetMissionTrigger : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Devuelve al jugador a la posición original.
-    /// Se llama cuando el jugador eligió la prenda correcta y cierra el canvas con X.
-    /// </summary>
+    private void DesactivarCollidersCloset()
+    {
+        for (int i = 0; i < collidersClosetParaDesactivar.Length; i++)
+        {
+            if (collidersClosetParaDesactivar[i] != null)
+            {
+                collidersClosetParaDesactivar[i].enabled = false;
+            }
+        }
+    }
+
+    private void ActivarCollidersCloset()
+    {
+        for (int i = 0; i < collidersClosetParaDesactivar.Length; i++)
+        {
+            if (collidersClosetParaDesactivar[i] != null)
+            {
+                collidersClosetParaDesactivar[i].enabled = true;
+            }
+        }
+    }
+
     public void ReturnPlayerToOriginalPosition()
     {
         StartCoroutine(ReturnPlayerRoutine());
     }
 
-    /// <summary>
-    /// Rutina que regresa al jugador, reactiva movimiento y cierra puertas.
-    /// </summary>
     private IEnumerator ReturnPlayerRoutine()
     {
         if (playerRoot == null || !originalPoseSaved)
@@ -209,16 +199,18 @@ public class ClosetMissionTrigger : MonoBehaviour
         missionCompleted = true;
         missionStarted = false;
 
+        ActivarCollidersCloset();
         CerrarPuertasCloset();
+
+        Debug.Log("Misión clóset completada. Jugador regresó a la posición original.");
     }
 
-    /// <summary>
-    /// Reactiva movimiento normal del jugador.
-    /// </summary>
     private void ReactivarMovimientoJugador()
     {
         if (mov == null)
+        {
             mov = movementScript as MovimientoVR2;
+        }
 
         if (mov != null)
         {
@@ -227,9 +219,6 @@ public class ClosetMissionTrigger : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Mantiene al jugador quieto en la vista del clóset después de elegir una prenda incorrecta.
-    /// </summary>
     public void ReactivarSeleccionSinMoverJugador()
     {
         BloquearMovimientoJugador();

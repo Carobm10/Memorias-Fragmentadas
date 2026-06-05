@@ -222,7 +222,7 @@ public class Selected : MonoBehaviour
                 ApagarTelefono();
                 ApagarClosetMission();
 
-                MostrarPromptMision("Presiona B para salir por el periódico");
+                MostrarPromptMision("Presiona B para salir por el periodico");
 
                 if (InputManagerCustom.PressB())
                 {
@@ -254,7 +254,7 @@ public class Selected : MonoBehaviour
                 MostrarPromptMision(
                     periodico.EstaEnLectura()
                     ? "Presiona B para pasar hoja / X para salir"
-                    : "Presiona B para ver periódico"
+                    : "Presiona B para ver periodico"
                 );
 
                 if (InputManagerCustom.PressB())
@@ -317,7 +317,7 @@ public class Selected : MonoBehaviour
 
             if (cajon != null)
             {
-                MostrarPromptPuertaOCajon(cajon.isOpen ? "Presiona B para cerrar cajon" : "Presiona B para abrir cajón");
+                MostrarPromptPuertaOCajon(cajon.isOpen ? "Presiona B para cerrar cajon" : "Presiona B para abrir cajon");
 
                 if (InputManagerCustom.PressB())
                 {
@@ -346,7 +346,7 @@ public class Selected : MonoBehaviour
                 ApagarTelefono();
                 ApagarClosetMission();
 
-                MostrarPromptMision("Presiona A para hablar con mamá");
+                MostrarPromptMision("Presiona A para hablar con mama");
 
                 if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.JoystickButton10))
                 {
@@ -537,7 +537,7 @@ public class Selected : MonoBehaviour
                 }
                 else
                 {
-                    MostrarPromptMision("Presiona A para iniciar la misión del clóset");
+                    MostrarPromptMision("Presiona A para iniciar la mision");
                 }
 
                 return;

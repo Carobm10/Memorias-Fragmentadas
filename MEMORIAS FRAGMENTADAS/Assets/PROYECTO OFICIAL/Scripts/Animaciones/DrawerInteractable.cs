@@ -32,7 +32,7 @@ public class DrawerInteractable : MonoBehaviour
     public Vector3 localOpenDirection = new Vector3(0f, 0f, -1f);
 
     [Header("Transform a mover (si no se asigna, se mueve a sí mismo)")]
-    [Tooltip("Asigna el padre del cajón si este script está en la manija")]
+    [Tooltip("Asigna el padre del cajon si este script está en la manija")]
     public Transform targetTransform;
 
     [Header("Estado del cajón")]
