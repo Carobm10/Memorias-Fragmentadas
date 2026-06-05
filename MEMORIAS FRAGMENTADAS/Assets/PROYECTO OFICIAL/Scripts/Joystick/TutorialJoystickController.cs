@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#pragma warning disable CS0414
 public class TutorialJoystickController : MonoBehaviour
 {
     [Header("Escena base")]

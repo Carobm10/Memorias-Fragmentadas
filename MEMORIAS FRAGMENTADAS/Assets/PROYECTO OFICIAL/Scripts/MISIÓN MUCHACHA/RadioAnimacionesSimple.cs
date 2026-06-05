@@ -104,9 +104,7 @@ public class RadioAnimacionesSimple : MonoBehaviour
 
         if (rosaFinalDialogue == null)
         {
-            rosaFinalDialogue = FindObjectOfType<RosaFinalDialogue>();
-            if (rosaFinalDialogue == null)
-                Debug.LogWarning("RADIO ANIMACIONES: No se encontró RosaFinalDialogue en la escena.");
+            rosaFinalDialogue = FindFirstObjectByType<RosaFinalDialogue>();
         }
     }
 
@@ -417,7 +415,7 @@ public class RadioAnimacionesSimple : MonoBehaviour
             selectedRaycast.enabled = true;
 
         if (rosaFinalDialogue == null)
-            rosaFinalDialogue = FindObjectOfType<RosaFinalDialogue>();
+            rosaFinalDialogue = FindFirstObjectByType<RosaFinalDialogue>();
 
         if (rosaFinalDialogue != null)
             rosaFinalDialogue.ActivarDialogoFinal();

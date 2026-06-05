@@ -200,7 +200,7 @@ public class TypewriterInteractable : MonoBehaviour
         if (playerMovement != null)
             playerMovement.puedeMoverse = false;
 
-        Selected selectedSystem = FindObjectOfType<Selected>();
+        Selected selectedSystem = FindFirstObjectByType<Selected>();
 
         if (selectedSystem != null)
         {
@@ -471,7 +471,7 @@ public class TypewriterInteractable : MonoBehaviour
         if (genericInteractPrompt != null)
             genericInteractPrompt.SetActive(false);
 
-        GameObject[] todos = FindObjectsOfType<GameObject>(true);
+        GameObject[] todos = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
 
         foreach (GameObject obj in todos)
         {
