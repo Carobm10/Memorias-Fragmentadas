@@ -31,6 +31,10 @@ public class DrawerInteractable : MonoBehaviour
     [Header("Dirección local de apertura")]
     public Vector3 localOpenDirection = new Vector3(0f, 0f, -1f);
 
+    [Header("Transform a mover (si no se asigna, se mueve a sí mismo)")]
+    [Tooltip("Asigna el padre del cajón si este script está en la manija")]
+    public Transform targetTransform;
+
     [Header("Estado del cajón")]
     public bool isOpen = false;
     public bool isLocked = false;
@@ -78,19 +82,34 @@ public class DrawerInteractable : MonoBehaviour
     {
         PrepararAudio();
         CargarSonidosPredeterminados();
-        closedLocalPosition = transform.localPosition;
+
+        // Si no se asignó un target, buscar si tiene padre con hijos (es una manija dentro de un cajón)
+        if (targetTransform == null)
+        {
+            // Si el padre se llama algo como "Highlight" o tiene más hijos, mover al padre
+            if (transform.parent != null && transform.localPosition == Vector3.zero)
+            {
+                targetTransform = transform.parent;
+            }
+            else
+            {
+                targetTransform = transform;
+            }
+        }
+
+        closedLocalPosition = targetTransform.localPosition;
         openLocalPosition = closedLocalPosition + localOpenDirection.normalized * openDistance;
 
         isOpen = startsOpen;
-        transform.localPosition = isOpen ? openLocalPosition : closedLocalPosition;
+        targetTransform.localPosition = isOpen ? openLocalPosition : closedLocalPosition;
     }
 
     void Update()
     {
         Vector3 targetPosition = isOpen ? openLocalPosition : closedLocalPosition;
 
-        transform.localPosition = Vector3.Lerp(
-            transform.localPosition,
+        targetTransform.localPosition = Vector3.Lerp(
+            targetTransform.localPosition,
             targetPosition,
             speed * Time.deltaTime
         );

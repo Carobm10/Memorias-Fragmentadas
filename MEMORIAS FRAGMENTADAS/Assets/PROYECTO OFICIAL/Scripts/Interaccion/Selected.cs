@@ -47,6 +47,8 @@ public class Selected : MonoBehaviour
     private GameObject ultimoGenericoMirado;
     private Collider lastHitCollider;
     private Component[] lastHitCache;
+    private DrawerItemPickup drawerItemActivo;
+    private InspectablePickup inspectablePickupActivo;
 
     void Awake()
     {
@@ -65,6 +67,34 @@ public class Selected : MonoBehaviour
         {
             LimpiarMiradas();
             Deselect();
+
+            if (pointer3D != null)
+                pointer3D.SetDetected(false);
+
+            return;
+        }
+
+        // Si hay un DrawerItemPickup en modo inspección, no procesar raycast
+        if (drawerItemActivo != null && drawerItemActivo.EstaInspeccionando())
+        {
+            LimpiarMiradas();
+            Deselect();
+            OcultarPromptPuertaOCajon();
+            ApagarMissionPrompt();
+
+            if (pointer3D != null)
+                pointer3D.SetDetected(false);
+
+            return;
+        }
+
+        // Si hay un InspectablePickup en modo inspección, no procesar raycast
+        if (inspectablePickupActivo != null && inspectablePickupActivo.EstaInspeccionando())
+        {
+            LimpiarMiradas();
+            Deselect();
+            OcultarPromptPuertaOCajon();
+            ApagarMissionPrompt();
 
             if (pointer3D != null)
                 pointer3D.SetDetected(false);
@@ -273,6 +303,7 @@ public class Selected : MonoBehaviour
 
                 if (InputManagerCustom.PressB())
                 {
+                    drawerItemActivo = itemCajon;
                     itemCajon.SacarParaInspeccion();
                 }
 
@@ -286,7 +317,7 @@ public class Selected : MonoBehaviour
 
             if (cajon != null)
             {
-                MostrarPromptPuertaOCajon(cajon.isOpen ? "Presiona B para cerrar cajón" : "Presiona B para abrir cajón");
+                MostrarPromptPuertaOCajon(cajon.isOpen ? "Presiona B para cerrar cajon" : "Presiona B para abrir cajón");
 
                 if (InputManagerCustom.PressB())
                 {
@@ -571,6 +602,27 @@ public class Selected : MonoBehaviour
                 if (InputManagerCustom.PressB())
                 {
                     inspectable360.StartInspection();
+                }
+
+                return;
+            }
+
+            // 11. OBJETOS INSPECCIONABLES PICKUP (sin cajón)
+            InspectablePickup inspectPickup = hit.collider.GetComponent<InspectablePickup>();
+            if (inspectPickup == null)
+                inspectPickup = hit.collider.GetComponentInParent<InspectablePickup>();
+
+            if (inspectPickup != null && inspectPickup.PuedeInspeccionar())
+            {
+                OcultarPromptPuertaOCajon();
+                LimpiarGenerico();
+
+                MostrarPromptPuertaOCajon("Presiona B para Inspeccionar");
+
+                if (InputManagerCustom.PressB())
+                {
+                    inspectablePickupActivo = inspectPickup;
+                    inspectPickup.IniciarInspeccion();
                 }
 
                 return;
@@ -895,5 +947,15 @@ public class Selected : MonoBehaviour
             currentTypewriter.HidePrompt();
             currentTypewriter = null;
         }
+    }
+
+    public void ClearDrawerItemActivo()
+    {
+        drawerItemActivo = null;
+    }
+
+    public void ClearInspectablePickupActivo()
+    {
+        inspectablePickupActivo = null;
     }
 }
