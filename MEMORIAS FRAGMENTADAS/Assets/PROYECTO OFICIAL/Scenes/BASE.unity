@@ -13434,6 +13434,9 @@ PrefabInstance:
       addedObject: {fileID: 1314640244}
     - targetCorrespondingSourceObject: {fileID: 4294054599712914006, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1811496568}
+    - targetCorrespondingSourceObject: {fileID: 4294054599712914006, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 952454541}
     - targetCorrespondingSourceObject: {fileID: 5131948571793589746, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
@@ -13469,6 +13472,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -517811805103901758, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1885192211}
+    - targetCorrespondingSourceObject: {fileID: -517811805103901758, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885192212}
     - targetCorrespondingSourceObject: {fileID: -2437496596099238094, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1115360043}
@@ -13510,10 +13516,10 @@ PrefabInstance:
       addedObject: {fileID: 1192891580}
     - targetCorrespondingSourceObject: {fileID: -8646420475015194124, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 479665647}
+      addedObject: {fileID: 479665656}
     - targetCorrespondingSourceObject: {fileID: -8646420475015194124, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 479665656}
+      addedObject: {fileID: 479665657}
     - targetCorrespondingSourceObject: {fileID: 4156295545720890320, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1136411402}
@@ -13580,6 +13586,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3088144555971450747, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1785268071}
+    - targetCorrespondingSourceObject: {fileID: 3088144555971450747, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1785268072}
+    - targetCorrespondingSourceObject: {fileID: -6925655735052480368, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 602715402}
     - targetCorrespondingSourceObject: {fileID: 5244825568961297109, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 584494325}
@@ -13663,10 +13675,10 @@ PrefabInstance:
       addedObject: {fileID: 1705785697}
     - targetCorrespondingSourceObject: {fileID: -5378878020751143913, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1072378619}
+      addedObject: {fileID: 1072378623}
     - targetCorrespondingSourceObject: {fileID: -5378878020751143913, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1072378623}
+      addedObject: {fileID: 1072378624}
     - targetCorrespondingSourceObject: {fileID: 7300108614851453599, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 908746636}
@@ -13789,7 +13801,7 @@ PrefabInstance:
       addedObject: {fileID: 2127334496}
     - targetCorrespondingSourceObject: {fileID: 4805366018050719526, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2127334498}
+      addedObject: {fileID: 2127334497}
     - targetCorrespondingSourceObject: {fileID: 5332589761199546845, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2128136503}
@@ -13894,28 +13906,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -517811805103901758, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
   m_PrefabInstance: {fileID: 479665626}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &479665647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479665643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30a00eda8355a9e4b88339ecc1ffda4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  cameraTransform: {fileID: 14378717}
-  visualPrefab: {fileID: 479665643}
-  inspectPoint: {fileID: 1715238135}
-  exitCanvas: {fileID: 720529101}
-  pointer3D: {fileID: 1669511501}
-  playerMovement: {fileID: 1201270050}
-  rotationSpeed: 120
-  mouseRotationSpeed: 5
-  inspectScale: 0.8
-  showDebug: 1
 --- !u!65 &479665655
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13958,6 +13948,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.10173333, y: 0.051677007, z: 0.11596363}
   m_Center: {x: 0.015101359, y: 0.004848315, z: -0.05347419}
+--- !u!114 &479665657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be59819c53817b14d8866e347ba3b9b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InspectablePickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &479686183
 GameObject:
   m_ObjectHideFlags: 0
@@ -15445,8 +15458,8 @@ GameObject:
   - component: {fileID: 584577181}
   - component: {fileID: 584577180}
   - component: {fileID: 584577179}
-  - component: {fileID: 584577178}
   - component: {fileID: 584577177}
+  - component: {fileID: 584577182}
   m_Layer: 8
   m_Name: Reloj
   m_TagString: Untagged
@@ -15475,28 +15488,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.21191272, y: 0.46595234, z: 0.33475456}
   m_Center: {x: -1.9014437, y: 0.2417643, z: -0.90934575}
---- !u!114 &584577178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584577176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea8fc473e693fce4e8e0e4eca9b61523, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  cameraTransform: {fileID: 0}
-  visualPrefab: {fileID: 0}
-  inspectPoint: {fileID: 0}
-  exitCanvas: {fileID: 0}
-  pointer3D: {fileID: 0}
-  playerMovement: {fileID: 0}
-  rotationSpeed: 120
-  mouseRotationSpeed: 5
-  inspectScale: 1
-  showDebug: 1
 --- !u!23 &584577179
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15571,6 +15562,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &584577182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584577176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be59819c53817b14d8866e347ba3b9b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InspectablePickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &587863003
 GameObject:
   m_ObjectHideFlags: 0
@@ -17229,6 +17243,34 @@ Transform:
   - {fileID: 1098235599}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &602715401 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6925655735052480368, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
+  m_PrefabInstance: {fileID: 479665626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &602715402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602715401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &603452689
 GameObject:
   m_ObjectHideFlags: 0
@@ -24643,7 +24685,6 @@ GameObject:
   - component: {fileID: 900148561}
   - component: {fileID: 900148560}
   - component: {fileID: 900148559}
-  - component: {fileID: 900148558}
   m_Layer: 8
   m_Name: Basketball_0
   m_TagString: Untagged
@@ -24666,28 +24707,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1314640244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &900148558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900148556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30a00eda8355a9e4b88339ecc1ffda4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  cameraTransform: {fileID: 14378717}
-  visualPrefab: {fileID: 479665630}
-  inspectPoint: {fileID: 1715238135}
-  exitCanvas: {fileID: 720529101}
-  pointer3D: {fileID: 1669511501}
-  playerMovement: {fileID: 1201270050}
-  rotationSpeed: 120
-  mouseRotationSpeed: 5
-  inspectScale: 50
-  showDebug: 1
 --- !u!114 &900148559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24702,9 +24721,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
   inspectPoint: {fileID: 1715238135}
   cameraTransform: {fileID: 14378717}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 1201270050}
   promptPanel: {fileID: 0}
-  promptText: {fileID: 0}
+  promptText: {fileID: 142483113}
   exitCanvas: {fileID: 0}
   pointer3D: {fileID: 1669511501}
   rotationSpeed: 120
@@ -25562,9 +25581,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
   inspectPoint: {fileID: 1715238135}
   cameraTransform: {fileID: 14378717}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 1201270050}
   promptPanel: {fileID: 0}
-  promptText: {fileID: 0}
+  promptText: {fileID: 142483113}
   exitCanvas: {fileID: 0}
   pointer3D: {fileID: 1669511501}
   rotationSpeed: 120
@@ -26454,6 +26473,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
       propertyPath: m_Name
       value: carritos
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7811658716286322693, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28789,28 +28812,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.008920661, y: 0.019669568, z: 0.00892066}
   m_Center: {x: -0.0000009536743, y: 0, z: 0.000000029802322}
---- !u!114 &1072378619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479665634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30a00eda8355a9e4b88339ecc1ffda4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  cameraTransform: {fileID: 14378717}
-  visualPrefab: {fileID: 479665634}
-  inspectPoint: {fileID: 1715238135}
-  exitCanvas: {fileID: 720529101}
-  pointer3D: {fileID: 1669511501}
-  playerMovement: {fileID: 1201270050}
-  rotationSpeed: 120
-  mouseRotationSpeed: 5
-  inspectScale: 50
-  showDebug: 1
 --- !u!65 &1072378623
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28832,6 +28833,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0024258697, y: 0.0021236972, z: 0.0014763337}
   m_Center: {x: 0.00006991521, y: -0.0004213595, z: 0.00013861326}
+--- !u!114 &1072378624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be59819c53817b14d8866e347ba3b9b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InspectablePickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &1072556394
 GameObject:
   m_ObjectHideFlags: 0
@@ -42363,7 +42387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
   inspectPoint: {fileID: 1715238135}
   cameraTransform: {fileID: 14378717}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 1201270050}
   promptPanel: {fileID: 0}
   promptText: {fileID: 142483113}
   exitCanvas: {fileID: 0}
@@ -45481,6 +45505,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.019079704, y: 0.046096902, z: 0.025218781}
   m_Center: {x: 0.025, y: 0.0034688828, z: 0.018607093}
+--- !u!114 &1785268072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &1788209257
 GameObject:
   m_ObjectHideFlags: 0
@@ -45700,6 +45747,143 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91da0db0d95217a41b616da91ef5bfcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RadioMissionInteractable
+--- !u!1 &1811496567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1811496568}
+  - component: {fileID: 1811496572}
+  - component: {fileID: 1811496571}
+  - component: {fileID: 1811496570}
+  - component: {fileID: 1811496569}
+  m_Layer: 8
+  m_Name: rueda_dos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1811496568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811496567}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.12278793, y: -0.1227879, z: 0.696364, w: 0.69636446}
+  m_LocalPosition: {x: -1.061, y: 0.16692583, z: -0.4681995}
+  m_LocalScale: {x: 0.63811, y: 0.11346, z: 0.6381099}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 479665641}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1811496569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811496567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceda984171cdb438d7233a82034358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawerItemPickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
+--- !u!65 &1811496570
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811496567}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.026356172, y: 0.1974822, z: 0.085781686}
+  m_Center: {x: 0.0032044132, y: -0.07684707, z: -0.02104852}
+--- !u!23 &1811496571
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811496567}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 5087166338504397265, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
+  - {fileID: -112094671313294038, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1811496572
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811496567}
+  m_Mesh: {fileID: 2555349468604153839, guid: 2a9ceb93ed9e3594d96b14543c7a54d3, type: 3}
 --- !u!1 &1825819222 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -709568874051060238, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
@@ -47894,6 +48078,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.23111165, y: 0.2636102, z: 0.32151815}
   m_Center: {x: -0.0074640424, y: 0.0047844998, z: 0.46489108}
+--- !u!114 &1885192212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479665644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be59819c53817b14d8866e347ba3b9b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InspectablePickup
+  inspectPoint: {fileID: 1715238135}
+  cameraTransform: {fileID: 14378717}
+  playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
+  rotationSpeed: 120
+  mouseRotationSpeed: 5
+  inspectScale: 1
+  estado: 0
 --- !u!1 &1886672738
 GameObject:
   m_ObjectHideFlags: 0
@@ -53319,7 +53526,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0013138208, y: 0.00082564814, z: 0.0005956691}
   m_Center: {x: 0.00042313576, y: -0.00019886578, z: 0.00000012503976}
---- !u!114 &2127334498
+--- !u!114 &2127334497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53328,19 +53535,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 479665630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30a00eda8355a9e4b88339ecc1ffda4b, type: 3}
+  m_Script: {fileID: 11500000, guid: be59819c53817b14d8866e347ba3b9b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InspectableObject360
-  cameraTransform: {fileID: 14378717}
-  visualPrefab: {fileID: 479665630}
+  m_EditorClassIdentifier: Assembly-CSharp::InspectablePickup
   inspectPoint: {fileID: 1715238135}
-  exitCanvas: {fileID: 720529101}
-  pointer3D: {fileID: 1669511501}
+  cameraTransform: {fileID: 14378717}
   playerMovement: {fileID: 1201270050}
+  promptPanel: {fileID: 0}
+  promptText: {fileID: 142483113}
+  exitCanvas: {fileID: 0}
+  pointer3D: {fileID: 1669511501}
   rotationSpeed: 120
   mouseRotationSpeed: 5
-  inspectScale: 50
-  showDebug: 1
+  inspectScale: 1
+  estado: 0
 --- !u!1 &2128136499 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5332589761199546845, guid: af3d4b3a2783319428b6aa7864c27011, type: 3}
